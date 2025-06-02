@@ -7,7 +7,7 @@ const MapView = () => {
   // Placeholder para el mapa
   return (
     <main className="flex-1 bg-gray-300 p-4">
-      <h2 className="text-xl font-semibold">Mapa interactivo</h2>
+      {/* <h2 className="text-xl font-semibold">Mapa interactivo</h2> */}
       {
         <MapContainer center={[43.26, -2.93]} zoom={14} scrollWheelZoom={true} className="h-full w-full">
           <TileLayer
