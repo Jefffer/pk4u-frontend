@@ -35,21 +35,20 @@ const AliasScreen = ({ onAliasSubmit }) => {
     if (isValid && alias.trim()) {
       onAliasSubmit(alias.trim());
     } else if (!alias.trim()) {
-      setError("Por favor, introduce un alias.");
+      setError("Por favor, introduce tu nombre de Usuario.");
       setIsValid(false);
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-sky-500 via-indigo-600 to-purple-700 p-4">
-      <div className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-xl shadow-2xl w-full max-w-md transform transition-all hover:scale-105 duration-300">
+      <div className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-xl shadow-2xl w-full max-w-md transform transition-all duration-300">
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          {/* Si el logo es de public: */}
           <img
             src={logoUrl}
             alt="PK4U Logo"
-            className="h-20 w-auto"
+            className="h-30 w-auto"
             onError={(e) => {
               e.target.onerror = null; // Previene loops si el placeholder también falla
               e.target.style.display = "none"; // Oculta la imagen rota
@@ -61,14 +60,13 @@ const AliasScreen = ({ onAliasSubmit }) => {
               e.target.parentNode.appendChild(logoText);
             }}
           />
-          {/* Si el logo es importado desde src/assets: <img src={pk4uLogo} alt="PK4U Logo" className="h-20 w-auto" /> */}
         </div>
 
         <h1 className="text-3xl font-bold text-center text-slate-700 dark:text-slate-100 mb-2">
-          ¡Bienvenido/a a PK4U!
+          Bienvenido a PK4U
         </h1>
         <p className="text-center text-slate-500 dark:text-slate-400 mb-8">
-          Ingresa un alias para comenzar.
+          Ingresa tu nombre de Usuario para comenzar
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -77,7 +75,7 @@ const AliasScreen = ({ onAliasSubmit }) => {
               htmlFor="alias"
               className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-1"
             >
-              Tu Alias
+              Tu Nombre de Usuario:
             </label>
             <input
               id="alias"

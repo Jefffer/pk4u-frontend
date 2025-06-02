@@ -17,19 +17,17 @@ function App() {
     setAliasHasBeenSet(true);
   };
 
-  // (Opcional) Añadir una función para "cerrar sesión" o cambiar alias
-  // const handleLogout = () => {
-  //   localStorage.removeItem('pk4uUserAlias');
-  //   setUserAlias(null);
-  //   setAliasHasBeenSet(false);
-  // };
+  const handleLogout = () => {
+    localStorage.removeItem('pk4uUserAlias');
+    setUserAlias(null);
+    setAliasHasBeenSet(false);
+  };
 
   if (!aliasHasBeenSet) {
     return <LoginFake onAliasSubmit={handleAliasSubmit} />;
   }
 
-  // Puedes pasar userAlias a Layout si quieres mostrarlo, por ejemplo, en el Header
-  return <Layout userAlias={userAlias} /* onLogout={handleLogout} */ />;
+  return <Layout userAlias={userAlias} onLogout={handleLogout} />;
 }
 
 export default App;
