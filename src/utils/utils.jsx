@@ -5,10 +5,10 @@ export const getAvailabilityColor = (spotsFree, spotsTotal) => {
   const percentageFree = (spotsFree / spotsTotal) * 100;
   const percentageFull = 100 - ((spotsFree / spotsTotal) * 100);
 
-  if (percentageFree === 0) return 'bg-red-500 hover:bg-red-600 text-white'; // Rojo para ninguna plaza libre
-  if (percentageFree < 25) return 'bg-orange-500 hover:bg-orange-600 text-white'; // Naranja para pocas plazas
-  if (percentageFree < 60) return 'bg-yellow-500 hover:bg-yellow-600 text-slate-800'; // Amarillo para disponibilidad media
-  return 'bg-green-500 hover:bg-green-600 text-white'; // Verde para alta disponibilidad
+  if (percentageFree === 0) return 'border border-red-600 bg-red-600/40 hover:bg-red-600 text-white'; // Rojo para ninguna plaza libre
+  if (percentageFree < 25) return 'border border-orange-600 bg-orange-600/40 hover:bg-orange-600 text-white'; // Naranja para pocas plazas
+  if (percentageFree < 60) return 'border border-yellow-600 bg-yellow-600/40 hover:bg-yellow-600 text-white'; // Amarillo para disponibilidad media
+  return 'border border-green-600 dark:bg-green-600/40 dark:hover:bg-green-600 text-white'; // Verde para alta disponibilidad
 };
 
 export const getAvailabilityIcon = (spotsFree, spotsTotal) => {

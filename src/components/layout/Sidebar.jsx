@@ -68,7 +68,7 @@ const Sidebar = ({ selectedParkingId }) => {
 
   return (
     <aside className="w-full md:w-1/3 lg:w-1/4 bg-slate-50 dark:bg-slate-800 p-6 border-r border-slate-200 dark:border-slate-700 overflow-y-auto">
-      <div className="sticky top-0 bg-slate-50 dark:bg-slate-800 pt-2 pb-2 z-10">
+      <div className="bg-slate-50 dark:bg-slate-800 pt-2 pb-2 z-10">
         {/* <h2 className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4">
           {parkingDetails ? "Detalle del Parking" : "Buscar Parkings"}
         </h2> */}
@@ -104,7 +104,7 @@ const Sidebar = ({ selectedParkingId }) => {
           )}
 
           {/* Nombre del Parking */}
-          <h3 className="text-2xl font-bold text-teal-600 dark:text-teal-400 mb-3 text-left">
+          <h3 className="text-xl font-bold text-teal-600 dark:text-teal-400 mb-3 text-left">
             {parkingDetails.name}
           </h3>
 
@@ -158,7 +158,11 @@ const Sidebar = ({ selectedParkingId }) => {
                 // Calcula el porcentaje para la barra de progreso
                 const percentageFull =
                   level.spotsTotal > 0
-                    ? 100 - ((level.spotsFree / level.spotsTotal) * 100)
+                    ? Math.round(
+                        100 - ((level.spotsFree /
+                          level.spotsTotal) *
+                          100)
+                      )
                     : 0;
 
                 return (
@@ -181,9 +185,9 @@ const Sidebar = ({ selectedParkingId }) => {
                       </span>
                     </div>
                     {/* Barra de progreso */}
-                    <div className="w-full bg-white/30 dark:bg-black/30 rounded-full h-2.5 mt-1">
+                    <div className="w-full bg-white/30 dark:bg-black/30 rounded-full h-1.5 mt-1">
                       <div
-                        className={`h-2.5 rounded-full ${
+                        className={`h-1.5 rounded-full ${
                           percentageFull === 100
                             ? "bg-red-300"
                             : percentageFull > 75
@@ -195,6 +199,9 @@ const Sidebar = ({ selectedParkingId }) => {
                         style={{ width: `${percentageFull}%` }}
                       ></div>
                     </div>
+                    <span className="block text-xs font-bold mt-1">
+                          {percentageFull}% OCUPADO
+                        </span>
                   </li>
                 );
               })}
