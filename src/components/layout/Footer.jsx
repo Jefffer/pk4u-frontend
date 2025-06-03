@@ -1,11 +1,14 @@
 import React from 'react';
-import { FaGithub } from 'react-icons/fa'; // Necesitarás instalar react-icons: npm install react-icons
+import { FaGithub, FaReact, FaJava } from 'react-icons/fa';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  // Asumo que los repositorios son los que están en TFM-SmartParking-Borrador2.docx [cite: 2]
-  // Específicamente el de frontend.
-  const frontendRepoUrl = "https://github.com/Jefffer/PK4U-frontend"; // Cambia esto si es necesario
+  const frontendRepoUrl = "https://github.com/Jefffer/PK4U-frontend";
+  const technologies = {
+    frontend: ["React", "React Router", "JavaScript (ES6)", "HTML5", "CSS3", "Tailwind CSS"],
+    backend: ["Spring Boot", "Java"],
+    databasesAndMaps: ["MongoDB", "Elasticsearch", "OpenStreetMap"]
+  };
 
   return (
     <footer className="bg-white dark:bg-slate-900 text-slate-800 dark:text-white shadow-md py-8 px-4 mt-auto">
@@ -19,9 +22,9 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Sección de Enlaces y Navegación (opcional, puedes añadir más aquí) */}
+        {/* Sección de Enlaces y Navegación  */}
         <div className="text-center">
-          {/* Podrías añadir enlaces a secciones importantes de tu app si lo deseas */}
+          {/* enlaces a secciones importantes */}
         </div>
 
         {/* Sección de Copyright y Enlace a GitHub */}
@@ -43,9 +46,36 @@ const Footer = () => {
       </div>
       <div className="mt-8 border-t border-gray-700 pt-4 text-center">
         <p className="text-xs text-gray-500">
-          Desarrollado con <span className="text-teal-400 font-semibold">React</span> y <span className="text-sky-400 font-semibold">Tailwind CSS</span>.
+          Desarrollado con 
+          <FaReact 
+            className="inline-block text-teal-400 mx-1 align-middle" 
+            aria-label="React Icon" 
+          />
+          <span className="text-teal-400 font-semibold">React</span> 
+          {' y'}
+          <FaJava 
+            className="inline-block text-orange-500 mx-1 align-middle" // Usando naranja para Java, puedes cambiarlo
+            aria-label="Java Icon"
+          /> 
+          <span className="text-orange-500 font-semibold">Java</span>
         </p>
       </div>
+      {/* <div className="mt-8 border-t border-gray-700 pt-6 text-center">
+        <p className="text-sm font-medium text-gray-300 dark:text-gray-400 mb-3">
+          Tecnologías Clave Utilizadas en este TFM:
+        </p>
+        <div className="text-xs text-gray-400 dark:text-gray-500 space-y-1">
+          <p>
+            <span className="font-semibold text-gray-300 dark:text-gray-400">Frontend:</span> {technologies.frontend.join(", ")}.
+          </p>
+          <p>
+            <span className="font-semibold text-gray-300 dark:text-gray-400">Backend:</span> {technologies.backend.join(", ")}.
+          </p>
+          <p>
+            <span className="font-semibold text-gray-300 dark:text-gray-400">Datos y Mapas:</span> {technologies.databasesAndMaps.join(", ")}.
+          </p>
+        </div>
+      </div> */}
     </footer>
   );
 };
