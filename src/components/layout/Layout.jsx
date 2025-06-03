@@ -15,7 +15,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
           toggleTheme={toggleTheme}
         />
         {/* <Header /> */}
-        <div className="flex flex-1 overflow-hidden bg-white dark:bg-slate-900">
+        <div className="flex flex-1 overflow-hidden flex-col md:flex-row bg-white dark:bg-slate-900">
           <Sidebar />
           <MapView />
         </div>

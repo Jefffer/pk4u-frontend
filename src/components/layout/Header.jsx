@@ -31,7 +31,7 @@ const Header = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
 
         <div className="flex items-center space-x-2 sm:space-x-4">
           {userAlias && (
-            <span className="text-xs sm:text-sm hidden md:inline">
+            <span className="text-xs sm:text-sm md:inline">
               Hola, <span className="font-semibold">{userAlias}</span>!
             </span>
           )}
