@@ -6,7 +6,7 @@ const logoUrl = "/pk4u-v1.png";
 
 const Header = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   return (
-    <header className="bg-white dark:bg-slate-900 text-slate-800 dark:text-white p-3 sm:p-4 shadow-md sticky top-0 z-50">
+    <header className="bg-white dark:bg-slate-900 text-slate-800 dark:text-white p-3 sm:p-4 shadow-md sticky top-0 z-[1100]">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-3">
           {/* Logo */}

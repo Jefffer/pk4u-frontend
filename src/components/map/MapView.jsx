@@ -6,10 +6,15 @@ import "leaflet/dist/leaflet.css";
 const MapView = () => {
   // Placeholder para el mapa
   return (
-    <main className="flex-1 bg-gray-300 p-4">
+    <main className="flex-1 bg-gray-300 dark:bg-gray-700 relative">
       {/* <h2 className="text-xl font-semibold">Mapa interactivo</h2> */}
       {
-        <MapContainer center={[43.26, -2.93]} zoom={14} scrollWheelZoom={true} className="h-full w-full">
+        <MapContainer
+          center={[43.26, -2.93]}
+          zoom={14}
+          scrollWheelZoom={true}
+          className="h-full w-full"
+        >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -20,10 +25,10 @@ const MapView = () => {
             </Popup>
           </Marker>
         </MapContainer>
-        }
-      <div className="w-full h-full bg-gray-400 flex items-center justify-center">
+      }
+      {/* <div className="w-full h-full bg-gray-400 flex items-center justify-center">
         <p>Contenedor del Mapa</p>
-      </div>
+      </div> */}
     </main>
   );
 };
