@@ -1,19 +1,28 @@
 import React from "react";
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
 import ThemeToggleButton from '../ui/ThemeToggleButton';
 
 const logoUrl = "/pk4u-v1.png";
 
-const Header = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
+const Header = ({ userAlias, onLogout, currentTheme, toggleTheme, isSidebarVisible, toggleSidebar }) => {
   return (
     <header className="bg-white dark:bg-slate-900 text-teal-600 dark:text-teal-400 p-3 sm:p-4 shadow-md sticky top-0 z-[1100]">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-3">
+          {/* Botón para alternar el Sidebar */}
+          <button
+            onClick={toggleSidebar}
+            title={isSidebarVisible ? "Ocultar barra lateral" : "Mostrar barra lateral"}
+            className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:ring-opacity-50 transition-colors duration-200"
+          >
+            {isSidebarVisible ? <FaTimes className="w-5 h-5" /> : <FaBars className="w-5 h-5" />}
+          </button>
+          
           {/* Logo */}
           <img
             src={logoUrl}
             alt="PK4U Logo"
-            className="h-10 w-auto sm:h-12" // Ajusta el tamaño según necesites
+            className="h-10 w-auto sm:h-12"
             onError={(e) => {
               e.target.onerror = null;
               e.target.style.display = "none";

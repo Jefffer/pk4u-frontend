@@ -72,13 +72,14 @@ const MapView = ({ onMarkerClick }) => {
   }, []); // El array vacío [] asegura que se ejecute solo una vez al montar el componente
 
   return (
-    <main className="flex-1 bg-gray-300 dark:bg-gray-700 relative">
+    <main className="h-full w-full bg-gray-300 dark:bg-gray-700 relative">
+    {/* <main className="flex-1 bg-gray-300 dark:bg-gray-700 relative"> */}
       {/* <h2 className="text-xl font-semibold">Mapa interactivo</h2> */}
 
       <MapContainer
         center={bilbaoCoords}
         zoom={14}
-        scrollWheelZoom={true}
+        scrollWheelZoom={false}
         className="h-full w-full"
       >
         <TileLayer

@@ -6,6 +6,11 @@ import Footer from "./Footer";
 
 const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   const [selectedParkingId, setSelectedParkingId] = useState(null);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
+const toggleSidebarVisibility = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
 
   return (
     <div>
@@ -15,11 +20,17 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
           onLogout={onLogout}
           currentTheme={currentTheme}
           toggleTheme={toggleTheme}
+          isSidebarVisible={isSidebarVisible}
+          toggleSidebar={toggleSidebarVisibility}
         />
         {/* <Header /> */}
         <div className="flex flex-1 overflow-hidden flex-col md:flex-row bg-white dark:bg-slate-900">
-          <Sidebar selectedParkingId={selectedParkingId} />
-          <MapView onMarkerClick={setSelectedParkingId} />
+          {isSidebarVisible && (
+            <Sidebar selectedParkingId={selectedParkingId} />
+          )}
+          <div className="flex-1 h-full">
+            <MapView onMarkerClick={setSelectedParkingId} />
+          </div>
         </div>
       </div>
       <Footer />

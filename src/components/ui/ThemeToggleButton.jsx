@@ -1,8 +1,8 @@
-import React from 'react';
-import { FaSun, FaMoon } from 'react-icons/fa'; // Iconos para sol y luna
+import React from "react";
+import { FaSun, FaMoon } from "react-icons/fa";
 
 const ThemeToggleButton = ({ currentTheme, toggleTheme }) => {
-  const isDark = currentTheme === 'dark';
+  const isDark = currentTheme === "dark";
 
   return (
     <button
