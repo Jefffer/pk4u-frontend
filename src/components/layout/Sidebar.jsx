@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../ui/Searchbar";
 // import ParkingList from '../parking/ParkingList';
-import { FaMapMarkerAlt, FaLayerGroup, FaParking } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaLayerGroup,
+  FaParking,
+  FaBuilding,
+  FaCar,
+  FaInfoCircle,
+  FaExclamationTriangle,
+  FaCheckCircle,
+  FaClock,
+} from "react-icons/fa";
 
 import { getParkingDetails } from "../../services/ParkingService";
+import { getAvailabilityColor, getAvailabilityIcon } from "../../utils/utils.jsx";
 
 const Sidebar = ({ selectedParkingId }) => {
   // Recibe selectedParkingId
@@ -52,7 +63,8 @@ const Sidebar = ({ selectedParkingId }) => {
     setImageError(true);
   };
 
-  const imageUrl = parkingDetails ? `/${parkingDetails.id}.png` : null;
+  const imageUrl = "/p1.png";
+  // const imageUrl = parkingDetails ? `/${parkingDetails.id}.png` : null;
 
   return (
     <aside className="w-full md:w-1/3 lg:w-1/4 bg-slate-50 dark:bg-slate-800 p-6 border-r border-slate-200 dark:border-slate-700 overflow-y-auto">
@@ -74,65 +86,121 @@ const Sidebar = ({ selectedParkingId }) => {
       {error && <p className="text-red-500 dark:text-red-400 mt-4">{error}</p>}
 
       {parkingDetails && !isLoading && !error && (
-        <div className="mt-4 text-slate-700 dark:text-slate-300">
+        <div className="mt-6 space-y-5">
+          {/* Imagen del Parking */}
           {!imageError && imageUrl && (
             <img
               src={imageUrl}
               alt={`Imagen de ${parkingDetails.name}`}
-              className="w-full h-auto max-h-48 object-cover rounded-lg mb-4 shadow-md"
-              onError={handleImageError} // Manejador para cuando la imagen no carga
+              className="w-full h-auto max-h-48 object-cover rounded-lg mb-4 shadow-lg border border-slate-200 dark:border-slate-700"
+              onError={handleImageError}
             />
           )}
           {imageError && (
-            <div className="w-full h-32 bg-slate-200 dark:bg-slate-700 flex items-center justify-center rounded-lg mb-4 text-slate-500 dark:text-slate-400 text-sm">
-              Imagen no disponible
+            <div className="w-full h-32 bg-slate-200 dark:bg-slate-700 flex flex-col items-center justify-center rounded-lg mb-4 text-slate-500 dark:text-slate-400 text-sm shadow">
+              <FaBuilding className="w-10 h-10 mb-2 text-slate-400 dark:text-slate-500" />
+              <span>Imagen no disponible</span>
             </div>
           )}
-          <h3 className="text-lg font-bold text-sky-700 dark:text-sky-500 mb-2">
+
+          {/* Nombre del Parking */}
+          <h3 className="text-2xl font-bold text-teal-600 dark:text-teal-400 mb-3 text-left">
             {parkingDetails.name}
           </h3>
-          <div className="space-y-2 text-sm">
-            <div className="flex items-start text-left">
-              <FaMapMarkerAlt className="text-sky-600 dark:text-sky-400 mt-0.5 mr-2 flex-shrink-0 h-4 w-4" />
-              <div>
-                {/* <span className="font-semibold">Dirección: </span> */}
-                <span>{parkingDetails.address}</span>
+
+          {/* Detalles del Parking */}
+          <div className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
+            <div className="flex items-start p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
+              <FaMapMarkerAlt className="text-teal-500 dark:text-teal-400 mt-1 mr-3 flex-shrink-0 h-5 w-5" />
+              <div className="text-left">
+                {/* <span className="font-semibold text-slate-800 dark:text-slate-100">Dirección:</span> */}
+                <p>{parkingDetails.address}</p>
               </div>
             </div>
-            <div className="flex items-center text-left">
-              <FaLayerGroup className="text-sky-600 dark:text-sky-400 mr-2 flex-shrink-0 h-4 w-4" />
-              <div>
-                <span className="font-semibold">{parkingDetails.numLevels}</span>
-                <span> Plantas</span>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
+                <FaLayerGroup className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
+                <div>
+                  <span className="font-semibold text-slate-800 dark:text-slate-100">
+                    {parkingDetails.numLevels}
+                  </span>
+                  <span className="ml-1">Plantas</span>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center text-left">
-              <FaParking className="text-sky-600 dark:text-sky-400 mr-2 flex-shrink-0 h-4 w-4" />
-              <div>
-                <span className="font-semibold">{parkingDetails.totalSpots}</span>
-                <span> Plazas Totales</span>
+              <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
+                <FaCar className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
+                <div>
+                  <span className="font-semibold text-slate-800 dark:text-slate-100">
+                    {parkingDetails.totalSpots}
+                  </span>
+                  <span className="ml-1">Plazas Totales</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <h4 className="text-md font-semibold mt-4 mb-2 border-t pt-3 border-slate-300 dark:border-slate-600 text-left">
-            Disponibilidad por Planta:
+          <h4 className="text-lg font-semibold mt-6 mb-3 border-t border-slate-200 dark:border-slate-700 pt-4 text-left text-slate-800 dark:text-slate-100">
+            Disponibilidad por Planta
           </h4>
           {parkingDetails.levelsInfo && parkingDetails.levelsInfo.length > 0 ? (
-            <ul className="space-y-1 text-sm">
-              {parkingDetails.levelsInfo.map((level) => (
-                <li
-                  key={level.levelId || level.levelName}
-                  className="p-2 bg-slate-100 dark:bg-slate-700 rounded text-left"
-                >
-                  <span className="font-medium">{level.levelName}:</span>
-                  <br />
-                  {level.spotsFree} plazas libres de {level.spotsTotal}
-                </li>
-              ))}
+            <ul className="space-y-3">
+              {parkingDetails.levelsInfo.map((level) => {
+                const colorClass = getAvailabilityColor(
+                  level.spotsFree,
+                  level.spotsTotal
+                );
+                const IconComponent = getAvailabilityIcon(
+                  level.spotsFree,
+                  level.spotsTotal
+                );
+
+                // Calcula el porcentaje para la barra de progreso
+                const percentageFull =
+                  level.spotsTotal > 0
+                    ? 100 - ((level.spotsFree / level.spotsTotal) * 100)
+                    : 0;
+
+                return (
+                  <li
+                    key={level.levelId || level.levelName}
+                    // onClick={() => handlePlantClick(level)} // Implementaremos esto después
+                    className={`p-4 rounded-lg shadow-md cursor-pointer transition-all duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1 ${colorClass} flex flex-col`}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center">
+                        {React.cloneElement(IconComponent, {
+                          className: "mr-2 flex-shrink-0 h-5 w-5",
+                        })}
+                        <span className="font-semibold text-md">
+                          {level.levelName}
+                        </span>
+                      </div>
+                      <span className="text-sm font-medium">
+                        {level.spotsFree} / {level.spotsTotal} libres
+                      </span>
+                    </div>
+                    {/* Barra de progreso */}
+                    <div className="w-full bg-white/30 dark:bg-black/30 rounded-full h-2.5 mt-1">
+                      <div
+                        className={`h-2.5 rounded-full ${
+                          percentageFull === 100
+                            ? "bg-red-300"
+                            : percentageFull > 75
+                            ? "bg-orange-300"
+                            : percentageFull > 40
+                            ? "bg-yellow-300"
+                            : "bg-green-300"
+                        }`}
+                        style={{ width: `${percentageFull}%` }}
+                      ></div>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           ) : (
-            <p className="text-sm text-left">
+            <p className="text-sm text-left text-slate-500 dark:text-slate-400">
               No hay información detallada de plantas disponible.
             </p>
           )}
