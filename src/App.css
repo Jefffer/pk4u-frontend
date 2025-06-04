@@ -1,6 +1,62 @@
 @import "tailwindcss";
 @config "./tailwind.config.js";
 
+/* Utilidad para ocultar la scrollbar en navegadores WebKit (Chrome, Safari, Edge nuevo) */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Utilidad para ocultar la scrollbar en Firefox */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.subtle-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Ancho de la scrollbar */
+  height: 6px; /* Alto de la scrollbar (para scroll horizontal, si lo hubiera) */
+}
+
+.subtle-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Hace el "camino" de la scrollbar transparente */
+  margin: 2px; /* Un pequeño margen opcional */
+}
+
+.subtle-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.3); /* Color del "pulgar" de la scrollbar (slate-500 con opacidad) */
+  border-radius: 10px; /* Bordes redondeados */
+  border: 1px solid transparent; /* Borde transparente para evitar problemas de renderizado */
+  background-clip: content-box; /* Asegura que el borde no se pinte sobre el thumb */
+}
+
+.subtle-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.5); /* Color del thumb al pasar el mouse (slate-500 con más opacidad) */
+}
+
+.subtle-scrollbar {
+  scrollbar-width: thin; /* Para Firefox, hace la scrollbar más delgada */
+  scrollbar-color: rgba(100, 116, 139, 0.3) transparent; /* thumb track - Para Firefox */
+                                                        /* El color del track es transparente */
+  -ms-overflow-style: auto; /* Asegura que IE muestre la scrollbar por defecto (o puedes intentar -ms-scrollbar-*-color si necesitas estilos específicos para IE) */
+}
+
+/* Para el modo oscuro, podrías querer colores ligeramente diferentes si los de arriba no contrastan bien.
+   Si tu .dark se aplica al html, puedes usarlo para variar los colores.
+   Sin embargo, los colores con opacidad sobre el fondo de la sidebar ya deberían adaptarse visualmente.
+   Si necesitas un control más explícito para el modo oscuro:
+*/
+.dark .subtle-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.2); /* Ejemplo: gris más claro con opacidad para el modo oscuro (gray-400 con opacidad) */
+}
+
+.dark .subtle-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.4); /* Ejemplo: hover en modo oscuro */
+}
+
+.dark .subtle-scrollbar {
+  scrollbar-color: rgba(156, 163, 175, 0.2) transparent; /* thumb track - Para Firefox en modo oscuro */
+}
+
 #root {
   /* max-width: 1280px;
   margin: 0 auto;

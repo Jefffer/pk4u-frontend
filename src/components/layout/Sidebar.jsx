@@ -77,9 +77,9 @@ const Sidebar = ({ selectedParkingId }) => {
       opacity: 1,
       transition: {
         type: "spring", // Usar spring para una entrada más "agradable y moderna"
-        stiffness: 120,
+        stiffness: 100,
         damping: 20,
-        duration: 0.4 // Spring no usa duration directamente así, pero ayuda a ajustar la sensación
+        // duration: 0.4 // Spring no usa duration directamente así, pero ayuda a ajustar la sensación
       }
     }
   };
@@ -90,10 +90,15 @@ const Sidebar = ({ selectedParkingId }) => {
       initial="hidden" // Estado inicial de la animación
       animate="visible" // Estado al que animar cuando aparece
       exit="hidden" // Estado al que animar cuando desaparece
-      className="w-full md:w-1/3 lg:w-1/4 bg-slate-50 dark:bg-slate-800 p-6 border-r border-slate-200 dark:border-slate-700 overflow-y-auto"
+      className="absolute top-0 left-0 h-full z-[1000]
+                 w-full md:w-1/3 lg:w-1/4 
+                 bg-slate-50 dark:bg-slate-800  
+                 bg-opacity-90 dark:bg-opacity-90 
+                 p-6 border-r border-slate-200 dark:border-slate-700 shadow-lg 
+                 overflow-y-auto subtle-scrollbar" // Para scroll si el contenido es largo
     >
     {/* <aside className="w-full md:w-1/3 lg:w-1/4 bg-slate-50 dark:bg-slate-800 p-6 border-r border-slate-200 dark:border-slate-700 overflow-y-auto"> */}
-      <div className="bg-slate-50 dark:bg-slate-800 pt-2 pb-2 z-10">
+      <div className="bg-transparent pt-2 pb-2 z-10">
         {/* <h2 className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4">
           {parkingDetails ? "Detalle del Parking" : "Buscar Parkings"}
         </h2> */}
