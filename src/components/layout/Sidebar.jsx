@@ -188,7 +188,7 @@ const Sidebar = ({ selectedParkingId }) => {
                     <div className="w-full bg-white/30 dark:bg-black/30 rounded-full h-1.5 mt-1">
                       <div
                         className={`h-1.5 rounded-full ${
-                          percentageFull === 100
+                          percentageFull >= 99
                             ? "bg-red-300"
                             : percentageFull > 75
                             ? "bg-orange-300"
