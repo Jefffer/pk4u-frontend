@@ -13,6 +13,14 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
+  // función para manejar el click en un marcador
+  const handleMarkerClick = (parkingId) => {
+    setSelectedParkingId(parkingId); // Actualiza el ID del parking seleccionado
+    if (!isSidebarVisible) { // Si la sidebar está oculta
+      setIsSidebarVisible(true); // Muéstrala
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-col h-screen">
@@ -27,7 +35,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
         {/* <Header /> */}
         <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-white dark:bg-slate-800">
           <div className="flex-1 h-full">
-            <MapView onMarkerClick={setSelectedParkingId} />
+            <MapView onMarkerClick={handleMarkerClick} />
           </div>
           <AnimatePresence initial={false}>
             {isSidebarVisible && (

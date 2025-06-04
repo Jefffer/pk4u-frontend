@@ -92,7 +92,7 @@ const Sidebar = ({ selectedParkingId }) => {
       exit="hidden" // Estado al que animar cuando desaparece
       className="absolute top-0 left-0 h-full z-[1000]
                  w-full md:w-1/3 lg:w-1/4 
-                 bg-slate-50 dark:bg-slate-800  
+                 bg-slate-50 dark:bg-slate-900  
                  bg-opacity-90 dark:bg-opacity-90 
                  p-6 border-r border-slate-200 dark:border-slate-700 shadow-lg 
                  overflow-y-auto subtle-scrollbar" // Para scroll si el contenido es largo

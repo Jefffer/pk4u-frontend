@@ -5,6 +5,7 @@ import {
   Marker,
   Popup,
   useMapEvents,
+  ZoomControl,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -80,6 +81,7 @@ const MapView = ({ onMarkerClick }) => {
         center={bilbaoCoords}
         zoom={14}
         scrollWheelZoom={false}
+        zoomControl={false} 
         className="h-full w-full"
       >
         <TileLayer
@@ -107,6 +109,8 @@ const MapView = ({ onMarkerClick }) => {
             </Popup>
           </Marker>
         ))}
+
+        <ZoomControl position="topright" /> 
 
         {/* <LocationMarker /> */}
       </MapContainer>

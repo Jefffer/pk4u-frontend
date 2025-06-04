@@ -6,7 +6,7 @@ const logoUrl = "/pk4u-v1.png";
 
 const Header = ({ userAlias, onLogout, currentTheme, toggleTheme, isSidebarVisible, toggleSidebar }) => {
   return (
-    <header className="bg-white dark:bg-slate-900 text-teal-600 dark:text-teal-400 p-3 sm:p-4 shadow-md sticky top-0 z-[1100]">
+    <header className="bg-white dark:bg-slate-950 text-teal-600 dark:text-teal-400 border-b-1 border-teal-800 p-3 sm:p-4 shadow-md sticky top-0 z-[1100]">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-3">
           {/* Botón para alternar el Sidebar */}

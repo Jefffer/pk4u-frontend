@@ -41,7 +41,7 @@ const AliasScreen = ({ onAliasSubmit }) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-sky-500 via-indigo-600 to-purple-700 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-teal-500 via-indigo-600 to-purple-700 p-4">
       <div className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-xl shadow-2xl w-full max-w-md transform transition-all duration-300">
         {/* Logo */}
         <div className="flex justify-center mb-6">
@@ -65,18 +65,18 @@ const AliasScreen = ({ onAliasSubmit }) => {
         <h1 className="text-3xl font-bold text-center text-slate-700 dark:text-slate-100 mb-2">
           Bienvenido a PK4U
         </h1>
-        <p className="text-center text-slate-500 dark:text-slate-400 mb-8">
+        <p className="text-center text-teal-500 dark:text-teal-500 mb-8">
           Ingresa tu nombre de Usuario para comenzar
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label
+            {/* <label
               htmlFor="alias"
               className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-1"
             >
               Tu Nombre de Usuario:
-            </label>
+            </label> */}
             <input
               id="alias"
               name="alias"
@@ -90,7 +90,7 @@ const AliasScreen = ({ onAliasSubmit }) => {
                               : "border-slate-300 dark:border-slate-600 focus:ring-sky-500 focus:border-sky-500"
                           }
                           bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
-              placeholder="Ej: ConductorEstrella"
+              placeholder="ConductorEstrella"
             />
             {error && (
               <p className="mt-2 text-xs text-red-600 dark:text-red-400 animate-pulse">
@@ -109,7 +109,7 @@ const AliasScreen = ({ onAliasSubmit }) => {
                         transition-all duration-150 ease-in-out
                         ${
                           isValid && alias.trim()
-                            ? "bg-sky-600 hover:bg-sky-700 focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+                            ? "bg-teal-500 hover:bg-teal-600 focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
                             : "bg-slate-400 dark:bg-slate-600 cursor-not-allowed"
                         } 
                         transform hover:scale-105 disabled:hover:scale-100`}

@@ -11,7 +11,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-white dark:bg-slate-900 text-slate-800 dark:text-white shadow-md py-8 px-4 mt-auto">
+    <footer className="bg-white dark:bg-slate-950 text-slate-800 dark:text-white border-t-1 border-teal-800 shadow-md py-8 px-4 mt-auto">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
         {/* Sección de Información del Proyecto */}
         <div className="text-center md:text-left">
