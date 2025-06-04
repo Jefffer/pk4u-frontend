@@ -104,12 +104,12 @@ const Sidebar = ({ selectedParkingId }) => {
           )}
 
           {/* Nombre del Parking */}
-          <h3 className="text-xl font-bold text-teal-600 dark:text-teal-400 mb-3 text-left">
+          <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-3 text-left">
             {parkingDetails.name}
           </h3>
 
           {/* Detalles del Parking */}
-          <div className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
+          <div className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
             <div className="flex items-start p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
               <FaMapMarkerAlt className="text-teal-500 dark:text-teal-400 mt-1 mr-3 flex-shrink-0 h-5 w-5" />
               <div className="text-left">
