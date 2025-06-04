@@ -102,7 +102,7 @@ export const getAllParkings = async () => {
       totalSpots: p.totalSpots,
       numLevels: p.numLevels,
     }))
-  ), 300)); // Simula un pequeño retardo de red
+  ), 0)); // Simula un pequeño retardo de red
 };
 
 export const getParkingDetails = async (parkingId) => {
@@ -122,7 +122,7 @@ export const getParkingDetails = async (parkingId) => {
     } else {
       reject(new Error('Parking not found'));
     }
-  }, 300)); // Simula un pequeño retardo de red
+  }, 0)); // Simula un pequeño retardo de red
 };
 
 // Endpoint para actualizar el estado de una plaza (simulado por el backend en el TFM)

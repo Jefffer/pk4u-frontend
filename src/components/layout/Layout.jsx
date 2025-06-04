@@ -3,6 +3,7 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import MapView from "../map/MapView";
 import Footer from "./Footer";
+import { AnimatePresence } from "framer-motion";
 
 const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   const [selectedParkingId, setSelectedParkingId] = useState(null);
@@ -24,10 +25,12 @@ const toggleSidebarVisibility = () => {
           toggleSidebar={toggleSidebarVisibility}
         />
         {/* <Header /> */}
-        <div className="flex flex-1 overflow-hidden flex-col md:flex-row bg-white dark:bg-slate-900">
-          {isSidebarVisible && (
-            <Sidebar selectedParkingId={selectedParkingId} />
-          )}
+        <div className="flex flex-1 overflow-hidden flex-col md:flex-row bg-white dark:bg-slate-800">
+           <AnimatePresence initial={false}>
+            {isSidebarVisible && (
+              <Sidebar selectedParkingId={selectedParkingId} />
+            )}
+          </AnimatePresence>
           <div className="flex-1 h-full">
             <MapView onMarkerClick={setSelectedParkingId} />
           </div>
