@@ -5,10 +5,10 @@ export const getAvailabilityColor = (spotsFree, spotsTotal) => {
   const percentageFree = (spotsFree / spotsTotal) * 100;
   const percentageFull = 100 - ((spotsFree / spotsTotal) * 100);
 
-  if (percentageFree < 2) return 'border border-red-600 bg-red-600/30 hover:bg-red-700 text-white'; // Rojo para ninguna plaza libre
-  if (percentageFree < 25) return 'border border-orange-600 bg-orange-600/30 hover:bg-orange-700 text-white'; // Naranja para pocas plazas
-  if (percentageFree < 60) return 'border border-yellow-600 bg-yellow-600/30 hover:bg-yellow-700 text-white'; // Amarillo para disponibilidad media
-  return 'border border-green-600 dark:bg-green-600/30 dark:hover:bg-green-700 text-white'; // Verde para alta disponibilidad
+  if (percentageFree < 2) return 'border border-red-500/50 bg-red-600 hover:bg-red-700 dark:bg-red-600/30 dark:hover:bg-red-700 text-slate-100'; // Rojo para ninguna plaza libre
+  if (percentageFree < 25) return 'border border-orange-500/50 bg-orange-600 hover:bg-orange-700 dark:bg-orange-600/30 dark:hover:bg-orange-700 text-slate-100'; // Naranja para pocas plazas
+  if (percentageFree < 60) return 'border border-yellow-500/50 bg-yellow-600 hover:bg-yellow-700 dark:bg-yellow-600/30 dark:hover:bg-yellow-700 text-slate-100'; // Amarillo para disponibilidad media
+  return 'border border-green-500/50 bg-green-600 hover:bg-green-700 dark:bg-green-600/30 dark:hover:bg-green-700 text-slate-100'; // Verde para alta disponibilidad
 };
 
 export const getAvailabilityIcon = (spotsFree, spotsTotal) => {

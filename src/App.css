@@ -57,6 +57,34 @@
   scrollbar-color: rgba(156, 163, 175, 0.2) transparent; /* thumb track - Para Firefox en modo oscuro */
 }
 
+/* .custom-popup .leaflet-popup-content-wrapper,
+.custom-popup .leaflet-popup-content {
+  background: #fff !important;
+  color: #23272f !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15) !important;
+  padding: 1rem !important;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+.custom-popup .leaflet-popup-tip {
+  background: #fff !important;
+} */
+
+.custom-popup-dark .leaflet-popup-content-wrapper,
+.custom-popup-dark .leaflet-popup-content {
+  background: #022f2e !important; /* dark teal */  
+  background: #0f172b !important;
+  color: #f9f3f4 !important;
+  /* border-radius: 0.75rem !important; */
+  /* box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important; */
+  /* padding: 1rem !important; */
+  /* font-family: 'Inter', 'Segoe UI', Arial, sans-serif; */
+}
+
+.custom-popup-dark .leaflet-popup-tip {
+  background: #0f172b !important;
+}
+
 #root {
   /* max-width: 1280px;
   margin: 0 auto;

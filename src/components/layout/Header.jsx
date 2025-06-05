@@ -12,7 +12,7 @@ const Header = ({ userAlias, onLogout, currentTheme, toggleTheme, isSidebarVisib
           {/* Botón para alternar el Sidebar */}
           <button
             onClick={toggleSidebar}
-            title={isSidebarVisible ? "Ocultar barra lateral" : "Mostrar barra lateral"}
+            title={isSidebarVisible ? "Ocultar detalles" : "Mostrar detalles"}
             className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:ring-opacity-50 transition-colors duration-200"
           >
             {isSidebarVisible ? <FaTimes className="w-5 h-5" /> : <FaBars className="w-5 h-5" />}

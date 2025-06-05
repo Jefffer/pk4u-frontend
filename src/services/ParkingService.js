@@ -31,8 +31,8 @@ const bilbaoParkingsData = [
     name: "Parking Low Cost Garaje Centro Bilbao",
     address: "Zankoeta Kalea, 5, Basurtu-Zorrotza, 48013 Bilbao, Bizkaia",
     coordinates: {
-      latitude: 43.25864130206425,
-      longitude: -2.9469144927552176,
+      latitude: 43.25845716817154, 
+      longitude: -2.9472678770983896,
     },
     numLevels: 3,
     totalSpots: 210, // 70 plazas/planta * 3 plantas
