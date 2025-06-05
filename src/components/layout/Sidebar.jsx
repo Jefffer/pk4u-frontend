@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../ui/Searchbar";
+import SpotMatrixPopup from "../parking/SpotMatrixPopup";
+import { getParkingSpotsForLevel } from "../../services/ParkingService";
 // import ParkingList from '../parking/ParkingList';
 import {
   FaMapMarkerAlt,
@@ -18,6 +20,51 @@ const Sidebar = ({ selectedParkingId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [imageError, setImageError] = useState(false);
+
+  // Para el Popup de la matriz de plazas
+  const [isSpotPopupOpen, setIsSpotPopupOpen] = useState(false);
+  const [currentLevelDataForPopup, setCurrentLevelDataForPopup] = useState(null);
+  const [currentParkingNameForPopup, setCurrentParkingNameForPopup] = useState("");
+
+  const handlePlantClick = async (levelInfo) => {
+    if (!parkingDetails) return;
+
+    setCurrentParkingNameForPopup(parkingDetails.name); // Guardar nombre del parking para el popup
+
+    // --- IMPORTANTE: Obtener datos de las plazas para la planta seleccionada ---
+    // Esto depende de cómo tu API sirva estos datos.
+    // Opción 1: Si getParkingDetails ya trae todas las plazas de todas las plantas
+    // podrías filtrar aquí.
+    // Opción 2: Llamar a un nuevo endpoint o al existente GET /parkings/{parkingId}/spots
+    // y luego filtrar por levelInfo.levelId o levelInfo.levelName.
+
+    // Simulando la llamada a un servicio que obtiene las plazas por planta:
+    // Deberías implementar esta lógica en ParkingService.js
+    // Por ejemplo, podría llamar a /api/v1/parkings/{parkingDetails.id}/spots
+    // y luego filtrar las plazas que pertenecen a levelInfo.levelId o levelName
+    setIsLoading(true); // Podrías usar un loader específico para el popup
+    try {
+      // Debes asegurarte que `getParkingSpotsForLevel` exista en tu ParkingService
+      // y que devuelva un objeto como { levelName: "...", spotsList: [{spotNumber:1, occupied:true}, ...] }
+      // El `levelInfo.levelId` o algún identificador único de la planta sería necesario aquí.
+      const spotsData = await getParkingSpotsForLevel(parkingDetails.id, levelInfo.levelId || levelInfo.levelName);
+      
+      setCurrentLevelDataForPopup({
+        levelName: levelInfo.levelName,
+        spotsTotal: levelInfo.spotsTotal, // Ya lo tienes
+        spotsFree: levelInfo.spotsFree,   // Ya lo tienes
+        spotsList: spotsData.spots // Asumiendo que spotsData.spots es el array de plazas individuales
+                                   // con su estado 'occupied'.
+      });
+      setIsSpotPopupOpen(true);
+    } catch (err) {
+      console.error("Error fetching spots for level:", err);
+      // Aquí podrías mostrar un error específico para el popup
+      setError("No se pudieron cargar las plazas de la planta."); // O un estado de error diferente
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSearch = (term) => {
     setSearchTerm(term);
@@ -92,7 +139,7 @@ const Sidebar = ({ selectedParkingId }) => {
       exit="hidden" // Estado al que animar cuando desaparece
       className="absolute top-0 left-0 h-full z-[1000]
                  w-full md:w-1/3 lg:w-1/4 
-                 bg-slate-50 dark:bg-slate-900  
+                 bg-slate-100 dark:bg-slate-900  
                  bg-opacity-90 dark:bg-opacity-90 
                  p-6 border-r border-slate-200 dark:border-slate-700 shadow-lg 
                  overflow-y-auto subtle-scrollbar" // Para scroll si el contenido es largo
@@ -198,7 +245,7 @@ const Sidebar = ({ selectedParkingId }) => {
                 return (
                   <li
                     key={level.levelId || level.levelName}
-                    // onClick={() => handlePlantClick(level)} // Implementaremos esto después
+                    onClick={() => handlePlantClick(level)} // Implementaremos esto después
                     className={`p-4 rounded-lg shadow-md cursor-pointer transition-all duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1 ${colorClass} flex flex-col`}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -257,6 +304,16 @@ const Sidebar = ({ selectedParkingId }) => {
           pendiente).
         </p>
       )}
+
+      {/* Renderizar el Popup */}
+      <SpotMatrixPopup
+        isOpen={isSpotPopupOpen}
+        onClose={() => setIsSpotPopupOpen(false)}
+        levelData={currentLevelDataForPopup}
+        parkingName={currentParkingNameForPopup}
+        levelName={currentLevelDataForPopup?.levelName}
+        theme={document.documentElement.classList.contains('dark') ? 'dark' : 'light'} // Pasar el tema actual
+      />
     </motion.aside>
   );
 };

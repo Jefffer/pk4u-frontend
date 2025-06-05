@@ -140,3 +140,57 @@ export const getSpotStatus = async (spotId) => {
     )
   );
 };
+
+export const getParkingSpotsForLevel = async (parkingId, levelIdentifier) => {
+  console.log(`Fetching spots for parking ${parkingId}, level ${levelIdentifier} (ParkingService)`);
+  
+  // --- IMPLEMENTACIÓN REAL CON FETCH ---
+  // try {
+  //   const response = await fetch(`${API_BASE_URL}/parkings/${parkingId}/spots`);
+  //   if (!response.ok) {
+  //     throw new Error(`HTTP error! status: ${response.status}`);
+  //   }
+  //   const allSpots = await response.json(); // Esto es un array de TODAS las plazas del parking
+  //   
+  //   // Filtrar las plazas por el levelIdentifier (puede ser level.levelName o level.levelId o level.number)
+  //   // Necesitas saber cómo tu API identifica las plantas dentro del array de plazas.
+  //   // Asumiendo que cada objeto plaza tiene una propiedad 'level' o 'levelName' o 'levelId'.
+  //   // Ejemplo: si la plaza tiene `plaza.level === levelIdentifier`
+  //   const levelSpots = allSpots.filter(spot => spot.level === levelIdentifier); // AJUSTA ESTA CONDICIÓN
+  // 
+  //   return {
+  //     spots: levelSpots // Devuelve el array de plazas para la planta específica
+  //   };
+  // } catch (error) {
+  //   console.error(`Error fetching spots for parking ${parkingId}, level ${levelIdentifier}:`, error);
+  //   throw error;
+  // }
+  // --- FIN IMPLEMENTACIÓN REAL ---
+
+
+  // --- SIMULACIÓN (mientras el backend no esté listo o si prefieres simular) ---
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const parking = bilbaoParkingsData.find(p => p.id === parkingId);
+      if (!parking) {
+        return reject(new Error('Parking not found for spot simulation'));
+      }
+      
+      const levelInfo = parking.levelsInfo.find(l => l.levelId === levelIdentifier || l.levelName === levelIdentifier);
+      if (!levelInfo) {
+        return reject(new Error('Level not found for spot simulation'));
+      }
+
+      // Simular una lista de plazas para la planta
+      const simulatedSpots = Array.from({ length: levelInfo.spotsTotal }, (_, i) => ({
+        id: `${levelIdentifier}_spot_${i + 1}`, // ID único de la plaza
+        spotNumber: (i + 1).toString(), // Número de plaza como string
+        occupied: i < (levelInfo.spotsTotal - levelInfo.spotsFree), // Simular ocupación
+        level: levelIdentifier // Para posible referencia
+      }));
+      
+      resolve({ spots: simulatedSpots });
+    }, 300); // Simula retardo de red
+  });
+  // --- FIN SIMULACIÓN ---
+};
