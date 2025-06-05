@@ -31,17 +31,19 @@ L.Icon.Default.mergeOptions({
 // Esta función se puede usar para crear iconos personalizados basados en el estado del parking
 const createCustomDivIcon = (parking, isSelected) => {
   // const iconColor = parking.totalSpots > 100 ? "text-teal-600" : "text-red-600";
-  const iconColor = isSelected ? "text-yellow-700" : "text-teal-700";
-  const shadow = isSelected ? "drop-shadow-2xl" : "drop-shadow-lg";
+  const iconColor = isSelected ? "text-teal-700" : "text-teal-500";
+  const shadow = isSelected ? "drop-shadow-xl" : "drop-shadow-md";
+  const border = isSelected ? "ring-4 ring-white" : "";
+  const iconSize = isSelected ? "text-5xl" : "text-4xl";
 
   return new L.DivIcon({
     html: ReactDOMServer.renderToString(
-      <GiPositionMarker className={`${iconColor} ${shadow} text-4xl`} />
+      <GiPositionMarker className={`${iconColor} ${shadow} ${iconSize}`} />
     ),
     className: "bg-transparent border-none", // Para evitar estilos por defecto de L.DivIcon
-    iconSize: [35, 35],
-    iconAnchor: [20, 35],
-    popupAnchor: [0, -35],
+    iconSize: [isSelected ? 48 : 36, isSelected ? 48 : 36],
+    iconAnchor: [isSelected ? 24 : 18, isSelected ? 48 : 36],
+    popupAnchor: [0, isSelected ? -48 : -36],
   });
 };
 
@@ -109,38 +111,19 @@ const MapView = ({ onMarkerClick }) => {
         zoomControl={false}
         className="h-full w-full"
       >
-        {/* <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        /> */}
-
-{/* <TileLayer
-  attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
-  url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" // Ejemplo de un mapa oscuro
-/> */}
-
-{/* <TileLayer
-  attribution='&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
-  url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
-  maxZoom={20}
-/> */}
-
-{/* <TileLayer
-  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors. Base map: <a href="https://www.mediawiki.org/wiki/Maps#Production_maps_cluster">Wikimedia maps</a>'
-  url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png"
-  maxZoom={19}
-/> */}
-
-<TileLayer
-  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
-  url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
-  maxZoom={19}
-/>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
+          url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+          maxZoom={19}
+        />
 
         {parkings.map((parking) => (
           <Marker
             key={parking.id}
-            icon={createCustomDivIcon(parking, selectedParkingId === parking.id)} // Usa el icono personalizado
+            icon={createCustomDivIcon(
+              parking,
+              selectedParkingId === parking.id
+            )} // Usa el icono personalizado
             position={[parking.latitude, parking.longitude]}
             eventHandlers={{
               click: () => {
@@ -151,11 +134,14 @@ const MapView = ({ onMarkerClick }) => {
           >
             <Popup className="custom-popup-dark dark:custom-popup-dark">
               <div className="flex flex-col">
-                <h3 className="text-lg font-semibold text-slate-200">{parking.name}</h3>
+                <h3 className="text-lg font-semibold text-slate-200">
+                  {parking.name}
+                </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   {parking.address}
                   <br />
-                  <span className="font-semibold">Plazas totales:</span> {parking.totalSpots}
+                  <span className="font-semibold">Plazas totales:</span>{" "}
+                  {parking.totalSpots}
                 </p>
               </div>
             </Popup>
