@@ -120,7 +120,7 @@ const SpotMatrixPopup = ({
                 className={`p-2 aspect-square rounded-md flex flex-col items-center justify-center transition-all duration-200 ease-in-out
                             ${
                               spot.occupied
-                                ? "bg-rose-500 dark:bg-transparent text-white dark:text-gray-400 shadow-md"
+                                ? "bg-rose-500 dark:bg-rose-700/10 text-white dark:text-gray-400 shadow-md"
                                 : "bg-teal-500 dark:bg-transparent text-white dark:text-teal-100 shadow-md hover:bg-teal-600 dark:hover:bg-teal-700/50"
                             }
                             border ${

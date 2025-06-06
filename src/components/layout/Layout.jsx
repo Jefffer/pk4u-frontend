@@ -44,7 +44,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
           </AnimatePresence>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

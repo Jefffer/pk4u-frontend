@@ -107,7 +107,7 @@ const MapView = ({ onMarkerClick }) => {
       <MapContainer
         center={bilbaoCoords}
         zoom={14}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
         zoomControl={false}
         className="h-full w-full"
       >
