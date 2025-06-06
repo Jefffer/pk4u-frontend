@@ -1,11 +1,12 @@
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { LiaSearchLocationSolid } from "react-icons/lia";
 
 const SearchBar = ({ onSearch, placeholder = "Buscar por dirección o nombre..." }) => {
   return (
     <div className="relative">
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <FaSearch className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+        <LiaSearchLocationSolid className="w-4 h-4 text-slate-400 dark:text-slate-500" />
       </div>
       <input
         type="text"

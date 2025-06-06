@@ -1,8 +1,10 @@
 // src/components/ui/SpotMatrixPopup.jsx
-import React, { useEffect, useRef } from 'react';
-import { FaTimes, FaCar, FaRegCircle, FaTimesCircle } from "react-icons/fa";
+import React, { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { CiParking1 } from "react-icons/ci";
 import { TbParkingCircleFilled } from "react-icons/tb";
+import { LiaCarSolid } from "react-icons/lia";
+import { MdDirectionsCar } from "react-icons/md";
 
 const SpotMatrixPopup = ({
   isOpen,
@@ -12,7 +14,29 @@ const SpotMatrixPopup = ({
   levelName,
   theme,
 }) => {
-    const popupContentRef = useRef(null); // Referencia al contenido del modal
+  const popupContentRef = useRef(null); // Referencia al contenido del modal
+
+  // Efecto para manejar el foco y ESC
+  useEffect(() => {
+    if (isOpen) {
+      const handleKeyDown = (event) => {
+        if (event.key === "Escape") {
+          onClose();
+        }
+      };
+      document.addEventListener("keydown", handleKeyDown);
+
+      // Intenta enfocar el contenido del popup o el botón de cerrar
+      const focusableElement = popupContentRef.current?.querySelector(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      focusableElement?.focus();
+
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [isOpen, onClose]);
 
   if (!isOpen || !levelData) return null;
 
@@ -50,15 +74,20 @@ const SpotMatrixPopup = ({
       occupied: i < levelData.spotsTotal - levelData.spotsFree,
     }));
 
-  return (
-    <div className={`fixed inset-0 flex items-center justify-center z-[1200] p-4 transition-opacity duration-300 ease-in-out
-                  ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
-                  bg-slate-900/20 dark:bg-black/20 backdrop-blur-sm`} onClick={handleClickOutside}>
+  const popupMarkup = (
+    <div
+      className={`fixed inset-0 flex items-center justify-center z-[1200] p-4 transition-opacity duration-300 ease-in-out
+                  ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
+                  bg-slate-900/20 dark:bg-black/20 backdrop-blur-sm`}
+      onClick={handleClickOutside}
+    >
       <div
-      ref={popupContentRef}
-      // El evento onClick aquí evitará que los clics DENTRO del modal propaguen al overlay y cierren el modal
+        ref={popupContentRef}
+        // El evento onClick aquí evitará que los clics DENTRO del modal propaguen al overlay y cierren el modal
         onClick={(e) => e.stopPropagation()}
-        className={`bg-slate-100/80 dark:bg-slate-900/80 p-6 rounded-xl shadow-2xl w-full max-w-lg md:max-w-2xl transform transition-all duration-300 ease-in-out ${theme} ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
+        className={`bg-slate-100/80 dark:bg-slate-900/90 p-6 rounded-xl shadow-2xl w-full max-w-lg md:max-w-2xl transform transition-all duration-300 ease-in-out ${theme} ${
+          isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"
+        }`}
       >
         {/* Cabecera del Popup */}
         <div className="flex justify-between items-center mb-6 pb-3 border-b border-slate-200 dark:border-slate-700">
@@ -70,13 +99,13 @@ const SpotMatrixPopup = ({
               {levelName}
             </p>
           </div>
-          <button
+          {/* <button
             onClick={onClose}
             className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
             aria-label="Cerrar popup"
           >
             <FaTimes className="w-5 h-5" />
-          </button>
+          </button> */}
         </div>
 
         {/* Matriz de Plazas */}
@@ -91,19 +120,19 @@ const SpotMatrixPopup = ({
                 className={`p-2 aspect-square rounded-md flex flex-col items-center justify-center transition-all duration-200 ease-in-out
                             ${
                               spot.occupied
-                                ? "bg-rose-500 dark:bg-rose-700/80 text-white dark:text-rose-200 shadow-md"
-                                : "bg-teal-500 dark:bg-teal-600/80 text-white dark:text-teal-100 shadow-md hover:bg-teal-600 dark:hover:bg-teal-700"
+                                ? "bg-rose-500 dark:bg-transparent text-white dark:text-gray-400 shadow-md"
+                                : "bg-teal-500 dark:bg-transparent text-white dark:text-teal-100 shadow-md hover:bg-teal-600 dark:hover:bg-teal-700/50"
                             }
                             border ${
                               spot.occupied
-                                ? "border-rose-600 dark:border-rose-600"
-                                : "border-teal-600 dark:border-teal-600"
+                                ? "border-rose-600 dark:border-gray-400/50"
+                                : "border-teal-600 dark:border-green-400/50"
                             }`}
               >
                 {spot.occupied ? (
-                  <FaCar className="w-5 h-5 md:w-6 md:h-6 mb-0.5 opacity-90" />
+                  <MdDirectionsCar className="w-5 h-5 md:w-6 md:h-6 mb-0.5 opacity-90 text-rose-500" />
                 ) : (
-                  <TbParkingCircleFilled className="w-5 h-5 md:w-6 md:h-6 mb-0.5 opacity-90" /> // Icono para libre
+                  <TbParkingCircleFilled className="w-5 h-5 md:w-6 md:h-6 mb-0.5 opacity-90 text-green-400" /> // Icono para libre
                 )}
                 <span className="text-xs md:text-sm font-medium block truncate">
                   {spot.spotNumber}
@@ -121,7 +150,7 @@ const SpotMatrixPopup = ({
         <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700 text-right">
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-transparent hover:bg-slate-300 dark:hover:bg-slate-700 text-black dark:text-white rounded-lg transition-colors focus:outline-none"
+            className="px-6 py-2 bg-transparent hover:bg-slate-300 dark:hover:bg-slate-700/50 text-black dark:text-slate-100 rounded-lg transition-colors focus:outline-none"
           >
             Cerrar
           </button>
@@ -129,6 +158,14 @@ const SpotMatrixPopup = ({
       </div>
     </div>
   );
+
+  let portalRoot = document.getElementById("portal-root");
+  if (!portalRoot) {
+    portalRoot = document.createElement("div");
+    portalRoot.setAttribute("id", "portal-root");
+    document.body.appendChild(portalRoot);
+  }
+  return createPortal(popupMarkup, portalRoot);
 };
 
 export default SpotMatrixPopup;

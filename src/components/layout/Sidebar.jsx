@@ -3,12 +3,17 @@ import SearchBar from "../ui/Searchbar";
 import SpotMatrixPopup from "../parking/SpotMatrixPopup";
 import { getParkingSpotsForLevel } from "../../services/ParkingService";
 // import ParkingList from '../parking/ParkingList';
+
 import {
   FaMapMarkerAlt,
   FaLayerGroup,
   FaBuilding,
   FaCar,
 } from "react-icons/fa";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+import { LiaMapMarkerSolid, LiaCarSolid, LiaCarSideSolid, LiaLayerGroupSolid   } from "react-icons/lia";
+import { TbCar } from "react-icons/tb";
+
 import { motion } from "framer-motion";
 import { getParkingDetails } from "../../services/ParkingService";
 import {
@@ -216,7 +221,7 @@ const Sidebar = ({ selectedParkingId }) => {
           {/* Detalles del Parking */}
           <div className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
             <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
-              <FaMapMarkerAlt className="text-teal-500 dark:text-teal-400 mr-3 flex-shrink-0 h-5 w-5" />
+              <LiaMapMarkerSolid className="text-teal-500 dark:text-teal-400 mr-3 flex-shrink-0 h-5 w-5" />
               <div className="text-left">
                 {/* <span className="font-semibold text-slate-800 dark:text-slate-100">Dirección:</span> */}
                 <p>{parkingDetails.address}</p>
@@ -225,7 +230,7 @@ const Sidebar = ({ selectedParkingId }) => {
 
             <div className="grid grid-cols-2 gap-3">
               <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
-                <FaLayerGroup className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
+                <LiaLayerGroupSolid className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
                 <div>
                   <span className="font-semibold text-slate-800 dark:text-slate-100">
                     {parkingDetails.numLevels}
@@ -234,7 +239,7 @@ const Sidebar = ({ selectedParkingId }) => {
                 </div>
               </div>
               <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
-                <FaCar className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
+                <LiaCarSideSolid className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
                 <div>
                   <span className="font-semibold text-slate-800 dark:text-slate-100">
                     {parkingDetails.totalSpots}
@@ -291,7 +296,7 @@ const Sidebar = ({ selectedParkingId }) => {
                     <div className="w-full bg-white/30 dark:bg-black/30 rounded-full h-1.5 mt-1">
                       <div
                         className={`h-1.5 rounded-full ${
-                          percentageFull >= 99
+                          percentageFull >= 98
                             ? "bg-red-300"
                             : percentageFull > 75
                             ? "bg-orange-300"
