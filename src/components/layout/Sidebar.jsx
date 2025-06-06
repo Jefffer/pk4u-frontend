@@ -11,7 +11,10 @@ import {
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { getParkingDetails } from "../../services/ParkingService";
-import { getAvailabilityColor, getAvailabilityIcon } from "../../utils/utils.jsx";
+import {
+  getAvailabilityColor,
+  getAvailabilityIcon,
+} from "../../utils/utils.jsx";
 
 const Sidebar = ({ selectedParkingId }) => {
   // Recibe selectedParkingId
@@ -23,8 +26,10 @@ const Sidebar = ({ selectedParkingId }) => {
 
   // Para el Popup de la matriz de plazas
   const [isSpotPopupOpen, setIsSpotPopupOpen] = useState(false);
-  const [currentLevelDataForPopup, setCurrentLevelDataForPopup] = useState(null);
-  const [currentParkingNameForPopup, setCurrentParkingNameForPopup] = useState("");
+  const [currentLevelDataForPopup, setCurrentLevelDataForPopup] =
+    useState(null);
+  const [currentParkingNameForPopup, setCurrentParkingNameForPopup] =
+    useState("");
 
   const handlePlantClick = async (levelInfo) => {
     if (!parkingDetails) return;
@@ -47,14 +52,17 @@ const Sidebar = ({ selectedParkingId }) => {
       // Debes asegurarte que `getParkingSpotsForLevel` exista en tu ParkingService
       // y que devuelva un objeto como { levelName: "...", spotsList: [{spotNumber:1, occupied:true}, ...] }
       // El `levelInfo.levelId` o algún identificador único de la planta sería necesario aquí.
-      const spotsData = await getParkingSpotsForLevel(parkingDetails.id, levelInfo.levelId || levelInfo.levelName);
-      
+      const spotsData = await getParkingSpotsForLevel(
+        parkingDetails.id,
+        levelInfo.levelId || levelInfo.levelName
+      );
+
       setCurrentLevelDataForPopup({
         levelName: levelInfo.levelName,
         spotsTotal: levelInfo.spotsTotal, // Ya lo tienes
-        spotsFree: levelInfo.spotsFree,   // Ya lo tienes
-        spotsList: spotsData.spots // Asumiendo que spotsData.spots es el array de plazas individuales
-                                   // con su estado 'occupied'.
+        spotsFree: levelInfo.spotsFree, // Ya lo tienes
+        spotsList: spotsData.spots, // Asumiendo que spotsData.spots es el array de plazas individuales
+        // con su estado 'occupied'.
       });
       setIsSpotPopupOpen(true);
     } catch (err) {
@@ -108,7 +116,7 @@ const Sidebar = ({ selectedParkingId }) => {
   const imageUrl = "/p1.png";
   // const imageUrl = parkingDetails ? `/${parkingDetails.id}.png` : null;
 
-// Variantes de animación para el Sidebar
+  // Variantes de animación para el Sidebar
   const sidebarVariants = {
     hidden: {
       x: "-100%", // Inicia fuera de la pantalla a la izquierda
@@ -116,8 +124,8 @@ const Sidebar = ({ selectedParkingId }) => {
       transition: {
         type: "tween", // Usar tween para un desvanecimiento más controlado
         duration: 0.3, // Duración más corta para la salida
-        ease: "easeIn"
-      }
+        ease: "easeIn",
+      },
     },
     visible: {
       x: 0, // Termina en su posición normal
@@ -127,8 +135,28 @@ const Sidebar = ({ selectedParkingId }) => {
         stiffness: 100,
         damping: 20,
         // duration: 0.4 // Spring no usa duration directamente así, pero ayuda a ajustar la sensación
-      }
+      },
+    },
+  };
+
+  // --- Efecto para bloquear/desbloquear el scroll del body ---
+  useEffect(() => {
+    const originalBodyOverflow = document.body.style.overflow;
+    if (isSpotPopupOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = originalBodyOverflow || ""; // Restaura o quita el estilo
     }
+
+    // Cleanup function para restaurar el scroll si el componente se desmonta
+    return () => {
+      document.body.style.overflow = originalBodyOverflow || "";
+    };
+  }, [isSpotPopupOpen]); // Se ejecuta cuando isSpotPopupOpen cambia
+  // --- FIN DEL EFECTO ---
+
+  const closeSpotPopup = () => {
+    setIsSpotPopupOpen(false);
   };
 
   return (
@@ -144,7 +172,7 @@ const Sidebar = ({ selectedParkingId }) => {
                  p-6 border-r border-slate-200 dark:border-slate-700 shadow-lg 
                  overflow-y-auto subtle-scrollbar" // Para scroll si el contenido es largo
     >
-    {/* <aside className="w-full md:w-1/3 lg:w-1/4 bg-slate-50 dark:bg-slate-800 p-6 border-r border-slate-200 dark:border-slate-700 overflow-y-auto"> */}
+      {/* <aside className="w-full md:w-1/3 lg:w-1/4 bg-slate-50 dark:bg-slate-800 p-6 border-r border-slate-200 dark:border-slate-700 overflow-y-auto"> */}
       <div className="bg-transparent pt-2 pb-2 z-10">
         {/* <h2 className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4">
           {parkingDetails ? "Detalle del Parking" : "Buscar Parkings"}
@@ -236,9 +264,7 @@ const Sidebar = ({ selectedParkingId }) => {
                 const percentageFull =
                   level.spotsTotal > 0
                     ? Math.round(
-                        100 - ((level.spotsFree /
-                          level.spotsTotal) *
-                          100)
+                        100 - (level.spotsFree / level.spotsTotal) * 100
                       )
                     : 0;
 
@@ -277,8 +303,8 @@ const Sidebar = ({ selectedParkingId }) => {
                       ></div>
                     </div>
                     <span className="block text-xs font-bold mt-1">
-                          {percentageFull}% OCUPADO
-                        </span>
+                      {percentageFull}% OCUPADO
+                    </span>
                   </li>
                 );
               })}
@@ -308,11 +334,13 @@ const Sidebar = ({ selectedParkingId }) => {
       {/* Renderizar el Popup */}
       <SpotMatrixPopup
         isOpen={isSpotPopupOpen}
-        onClose={() => setIsSpotPopupOpen(false)}
+        onClose={closeSpotPopup}
         levelData={currentLevelDataForPopup}
         parkingName={currentParkingNameForPopup}
         levelName={currentLevelDataForPopup?.levelName}
-        theme={document.documentElement.classList.contains('dark') ? 'dark' : 'light'} // Pasar el tema actual
+        theme={
+          document.documentElement.classList.contains("dark") ? "dark" : "light"
+        } // Pasar el tema actual
       />
     </motion.aside>
   );

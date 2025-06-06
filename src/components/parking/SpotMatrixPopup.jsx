@@ -1,5 +1,5 @@
 // src/components/ui/SpotMatrixPopup.jsx
-import React from "react";
+import React, { useEffect, useRef } from 'react';
 import { FaTimes, FaCar, FaRegCircle, FaTimesCircle } from "react-icons/fa";
 import { CiParking1 } from "react-icons/ci";
 import { TbParkingCircleFilled } from "react-icons/tb";
@@ -12,7 +12,16 @@ const SpotMatrixPopup = ({
   levelName,
   theme,
 }) => {
+    const popupContentRef = useRef(null); // Referencia al contenido del modal
+
   if (!isOpen || !levelData) return null;
+
+  // Manejador para cerrar al hacer clic fuera
+  const handleClickOutside = (event) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
 
   // Asumimos que levelData.spots es un array de objetos:
   // [{ spotNumber: 'A1', occupied: true }, { spotNumber: 'A2', occupied: false }, ...]
@@ -44,8 +53,11 @@ const SpotMatrixPopup = ({
   return (
     <div className={`fixed inset-0 flex items-center justify-center z-[1200] p-4 transition-opacity duration-300 ease-in-out
                   ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
-                  bg-slate-900/30 dark:bg-black/50 backdrop-blur-sm`}>
+                  bg-slate-900/20 dark:bg-black/20 backdrop-blur-sm`} onClick={handleClickOutside}>
       <div
+      ref={popupContentRef}
+      // El evento onClick aquí evitará que los clics DENTRO del modal propaguen al overlay y cierren el modal
+        onClick={(e) => e.stopPropagation()}
         className={`bg-slate-100/80 dark:bg-slate-900/80 p-6 rounded-xl shadow-2xl w-full max-w-lg md:max-w-2xl transform transition-all duration-300 ease-in-out ${theme} ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
       >
         {/* Cabecera del Popup */}
@@ -115,22 +127,6 @@ const SpotMatrixPopup = ({
           </button>
         </div>
       </div>
-      {/* <style jsx global>{`
-        @keyframes modalShow {
-          from {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        .animate-modalShow {
-          animation: modalShow 0.3s forwards
-            cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-      `}</style> */}
     </div>
   );
 };
