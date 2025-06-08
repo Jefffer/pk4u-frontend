@@ -21,7 +21,7 @@ import {
   getAvailabilityIcon,
 } from "../../utils/utils.jsx";
 
-const Sidebar = ({ selectedParkingId }) => {
+const Sidebar = ({ selectedParkingId, searchInputRef  }) => {
   // Recibe selectedParkingId
   const [searchTerm, setSearchTerm] = useState("");
   const [parkingDetails, setParkingDetails] = useState(null);
@@ -164,7 +164,7 @@ const Sidebar = ({ selectedParkingId }) => {
     setIsSpotPopupOpen(false);
   };
 
-  if (!selectedParkingId) return null; // Oculta el sidebar si no hay parking seleccionado
+  // if (!selectedParkingId) return null; // Oculta el sidebar si no hay parking seleccionado
 
   return (
     <motion.aside // Usar motion.aside
@@ -187,6 +187,7 @@ const Sidebar = ({ selectedParkingId }) => {
         <SearchBar
           onSearch={handleSearch}
           placeholder="Introduce ubicación o nombre..."
+          ref={searchInputRef} // Asignamos el ref al SearchBar
         />
       </div>
 
@@ -324,18 +325,24 @@ const Sidebar = ({ selectedParkingId }) => {
         </div>
       )}
 
-      {!parkingDetails && !isLoading && !error && !searchTerm && (
+      {/* {!parkingDetails && !isLoading && !error && !searchTerm && (
         <p className="text-slate-500 dark:text-slate-400 mt-4">
           Selecciona un parking en el mapa para ver sus detalles, o utiliza la
           barra de búsqueda.
         </p>
-      )}
+      )} */}
       {/* Mensaje para cuando hay un término de búsqueda pero aún no hay resultados */}
       {!parkingDetails && searchTerm && (
         <p className="text-slate-600 dark:text-slate-400 mt-4">
           Resultados para: "{searchTerm}" (funcionalidad de lista de búsqueda
           pendiente).
         </p>
+      )}
+
+      {!parkingDetails && !isLoading && !error && (
+        <div className="text-center mt-10 text-slate-500 dark:text-slate-400">
+          <p>Selecciona un parking en el mapa para ver sus detalles.</p>
+        </div>
       )}
 
       {/* Renderizar el Popup */}
