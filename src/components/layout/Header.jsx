@@ -21,7 +21,7 @@ const Header = ({
 }) => {
   return (
     <header className="bg-white dark:bg-slate-950 text-teal-600 dark:text-teal-400 border-b-1 border-teal-800 p-3 sm:p-4 shadow-md sticky top-0 z-[1100]">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-3">
           {/* Botón para alternar el Sidebar */}
           <button
@@ -63,10 +63,10 @@ const Header = ({
           <div className="relative">
             <button
               onClick={onSearchClick}
-              className="flex items-center w-48 lg:w-54 p-2 text-sm text-left text-slate-500 dark:text-slate-400 border border-slate-300 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 focus:ring-1 transition-all duration-300 sm:w-48"
+              className="flex items-center lg:w-54 p-2 pl-2 text-sm text-left text-slate-500 dark:text-slate-400 border border-slate-300 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 focus:ring-1 transition-all duration-300 sm:w-48"
             >
               <LiaSearchLocationSolid className="w-4 h-4 sm:mr-2" />
-              <span className="hidden sm:inline text-sm">Buscar...</span>
+              <span className="hidden sm:inline text-xs">Busca tu parking</span>
             </button>
           </div>
 

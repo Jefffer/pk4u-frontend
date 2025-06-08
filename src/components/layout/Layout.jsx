@@ -33,6 +33,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
     } else {
       // Si el sidebar ya está visible, hacemos focus directamente
       searchInputRef.current?.focus();
+      setShouldFocusSearch(false);
     }
   };
   
