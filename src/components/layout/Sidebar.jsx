@@ -164,6 +164,8 @@ const Sidebar = ({ selectedParkingId }) => {
     setIsSpotPopupOpen(false);
   };
 
+  if (!selectedParkingId) return null; // Oculta el sidebar si no hay parking seleccionado
+
   return (
     <motion.aside // Usar motion.aside
       variants={sidebarVariants} // Aplicar las variantes

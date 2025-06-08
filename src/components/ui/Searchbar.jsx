@@ -6,7 +6,7 @@ const SearchBar = ({ onSearch, placeholder = "Buscar por dirección o nombre..."
   return (
     <div className="relative">
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <LiaSearchLocationSolid className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+        <LiaSearchLocationSolid className="w-4 h-4 text-slate-500 dark:text-slate-400" />
       </div>
       <input
         type="text"

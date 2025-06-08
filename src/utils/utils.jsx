@@ -1,5 +1,6 @@
 import { FaInfoCircle, FaExclamationTriangle, FaCheckCircle, FaClock, FaParking } from 'react-icons/fa';
-import { LiaInfoCircleSolid, LiaExclamationTriangleSolid, LiaClockSolid, LiaParkingSolid, LiaCheckCircleSolid    } from "react-icons/lia";
+import { LiaInfoCircleSolid, LiaExclamationTriangleSolid, LiaClockSolid, LiaParkingSolid, LiaCheckCircleSolid } from "react-icons/lia";
+import { PiTimer } from "react-icons/pi";
 
 export const getAvailabilityColor = (spotsFree, spotsTotal) => {
   if (spotsTotal === 0) return 'text-slate-500 dark:text-slate-400'; // Sin plazas o datos
@@ -17,7 +18,7 @@ export const getAvailabilityIcon = (spotsFree, spotsTotal) => {
   const percentageFree = (spotsFree / spotsTotal) * 100;
 
   if (percentageFree <= 2) return <LiaExclamationTriangleSolid className="mr-2 flex-shrink-0 h-5 w-5" />;
-  if (percentageFree < 25) return <LiaClockSolid className="mr-2 flex-shrink-0 h-5 w-5" />;
+  if (percentageFree < 25) return <PiTimer className="mr-2 flex-shrink-0 h-5 w-5" />;
   if (percentageFree < 60) return <LiaParkingSolid className="mr-2 flex-shrink-0 h-5 w-5" />;
   return <LiaCheckCircleSolid className="mr-2 flex-shrink-0 h-5 w-5" />;
 };

@@ -14,7 +14,7 @@ const Header = ({ userAlias, onLogout, currentTheme, toggleTheme, isSidebarVisib
           <button
             onClick={toggleSidebar}
             title={isSidebarVisible ? "Ocultar detalles" : "Mostrar detalles"}
-            className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:ring-opacity-50 transition-colors duration-200"
+            className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:ring-opacity-50 transition-colors duration-200"
           >
             {isSidebarVisible ? <LiaTimesSolid className="w-5 h-5" /> : <LiaBarsSolid className="w-5 h-5" />}
           </button>
@@ -35,7 +35,8 @@ const Header = ({ userAlias, onLogout, currentTheme, toggleTheme, isSidebarVisib
             }}
           />
           <h1 className="text-xl sm:text-2xl font-bold hidden sm:block">
-            PK4U - Parking for You
+            PK4U 
+            {/* - Parking for You */}
           </h1>
         </div>
 

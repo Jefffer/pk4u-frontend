@@ -7,7 +7,7 @@ import { AnimatePresence } from "framer-motion";
 
 const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   const [selectedParkingId, setSelectedParkingId] = useState(null);
-  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
   const toggleSidebarVisibility = () => {
     setIsSidebarVisible(!isSidebarVisible);
@@ -37,7 +37,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
           <div className="flex-1 h-full">
             <MapView onMarkerClick={handleMarkerClick} />
           </div>
-          <AnimatePresence initial={false}>
+          <AnimatePresence>
             {isSidebarVisible && (
               <Sidebar selectedParkingId={selectedParkingId} />
             )}
