@@ -8,6 +8,7 @@ import { AnimatePresence } from "framer-motion";
 const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   const [selectedParkingId, setSelectedParkingId] = useState(null);
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const [shouldFocusSearch, setShouldFocusSearch] = useState(false); // estado para controlar el focus
   const searchInputRef = useRef(null); // Ref para el input del buscador del sidebar
 
   const toggleSidebarVisibility = () => {
@@ -17,6 +18,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   // función para manejar el click en un marcador
   const handleMarkerClick = (parkingId) => {
     setSelectedParkingId(parkingId); // Actualiza el ID del parking seleccionado
+    setShouldFocusSearch(false); // No queremos focus al hacer click en un marcador
     if (!isSidebarVisible) {
       // Si la sidebar está oculta
       setIsSidebarVisible(true); // Muéstrala
@@ -25,14 +27,21 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
 
   // función para abrir el sidebar y hacer focus en el buscador
   const handleSearchClick = () => {
+    setShouldFocusSearch(true); // Indicamos que queremos hacer focus
     if (!isSidebarVisible) {
       setIsSidebarVisible(true);
-    }
-    // Hacemos focus en el input del sidebar.
-    // Usamos un timeout para asegurar que el sidebar ya sea visible y el ref esté disponible.
-    setTimeout(() => {
+    } else {
+      // Si el sidebar ya está visible, hacemos focus directamente
       searchInputRef.current?.focus();
-    }, 100); // 100ms es un tiempo prudencial para la animación
+    }
+  };
+  
+  // --- FUNCIÓN CALLBACK ---
+  const onSidebarAnimationComplete = () => {
+    if (shouldFocusSearch) {
+      searchInputRef.current?.focus();
+      setShouldFocusSearch(false); // Reseteamos el estado
+    }
   };
 
   return (
@@ -57,6 +66,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
               <Sidebar
                 selectedParkingId={selectedParkingId}
                 searchInputRef={searchInputRef}
+                onAnimationComplete={onSidebarAnimationComplete}
               />
             )}
           </AnimatePresence>

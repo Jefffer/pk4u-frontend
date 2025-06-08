@@ -4,6 +4,7 @@ import {
   LiaSignOutAltSolid,
   LiaBarsSolid,
   LiaTimesSolid,
+  LiaSearchLocationSolid
 } from "react-icons/lia";
 import ThemeToggleButton from "../ui/ThemeToggleButton";
 
@@ -16,6 +17,7 @@ const Header = ({
   toggleTheme,
   isSidebarVisible,
   toggleSidebar,
+  onSearchClick 
 }) => {
   return (
     <header className="bg-white dark:bg-slate-950 text-teal-600 dark:text-teal-400 border-b-1 border-teal-800 p-3 sm:p-4 shadow-md sticky top-0 z-[1100]">
@@ -56,14 +58,15 @@ const Header = ({
         </div>
 
         <div className="flex items-center space-x-2 sm:space-x-4">
-          {/* Nuevo Buscador en el Header */}
+          
+          {/* Buscador en el Header */}
           <div className="relative">
             <button
               onClick={onSearchClick}
-              className="flex items-center w-full max-w-xs p-2 text-sm text-slate-500 dark:text-slate-400 border border-slate-300 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 focus:ring-1 focus:ring-sky-500 focus:border-sky-500 transition-colors"
+              className="flex items-center w-48 lg:w-54 p-2 text-sm text-left text-slate-500 dark:text-slate-400 border border-slate-300 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 focus:ring-1 transition-all duration-300 sm:w-48"
             >
-              <LiaSearchLocationSolid className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Buscar...</span>
+              <LiaSearchLocationSolid className="w-4 h-4 sm:mr-2" />
+              <span className="hidden sm:inline text-sm">Buscar...</span>
             </button>
           </div>
 

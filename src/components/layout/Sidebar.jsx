@@ -21,7 +21,7 @@ import {
   getAvailabilityIcon,
 } from "../../utils/utils.jsx";
 
-const Sidebar = ({ selectedParkingId, searchInputRef  }) => {
+const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) => {
   // Recibe selectedParkingId
   const [searchTerm, setSearchTerm] = useState("");
   const [parkingDetails, setParkingDetails] = useState(null);
@@ -172,6 +172,11 @@ const Sidebar = ({ selectedParkingId, searchInputRef  }) => {
       initial="hidden" // Estado inicial de la animación
       animate="visible" // Estado al que animar cuando aparece
       exit="hidden" // Estado al que animar cuando desaparece
+      onAnimationComplete={(definition) => {
+        if (definition === "visible" && typeof onAnimationComplete === 'function') {
+          onAnimationComplete();
+        }
+      }}
       className="absolute top-0 left-0 h-full z-[1000]
                  w-full md:w-1/3 lg:w-1/4 
                  bg-slate-100 dark:bg-slate-900  
