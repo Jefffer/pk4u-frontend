@@ -9,7 +9,7 @@ const ThemeToggleButton = ({ currentTheme, toggleTheme }) => {
     <button
       onClick={toggleTheme}
       title={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
-      className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:ring-opacity-50 transition-colors duration-200"
+      className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:ring-opacity-50 transition-colors duration-200 mr-1"
     >
       {isDark ? (
         <LiaSunSolid className="w-5 h-5 hover:text-yellow-400 dark:hover:text-yellow-400 dark:text-slate-300" />

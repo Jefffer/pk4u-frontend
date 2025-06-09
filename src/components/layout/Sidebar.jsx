@@ -330,12 +330,12 @@ const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) =>
         </div>
       )}
 
-      {/* {!parkingDetails && !isLoading && !error && !searchTerm && (
+      {!parkingDetails && !isLoading && !error && !searchTerm && (
         <p className="text-slate-500 dark:text-slate-400 mt-4">
           Selecciona un parking en el mapa para ver sus detalles, o utiliza la
           barra de búsqueda.
         </p>
-      )} */}
+      )}
       {/* Mensaje para cuando hay un término de búsqueda pero aún no hay resultados */}
       {!parkingDetails && searchTerm && (
         <p className="text-slate-600 dark:text-slate-400 mt-4">
@@ -344,11 +344,11 @@ const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) =>
         </p>
       )}
 
-      {!parkingDetails && !isLoading && !error && (
+      {/* {!parkingDetails && !isLoading && !error && (
         <div className="text-center mt-10 text-slate-500 dark:text-slate-400">
           <p>Selecciona un parking en el mapa para ver sus detalles.</p>
         </div>
-      )}
+      )} */}
 
       {/* Renderizar el Popup */}
       <SpotMatrixPopup

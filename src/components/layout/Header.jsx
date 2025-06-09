@@ -5,7 +5,7 @@ import {
   LiaSignOutAltSolid,
   LiaBarsSolid,
   LiaTimesSolid,
-  LiaSearchLocationSolid
+  LiaSearchLocationSolid,
 } from "react-icons/lia";
 import ThemeToggleButton from "../ui/ThemeToggleButton";
 
@@ -18,7 +18,7 @@ const Header = ({
   toggleTheme,
   isSidebarVisible,
   toggleSidebar,
-  onSearchClick 
+  onSearchClick,
 }) => {
   return (
     <header className="bg-white dark:bg-slate-950 text-teal-600 dark:text-teal-400 border-b-1 border-teal-800 p-3 sm:p-4 shadow-md sticky top-0 z-[1100]">
@@ -39,45 +39,47 @@ const Header = ({
 
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-          <img
-            src={logoUrl}
-            alt="PK4U Logo"
-            className="h-10 w-auto sm:h-11"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.style.display = "none";
-              const logoText = document.createElement("span");
-              logoText.textContent = "PK4U";
-              logoText.className =
-                "text-2xl font-bold text-sky-600 dark:text-sky-400";
-              e.target.parentNode.insertBefore(logoText, e.target);
-            }}
-          />
-          <h1 className="text-xl sm:text-2xl font-bold hidden sm:block">
-            PK4U
-            {/* - Parking for You */}
-          </h1>
+            <img
+              src={logoUrl}
+              alt="PK4U Logo"
+              className="h-10 w-auto sm:h-11"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.style.display = "none";
+                const logoText = document.createElement("span");
+                logoText.textContent = "PK4U";
+                logoText.className =
+                  "text-2xl font-bold text-sky-600 dark:text-sky-400";
+                e.target.parentNode.insertBefore(logoText, e.target);
+              }}
+            />
+            <h1 className="text-xl sm:text-2xl font-bold block">
+              PK4U
+              {/* - Parking for You */}
+            </h1>
           </Link>
         </div>
 
         <div className="flex items-center space-x-2 sm:space-x-4">
-          
-          {/* Buscador en el Header */}
-          <div className="relative">
-            <button
-              onClick={onSearchClick}
-              className="flex items-center lg:w-54 p-2 pl-2 text-sm text-left text-slate-500 dark:text-slate-400 border border-slate-300 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700/80 focus:ring-1 transition-all duration-300 sm:w-48 cursor-text"
-            >
-              <LiaSearchLocationSolid className="w-4 h-4 sm:mr-2" />
-              <span className="hidden sm:inline text-xs">Busca tu parking</span>
-            </button>
-          </div>
 
-          {userAlias && (
+{userAlias && (
             <span className="text-xs sm:text-sm md:inline">
               Hola, <span className="font-semibold">{userAlias}</span>!
             </span>
           )}
+
+          {/* Buscador en el Header */}
+          <div className="relative mr-1 sm:mr-2">
+            <button
+              onClick={onSearchClick}
+              className="flex items-center p-2 rounded-lg transition-all duration-300 cursor-text
+      sm:lg:w-54 sm:pl-2 sm:text-sm sm:text-left sm:text-slate-500 sm:dark:text-slate-400 sm:border sm:border-slate-300 sm:dark:border-none sm:bg-slate-50 sm:dark:bg-slate-700/50 sm:hover:bg-slate-100 sm:dark:hover:bg-slate-700/80 sm:focus:ring-1 sm:w-48"
+              aria-label="Buscar parking"
+            >
+              <LiaSearchLocationSolid className="w-5 h-5 sm:mr-2" />
+              <span className="hidden sm:inline text-xs">Busca tu parking</span>
+            </button>
+          </div>          
 
           {/* Botón para cambiar tema */}
           <ThemeToggleButton
@@ -91,7 +93,7 @@ const Header = ({
               title="Cambiar de usuario"
               className="flex items-center space-x-2 text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-150"
             >
-              <LiaSignOutAltSolid className="h-4 w-4 sm:h-5 sm:w-5" />
+              <LiaSignOutAltSolid className="h-4 w-4 sm:h-5 sm:w-5 mr-0 sm:mr-2" />
               <span className="hidden sm:inline text-xs sm:text-sm">Salir</span>
             </button>
           )}
