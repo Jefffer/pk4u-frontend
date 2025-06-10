@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaGithub, FaReact, FaJava } from 'react-icons/fa';
+import { FaGithub, FaReact, FaJava, FaInfoCircle  } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -15,16 +16,30 @@ const Footer = () => {
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
         {/* Sección de Información del Proyecto */}
         <div className="text-center md:text-left">
-          <h5 className="text-xl font-bold mb-2">PK4U Smart Parking</h5>
+          <h5 className="text-xl font-bold mb-2">PK4U: Parking for You</h5>
           <p className="text-sm text-gray-400">
             Gestión inteligente de aparcamientos en tiempo real para Smart Cities.
             Este proyecto forma parte del Trabajo Fin de Máster de la UNIR.
           </p>
         </div>
 
-        {/* Sección de Enlaces y Navegación  */}
+        {/* Sección de Enlaces y Navegación */}
         <div className="text-center">
-          {/* enlaces a secciones importantes */}
+          <h5 className="text-lg font-semibold mb-2">Navegación</h5>
+          <ul className="space-y-2">
+            <li>
+              <Link to="/about" className="inline-flex items-center text-gray-300 hover:text-teal-400 transition-colors duration-300">
+                <FaInfoCircle className="w-4 h-4 mr-2" />
+                Acerca del Proyecto
+              </Link>
+            </li>
+            <li>
+               <Link to="/" className="inline-flex items-center text-gray-300 hover:text-teal-400 transition-colors duration-300">
+                <FaReact className="w-4 h-4 mr-2" />
+                Ir al mapa
+              </Link>
+            </li>
+          </ul>
         </div>
 
         {/* Sección de Copyright y Enlace a GitHub */}

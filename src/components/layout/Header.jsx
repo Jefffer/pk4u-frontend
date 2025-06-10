@@ -6,8 +6,10 @@ import {
   LiaBarsSolid,
   LiaTimesSolid,
   LiaSearchLocationSolid,
+  LiaPlusSolid,
 } from "react-icons/lia";
 import ThemeToggleButton from "../ui/ThemeToggleButton";
+import HeaderMenu from "../ui/DropdownMenu";
 
 const logoUrl = "/pk4u-v1.png";
 
@@ -23,18 +25,18 @@ const Header = ({
   return (
     <header className="bg-white dark:bg-slate-950 text-teal-600 dark:text-teal-400 border-b-1 border-teal-800 p-3 sm:p-4 shadow-md sticky top-0 z-[1100]">
       <div className="mx-auto flex justify-between items-center">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2">
           {/* Botón para alternar el Sidebar */}
           <button
             onClick={toggleSidebar}
             title={isSidebarVisible ? "Ocultar detalles" : "Mostrar detalles"}
             className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:ring-opacity-50 transition-colors duration-200"
           >
-            {isSidebarVisible ? (
-              <LiaTimesSolid className="w-5 h-5" />
-            ) : (
-              <LiaBarsSolid className="w-5 h-5" />
-            )}
+            <LiaTimesSolid
+    className={`w-4 h-4 transition-transform duration-500 ease-in-out ${
+      isSidebarVisible ? "rotate-0" : "rotate-135"
+    }`}
+  />
           </button>
 
           {/* Logo */}
@@ -61,8 +63,7 @@ const Header = ({
         </div>
 
         <div className="flex items-center space-x-2 sm:space-x-4">
-
-{userAlias && (
+          {userAlias && (
             <span className="text-xs sm:text-sm md:inline">
               Hola, <span className="font-semibold">{userAlias}</span>!
             </span>
@@ -79,7 +80,10 @@ const Header = ({
               <LiaSearchLocationSolid className="w-5 h-5 sm:mr-2" />
               <span className="hidden sm:inline text-xs">Busca tu parking</span>
             </button>
-          </div>          
+          </div>
+
+          {/* Menú de navegación */}
+          <HeaderMenu />
 
           {/* Botón para cambiar tema */}
           <ThemeToggleButton

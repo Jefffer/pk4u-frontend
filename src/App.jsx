@@ -2,6 +2,8 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import Layout from "./components/layout/Layout";
 import LoginFake from "./components/auth/LoginFake";
+import AboutPage from "./pages/AboutPage"; 
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   // Intentamos obtener el alias de localStorage al iniciar
@@ -12,7 +14,6 @@ function App() {
     () => !!localStorage.getItem("pk4uUserAlias")
   );
 
-
   // Estado para el tema: 'light' o 'dark'
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('pk4uTheme');
@@ -21,7 +22,7 @@ function App() {
     }
     // Preferir el esquema de color del sistema si no hay nada guardado, sino default a oscuro
     // window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
-    return 'dark'; // Default a oscuro como solicitaste
+    return 'dark'; // Default a oscuro 
   });
 
   useEffect(() => {
@@ -37,7 +38,6 @@ function App() {
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
-
 
   const handleAliasSubmit = (alias) => {
     localStorage.setItem("pk4uUserAlias", alias); // Guardamos el alias en localStorage
@@ -55,7 +55,38 @@ function App() {
     return <LoginFake onAliasSubmit={handleAliasSubmit} currentTheme={theme} />;
   }
 
-  return <Layout userAlias={userAlias} onLogout={handleLogout} currentTheme={theme} toggleTheme={toggleTheme} />;
+  // Componente privado para proteger rutas
+  const PrivateRoute = ({ children }) => {
+    return aliasHasBeenSet ? children : <Navigate to="/login" />;
+  };
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/login" element={!aliasHasBeenSet ? <LoginFake onAliasSubmit={handleAliasSubmit} currentTheme={theme} /> : <Navigate to="/" />} />
+        
+        <Route 
+          path="/" 
+          element={
+            <PrivateRoute>
+              <Layout userAlias={userAlias} onLogout={handleLogout} currentTheme={theme} toggleTheme={toggleTheme} />
+            </PrivateRoute>
+          } 
+        />
+        
+        <Route 
+          path="/about" 
+          element={
+            <PrivateRoute>
+              <AboutPage userAlias={userAlias} onLogout={handleLogout} currentTheme={theme} toggleTheme={toggleTheme} />
+            </PrivateRoute>
+          } 
+        />
+
+        <Route path="*" element={<Navigate to={aliasHasBeenSet ? "/" : "/login"} />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
