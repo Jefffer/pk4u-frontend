@@ -7,6 +7,7 @@ import {
   LiaTimesSolid,
   LiaSearchLocationSolid,
   LiaPlusSolid,
+  LiaGithub 
 } from "react-icons/lia";
 import ThemeToggleButton from "../ui/ThemeToggleButton";
 import HeaderMenu from "../ui/DropdownMenu";
@@ -33,10 +34,10 @@ const Header = ({
             className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:ring-opacity-50 transition-colors duration-200"
           >
             <LiaTimesSolid
-    className={`w-4 h-4 transition-transform duration-500 ease-in-out ${
-      isSidebarVisible ? "rotate-0" : "rotate-135"
-    }`}
-  />
+              className={`w-4 h-4 transition-transform duration-500 ease-in-out ${
+                isSidebarVisible ? "rotate-0" : "rotate-135"
+              }`}
+            />
           </button>
 
           {/* Logo */}
@@ -62,7 +63,7 @@ const Header = ({
           </Link>
         </div>
 
-        <div className="flex items-center space-x-2 sm:space-x-4">
+        <div className="flex items-center space-x-1 sm:space-x-4">
           {userAlias && (
             <span className="text-xs sm:text-sm md:inline">
               Hola, <span className="font-semibold">{userAlias}</span>!
@@ -70,7 +71,7 @@ const Header = ({
           )}
 
           {/* Buscador en el Header */}
-          <div className="relative mr-1 sm:mr-2">
+          <div className="relative">
             <button
               onClick={onSearchClick}
               className="flex items-center p-2 rounded-lg transition-all duration-300 cursor-text
@@ -95,12 +96,22 @@ const Header = ({
             <button
               onClick={onLogout}
               title="Cambiar de usuario"
-              className="flex items-center space-x-2 text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-150"
+              className="flex items-center space-x-2 mr-1 sm:mr-2 text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-150"
             >
               <LiaSignOutAltSolid className="h-4 w-4 sm:h-5 sm:w-5 mr-0 sm:mr-2" />
               <span className="hidden sm:inline text-xs sm:text-sm">Salir</span>
             </button>
           )}
+
+          <a
+            href="https://github.com/Jefffer/pk4u-frontend"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Ver repositorio en GitHub"
+            className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-150"
+          >
+            <LiaGithub  className="w-5 h-5" />
+          </a>
         </div>
       </div>
     </header>

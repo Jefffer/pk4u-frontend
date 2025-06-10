@@ -74,7 +74,7 @@ const HeaderMenu = () => {
   };
 
   return (
-    <div className="relative mr-1">
+    <div className="relative mr-1 sm:mr-2">
       <button
         onClick={toggleMenu}
         title="Navegación"
