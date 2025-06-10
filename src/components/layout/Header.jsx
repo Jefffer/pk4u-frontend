@@ -84,7 +84,7 @@ const Header = ({
           </div>
 
           {/* Menú de navegación */}
-          <HeaderMenu />
+          <HeaderMenu onLogout={onLogout} />
 
           {/* Botón para cambiar tema */}
           <ThemeToggleButton
@@ -92,7 +92,7 @@ const Header = ({
             toggleTheme={toggleTheme}
           />
 
-          {userAlias && (
+          {/* {userAlias && (
             <button
               onClick={onLogout}
               title="Cambiar de usuario"
@@ -101,7 +101,7 @@ const Header = ({
               <LiaSignOutAltSolid className="h-4 w-4 sm:h-5 sm:w-5 mr-0 sm:mr-2" />
               <span className="hidden sm:inline text-xs sm:text-sm">Salir</span>
             </button>
-          )}
+          )} */}
 
           <a
             href="https://github.com/Jefffer/pk4u-frontend"

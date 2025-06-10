@@ -1,15 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import { LiaLayerGroupSolid, LiaInfoCircleSolid, LiaMapMarkedAltSolid, LiaBarsSolid } from "react-icons/lia";
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  LiaLayerGroupSolid,
+  LiaInfoCircleSolid,
+  LiaMapMarkedAltSolid,
+  LiaBarsSolid,
+  LiaSignOutAltSolid,
+} from "react-icons/lia";
 
 const menuItems = [
-  { to: '/', label: 'Mapa de Parkings', icon: <LiaMapMarkedAltSolid /> },
-  { to: '/about', label: 'Acerca del Proyecto', icon: <LiaInfoCircleSolid /> },
+  { to: "/", label: "Mapa de Parkings", icon: <LiaMapMarkedAltSolid /> },
+  { to: "/about", label: "Acerca del Proyecto", icon: <LiaInfoCircleSolid /> },
   // Futuros enlaces se pueden añadir aquí
 ];
 
-const DropdownMenu = ({ isVisible, onClose }) => {
+const DropdownMenu = ({ isVisible, onClose, onLogout  }) => {
   const dropdownRef = useRef(null);
 
   // Cierra el menú si se hace clic fuera de él
@@ -21,11 +27,11 @@ const DropdownMenu = ({ isVisible, onClose }) => {
     };
 
     if (isVisible) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isVisible, onClose]);
 
@@ -49,11 +55,34 @@ const DropdownMenu = ({ isVisible, onClose }) => {
                   onClick={onClose}
                   className="flex items-center w-full px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-teal-900/50 rounded-md transition-colors duration-150"
                 >
-                  <span className="mr-3 text-teal-500 text-base">{item.icon}</span>
+                  <span className="mr-3 text-teal-500 text-base">
+                    {item.icon}
+                  </span>
                   {item.label}
                 </Link>
               </li>
             ))}
+          </ul>
+
+          {/* Separador */}
+          <div className="h-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
+
+          {/* Botón de Salir */}
+          <ul className="p-2">
+            <li>
+              <button
+                onClick={() => {
+                  onLogout();
+                  onClose();
+                }}
+                className="flex items-center w-full px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-md transition-colors duration-150"
+              >
+                <span className="mr-3 text-red-500 text-base">
+                  <LiaSignOutAltSolid />
+                </span>
+                Salir
+              </button>
+            </li>
           </ul>
         </motion.div>
       )}
@@ -61,7 +90,7 @@ const DropdownMenu = ({ isVisible, onClose }) => {
   );
 };
 
-const HeaderMenu = () => {
+const HeaderMenu = ({ onLogout }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const toggleMenu = (e) => {
@@ -82,7 +111,11 @@ const HeaderMenu = () => {
       >
         <LiaBarsSolid className="w-5 h-5" />
       </button>
-      <DropdownMenu isVisible={isMenuVisible} onClose={closeMenu} />
+      <DropdownMenu
+        isVisible={isMenuVisible}
+        onClose={closeMenu}
+        onLogout={onLogout}
+      />
     </div>
   );
 };
