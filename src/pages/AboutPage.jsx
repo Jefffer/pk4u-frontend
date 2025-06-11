@@ -15,13 +15,16 @@ import {
   LiaGlobeEuropeSolid,
   LiaProjectDiagramSolid,
   LiaKeySolid,
+  LiaLaptopCodeSolid,
+  LiaCitySolid,
+  LiaReact,
 } from "react-icons/lia";
 
 const AboutPage = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200">
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-300">
       <Header
         userAlias={userAlias}
         onLogout={onLogout}
@@ -77,14 +80,14 @@ const AboutPage = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 flex items-center text-red-500 dark:text-red-400">
-              <FaCity className="mr-3" />
+              <LiaCitySolid className="mr-3" />
               El Desafío Urbano
             </h2>
             <p className="mb-4 text-lg">
               En las ciudades modernas, encontrar aparcamiento se ha convertido en un desafío diario que genera estrés, pérdida de tiempo y un aumento innecesario del tráfico y la contaminación.
             </p>
             <p className="mb-4 text-lg">
-              Este fenómeno, conocido como <span className="font-semibold text-teal-600 dark:text-teal-400">"cruising for parking"</span>, afecta negativamente la calidad de vida y la sostenibilidad urbana.
+              Este fenómeno, conocido como <em className="font-semibold text-teal-600 dark:text-teal-400 ">cruising for parking</em>, afecta negativamente la calidad de vida y la sostenibilidad urbana.
             </p>
             <p className="text-base text-slate-600 dark:text-slate-400">
               Las soluciones comerciales suelen ser propietarias y costosas, limitando su adopción y la interoperabilidad entre servicios de Smart City.
@@ -138,27 +141,27 @@ const AboutPage = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
 
       {/* CARACTERÍSTICAS */}
       <section className="py-20 bg-gradient-to-b from-white via-teal-50 to-white dark:from-slate-900 dark:via-slate-900/80 dark:to-slate-900">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 flex items-center justify-center">
-          <LiaKeySolid className="inline-block mr-3 text-yellow-500" />
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 flex items-center justify-center text-yellow-500">
+          <LiaKeySolid className="inline-block mr-3" />
           Características Clave
         </h2>
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           <div className="p-8 rounded-2xl bg-white/80 dark:bg-slate-800/80 shadow-lg flex flex-col items-center hover:scale-105 transition-transform duration-300">
-            <FaSearchLocation className="text-5xl text-teal-500 mb-4" />
+            <FaSearchLocation className="text-5xl mb-4" />
             <h3 className="text-xl font-semibold mb-2">Visualización en Mapa</h3>
             <p className="text-slate-600 dark:text-slate-400 text-center">
               Mapa interactivo con OpenStreetMap que muestra la ubicación de todos los parkings y su estado general.
             </p>
           </div>
           <div className="p-8 rounded-2xl bg-white/80 dark:bg-slate-800/80 shadow-lg flex flex-col items-center hover:scale-105 transition-transform duration-300">
-            <FaUsers className="text-5xl text-teal-500 mb-4" />
+            <FaUsers className="text-5xl mb-4" />
             <h3 className="text-xl font-semibold mb-2">Información en Tiempo Real</h3>
             <p className="text-slate-600 dark:text-slate-400 text-center">
               Datos de ocupación actualizados periódicamente para reflejar la disponibilidad de plazas de la forma más precisa posible.
             </p>
           </div>
           <div className="p-8 rounded-2xl bg-white/80 dark:bg-slate-800/80 shadow-lg flex flex-col items-center hover:scale-105 transition-transform duration-300">
-            <FaLaptopCode className="text-5xl text-teal-500 mb-4" />
+            <FaLaptopCode className="text-5xl mb-4" />
             <h3 className="text-xl font-semibold mb-2">Código Abierto</h3>
             <p className="text-slate-600 dark:text-slate-400 text-center">
               Proyecto distribuido bajo una licencia Open Source para fomentar la colaboración, la transparencia y la adaptación a las necesidades de cualquier ciudad.
@@ -169,7 +172,8 @@ const AboutPage = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
 
       {/* STACK TECNOLÓGICO */}
       <section className="py-20">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
+        <h2 className="text-indigo-400 text-3xl sm:text-4xl font-bold text-center mb-12">
+            <LiaLaptopCodeSolid className="inline-block mr-3" />
           Stack Tecnológico
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
