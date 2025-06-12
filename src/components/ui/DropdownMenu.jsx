@@ -11,12 +11,12 @@ import {
 } from "react-icons/lia";
 
 const menuItems = [
-  { to: "/", label: "Mapa de Parkings", icon: <LiaMapMarkedAltSolid /> },
-  { to: "/about", label: "Acerca del Proyecto", icon: <LiaInfoCircleSolid /> },
+  { to: "/", labelKey: "menu.map", icon: <LiaMapMarkedAltSolid /> },
+  { to: "/about", labelKey: "menu.about", icon: <LiaInfoCircleSolid /> },
   // Futuros enlaces se pueden añadir aquí
 ];
 
-const DropdownMenu = ({ isVisible, onClose, onLogout  }) => {
+const DropdownMenu = ({ isVisible, onClose, onLogout }) => {
   const dropdownRef = useRef(null);
   const { t } = useTranslation();
 
@@ -57,10 +57,8 @@ const DropdownMenu = ({ isVisible, onClose, onLogout  }) => {
                           onClick={onClose}
                           className="flex items-center w-full px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-teal-900/50 rounded-md transition-colors duration-150"
                       >
-                  <span className="mr-3 text-teal-500 text-base">
-                    {item.icon}
-                  </span>
-                        {t(item.label)}
+                        <span className="mr-3 text-teal-500 text-base">{item.icon}</span>
+                        {t(item.labelKey)}
                       </Link>
                     </li>
                 ))}
@@ -80,7 +78,7 @@ const DropdownMenu = ({ isVisible, onClose, onLogout  }) => {
                 <span className="mr-3 text-red-500 text-base">
                   <LiaSignOutAltSolid />
                 </span>
-                    {t("Cerrar sesión")}
+                    {t("menu.logout")}
                   </button>
                 </li>
               </ul>
@@ -107,17 +105,13 @@ const HeaderMenu = ({ onLogout }) => {
       <div className="relative mr-1 sm:mr-2">
         <button
             onClick={toggleMenu}
-            title={t("Menú")}
+            title={t("menu.title")}
             className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-teal-500"
-            aria-label={t("Menú")}
+            aria-label={t("menu.title")}
         >
           <LiaBarsSolid className="w-5 h-5" />
         </button>
-        <DropdownMenu
-            isVisible={isMenuVisible}
-            onClose={closeMenu}
-            onLogout={onLogout}
-        />
+        <DropdownMenu isVisible={isMenuVisible} onClose={closeMenu} onLogout={onLogout} />
       </div>
   );
 };

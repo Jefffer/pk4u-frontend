@@ -14,5 +14,121 @@
   "Cambiar tema": "Cambiar tema",
   "Tema claro": "Tema claro",
   "Tema oscuro": "Tema oscuro",
-  "Bienvenido a PK4U": "Bienvenido a PK4U"
+  "Bienvenido a PK4U": "Bienvenido a PK4U",
+
+  "search": {
+    "placeholder": "Introduce ubicación o nombre..."
+  },
+  "loading": {
+    "details": "Cargando detalles..."
+  },
+  "error": {
+    "loadDetails": "No se pudieron cargar los detalles del parking."
+  },
+  "image": {
+    "alt": "Imagen de {{name}}",
+    "notAvailable": "Imagen no disponible"
+  },
+  "levels": "Plantas",
+  "totalSpots": "Plazas Totales",
+  "availabilityByLevel": "Disponibilidad por Planta",
+  "free": "libres",
+  "occupied": "OCUPADO",
+  "noLevelInfo": "No hay información detallada de plantas disponible.",
+  "selectParking": "Selecciona un parking en el mapa para ver sus detalles, o utiliza la barra de búsqueda.",
+  "searchResults": "Resultados para: \"{{term}}\" (funcionalidad de lista de búsqueda pendiente).",
+
+  "theme": {
+    "toggleToLight": "Cambiar a modo claro",
+    "toggleToDark": "Cambiar a modo oscuro"
+  },
+
+  "parking": {
+    "totalSpots": "Total plazas",
+    "price": "Precio"
+  },
+
+  "menu": {
+    "map": "Mapa de Parkings",
+    "about": "Acerca del Proyecto",
+    "logout": "Cerrar sesión",
+    "title": "Menú"
+  },
+
+  "about": {
+    "hero": {
+      "alt": "Imagen de fondo para la página Sobre Nosotros",
+      "logoAlt": "Logotipo de PK4U",
+      "title": "Sobre Nosotros",
+      "subtitle": "Una solución inteligente para gestionar el aparcamiento urbano.",
+      "ctaMap": "Ir al Mapa",
+      "ctaGithub": "Ver código en GitHub"
+    },
+    "challenge": {
+      "title": "El problema",
+      "paragraph1": "El aparcamiento en las ciudades es un desafío creciente...",
+      "emphasis": "La congestión urbana y la falta de espacios",
+      "paragraph2": "crean estrés y pérdida de tiempo.",
+      "paragraph3": "Es necesario encontrar soluciones tecnológicas eficientes.",
+      "imgAlt": "Imagen ilustrativa del problema de aparcamiento"
+    },
+    "solution": {
+      "title": "Nuestra solución",
+      "bold1": "PK4U ofrece una plataforma integral",
+      "paragraph1": "que integra datos abiertos y tecnología avanzada para optimizar el aparcamiento.",
+      "paragraph2": "Incluye mapas interactivos, reservas en tiempo real y análisis de datos.",
+      "paragraph3": "Fácil de usar y accesible desde cualquier dispositivo.",
+      "imgAlt": "Imagen representativa de la solución PK4U",
+      "logoAlt": "Logotipo PK4U para sección de solución"
+    },
+    "features": {
+      "title": "Características principales",
+      "feature1": {
+        "title": "Búsqueda rápida",
+        "description": "Encuentra espacios disponibles cerca de ti en segundos."
+      },
+      "feature2": {
+        "title": "Comunidad activa",
+        "description": "Comparte y recibe información de otros usuarios."
+      },
+      "feature3": {
+        "title": "Tecnología avanzada",
+        "description": "Utilizamos React, Java y más para garantizar calidad."
+      }
+    },
+    "technologies": {
+      "title": "Tecnologías usadas",
+      "react": "React",
+      "java": "Java",
+      "spring": "Spring",
+      "openData": "Datos abiertos",
+      "smartCities": "Smart Cities",
+      "elasticsearch": "Elasticsearch"
+    }
+  },
+
+  "footer": {
+    "projectInfo": {
+      "title": "PK4U: Parking for You",
+      "description": "Gestión inteligente de aparcamientos en tiempo real para Smart Cities. Este proyecto forma parte del Trabajo Fin de Máster de la UNIR."
+    },
+    "navigation": {
+      "title": "Navegación",
+      "aboutProject": "Acerca del Proyecto",
+      "goToMap": "Ir al mapa"
+    },
+    "copyright": {
+      "text": "© {{year}} Equipo PK4U",
+      "viewSource": "Ver Código Fuente",
+      "githubAriaLabel": "Repositorio de Frontend en GitHub"
+    },
+    "builtWith": {
+      "text": "Desarrollado con",
+      "react": "React",
+      "and": "y",
+      "java": "Java",
+      "reactAriaLabel": "Icono de React",
+      "javaAriaLabel": "Icono de Java"
+    }
+  }
 }

@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 function ParkingOccupacy({ total, children, rate }) {
+    const { t } = useTranslation();
     const [desplegado, setDesplegado] = useState(false);
     const plantasRef = useRef(null);
 
@@ -17,11 +19,11 @@ function ParkingOccupacy({ total, children, rate }) {
                 onClick={() => setDesplegado((prev) => !prev)}
             >
                 <span className="mr-2 text-lg font-bold">🅿️</span>
-                Total plazas: {total}
+                {t("parking.totalSpots")}: {total}
             </div>
             {rate && (
                 <div className="text-sm text-teal-700 dark:text-teal-300 font-medium mb-2 text-center">
-                    Precio: {rate}
+                    {t("parking.price")}: {rate}
                 </div>
             )}
             {desplegado && (
