@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SearchBar from "../ui/Searchbar";
 import SpotMatrixPopup from "../parking/SpotMatrixPopup";
 import { getParkingSpotsForLevel } from "../../services/ParkingService";
+import ParkingOccupacy from "../parking/ParkingOccupacy";
 // import ParkingList from '../parking/ParkingList';
 
 import {
@@ -262,70 +263,69 @@ const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) =>
             Disponibilidad por Planta
           </h4>
           {parkingDetails.levelsInfo && parkingDetails.levelsInfo.length > 0 ? (
-            <ul className="space-y-3">
-              {parkingDetails.levelsInfo.map((level) => {
-                const colorClass = getAvailabilityColor(
-                  level.spotsFree,
-                  level.spotsTotal
-                );
-                const IconComponent = getAvailabilityIcon(
-                  level.spotsFree,
-                  level.spotsTotal
-                );
+              <ParkingOccupacy total={parkingDetails.totalSpots} rate={parkingDetails.rate}>
+                <ul className="space-y-3">
+                  {parkingDetails.levelsInfo.map((level) => {
+                    const colorClass = getAvailabilityColor(
+                        level.spotsFree,
+                        level.spotsTotal
+                    );
+                    const IconComponent = getAvailabilityIcon(
+                        level.spotsFree,
+                        level.spotsTotal
+                    );
+                    const percentageFull =
+                        level.spotsTotal > 0
+                            ? Math.round(
+                                100 - (level.spotsFree / level.spotsTotal) * 100
+                            )
+                            : 0;
 
-                // Calcula el porcentaje para la barra de progreso
-                const percentageFull =
-                  level.spotsTotal > 0
-                    ? Math.round(
-                        100 - (level.spotsFree / level.spotsTotal) * 100
-                      )
-                    : 0;
-
-                return (
-                  <li
-                    key={level.levelId || level.levelName}
-                    onClick={() => handlePlantClick(level)} // Implementaremos esto después
-                    className={`p-4 rounded-lg shadow-md cursor-pointer transition-all duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1 ${colorClass} flex flex-col`}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="flex items-center">
-                        {React.cloneElement(IconComponent, {
-                          className: "mr-2 flex-shrink-0 h-5 w-5",
-                        })}
-                        <span className="font-semibold text-md">
-                          {level.levelName}
-                        </span>
-                      </div>
-                      <span className="text-sm font-medium">
-                        {level.spotsFree} / {level.spotsTotal} libres
-                      </span>
-                    </div>
-                    {/* Barra de progreso */}
-                    <div className="w-full bg-white/30 dark:bg-black/30 rounded-full h-1.5 mt-1">
-                      <div
-                        className={`h-1.5 rounded-full ${
-                          percentageFull >= 98
-                            ? "bg-red-300"
-                            : percentageFull > 75
-                            ? "bg-orange-300"
-                            : percentageFull > 40
-                            ? "bg-yellow-300"
-                            : "bg-green-300"
-                        }`}
-                        style={{ width: `${percentageFull}%` }}
-                      ></div>
-                    </div>
-                    <span className="block text-xs font-bold mt-1">
-                      {percentageFull}% OCUPADO
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
+                    return (
+                        <li
+                            key={level.levelId || level.levelName}
+                            onClick={() => handlePlantClick(level)}
+                            className={`p-4 rounded-lg shadow-md cursor-pointer transition-all duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1 ${colorClass} flex flex-col`}
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="flex items-center">
+                              {React.cloneElement(IconComponent, {
+                                className: "mr-2 flex-shrink-0 h-5 w-5",
+                              })}
+                              <span className="font-semibold text-md">
+                  {level.levelName}
+                </span>
+                            </div>
+                            <span className="text-sm font-medium">
+                {level.spotsFree} / {level.spotsTotal} libres
+              </span>
+                          </div>
+                          <div className="w-full bg-white/30 dark:bg-black/30 rounded-full h-1.5 mt-1">
+                            <div
+                                className={`h-1.5 rounded-full ${
+                                    percentageFull >= 98
+                                        ? "bg-red-300"
+                                        : percentageFull > 75
+                                            ? "bg-orange-300"
+                                            : percentageFull > 40
+                                                ? "bg-yellow-300"
+                                                : "bg-green-300"
+                                }`}
+                                style={{ width: `${percentageFull}%` }}
+                            ></div>
+                          </div>
+                          <span className="block text-xs font-bold mt-1">
+              {percentageFull}% OCUPADO
+            </span>
+                        </li>
+                    );
+                  })}
+                </ul>
+              </ParkingOccupacy>
           ) : (
-            <p className="text-sm text-left text-slate-500 dark:text-slate-400">
-              No hay información detallada de plantas disponible.
-            </p>
+              <p className="text-sm text-left text-slate-500 dark:text-slate-400">
+                No hay información detallada de plantas disponible.
+              </p>
           )}
         </div>
       )}

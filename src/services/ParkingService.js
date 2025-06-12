@@ -5,6 +5,7 @@ const bilbaoParkingsData = [
     id: "p1",
     name: "Centro Comercial Zubiarte",
     address: "Leizaola Lehendakariaren Kalea, 2, Abando, 48011 Bilbao, Bizkaia",
+    rate: "3,78€/h",
     coordinates: {
       latitude: 43.26783598009229,
       longitude: -2.9402014500976663,
@@ -30,6 +31,7 @@ const bilbaoParkingsData = [
     id: "p2",
     name: "Parking Low Cost Garaje Centro Bilbao",
     address: "Zankoeta Kalea, 5, Basurtu-Zorrotza, 48013 Bilbao, Bizkaia",
+    rate: "2,15€/h",
     coordinates: {
       latitude: 43.25845716817154, 
       longitude: -2.9472678770983896,
@@ -61,6 +63,7 @@ const bilbaoParkingsData = [
     id: "p3",
     name: "Parking PARKIA - Arenal. Bilbao",
     address: "Areatzako Pasealekua, 1, Ibaiondo, 48005 Bilbao, Bizkaia",
+    rate: "4,15€/h",
     coordinates: { latitude: 43.26264474357679, longitude: -2.922281107878985 },
     numLevels: 3,
     totalSpots: 90, // 30 plazas/planta * 3 plantas
