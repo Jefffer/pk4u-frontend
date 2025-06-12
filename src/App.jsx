@@ -2,31 +2,28 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import Layout from "./components/layout/Layout";
 import LoginFake from "./components/auth/LoginFake";
-import AboutPage from "./pages/AboutPage"; 
+import AboutPage from "./pages/AboutPage";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function App() {
-  // Intentamos obtener el alias de localStorage al iniciar
+  const { t } = useTranslation();
   const [userAlias, setUserAlias] = useState(() =>
-    localStorage.getItem("pk4uUserAlias")
+      localStorage.getItem("pk4uUserAlias")
   );
   const [aliasHasBeenSet, setAliasHasBeenSet] = useState(
-    () => !!localStorage.getItem("pk4uUserAlias")
+      () => !!localStorage.getItem("pk4uUserAlias")
   );
 
-  // Estado para el tema: 'light' o 'dark'
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('pk4uTheme');
     if (savedTheme) {
       return savedTheme;
     }
-    // Preferir el esquema de color del sistema si no hay nada guardado, sino default a oscuro
-    // window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
-    return 'dark'; // Default a oscuro 
+    return 'dark';
   });
 
   useEffect(() => {
-    // Aplicar la clase 'dark' al elemento <html> y guardar en localStorage
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
@@ -40,7 +37,7 @@ function App() {
   };
 
   const handleAliasSubmit = (alias) => {
-    localStorage.setItem("pk4uUserAlias", alias); // Guardamos el alias en localStorage
+    localStorage.setItem("pk4uUserAlias", alias);
     setUserAlias(alias);
     setAliasHasBeenSet(true);
   };
@@ -55,37 +52,36 @@ function App() {
     return <LoginFake onAliasSubmit={handleAliasSubmit} currentTheme={theme} />;
   }
 
-  // Componente privado para proteger rutas
   const PrivateRoute = ({ children }) => {
     return aliasHasBeenSet ? children : <Navigate to="/login" />;
   };
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={!aliasHasBeenSet ? <LoginFake onAliasSubmit={handleAliasSubmit} currentTheme={theme} /> : <Navigate to="/" />} />
-        
-        <Route 
-          path="/" 
-          element={
-            <PrivateRoute>
-              <Layout userAlias={userAlias} onLogout={handleLogout} currentTheme={theme} toggleTheme={toggleTheme} />
-            </PrivateRoute>
-          } 
-        />
-        
-        <Route 
-          path="/about" 
-          element={
-            <PrivateRoute>
-              <AboutPage userAlias={userAlias} onLogout={handleLogout} currentTheme={theme} toggleTheme={toggleTheme} />
-            </PrivateRoute>
-          } 
-        />
+      <Router>
+        <Routes>
+          <Route path="/login" element={!aliasHasBeenSet ? <LoginFake onAliasSubmit={handleAliasSubmit} currentTheme={theme} /> : <Navigate to="/" />} />
 
-        <Route path="*" element={<Navigate to={aliasHasBeenSet ? "/" : "/login"} />} />
-      </Routes>
-    </Router>
+          <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Layout userAlias={userAlias} onLogout={handleLogout} currentTheme={theme} toggleTheme={toggleTheme} />
+                </PrivateRoute>
+              }
+          />
+
+          <Route
+              path="/about"
+              element={
+                <PrivateRoute>
+                  <AboutPage userAlias={userAlias} onLogout={handleLogout} currentTheme={theme} toggleTheme={toggleTheme} />
+                </PrivateRoute>
+              }
+          />
+
+          <Route path="*" element={<Navigate to={aliasHasBeenSet ? "/" : "/login"} />} />
+        </Routes>
+      </Router>
   );
 }
 

@@ -4,77 +4,74 @@ import Sidebar from "./Sidebar";
 import MapView from "../map/MapView";
 import Footer from "./Footer";
 import { AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
+  const { t } = useTranslation();
   const [selectedParkingId, setSelectedParkingId] = useState(null);
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-  const [shouldFocusSearch, setShouldFocusSearch] = useState(false); // estado para controlar el focus
-  const searchInputRef = useRef(null); // Ref para el input del buscador del sidebar
+  const [shouldFocusSearch, setShouldFocusSearch] = useState(false);
+  const searchInputRef = useRef(null);
 
   const toggleSidebarVisibility = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
-  // función para manejar el click en un marcador
   const handleMarkerClick = (parkingId) => {
-    setSelectedParkingId(parkingId); // Actualiza el ID del parking seleccionado
-    setShouldFocusSearch(false); // No queremos focus al hacer click en un marcador
+    setSelectedParkingId(parkingId);
+    setShouldFocusSearch(false);
     if (!isSidebarVisible) {
-      // Si la sidebar está oculta
-      setIsSidebarVisible(true); // Muéstrala
+      setIsSidebarVisible(true);
     }
   };
 
-  // función para abrir el sidebar y hacer focus en el buscador
   const handleSearchClick = () => {
-    setShouldFocusSearch(true); // Indicamos que queremos hacer focus
+    setShouldFocusSearch(true);
     if (!isSidebarVisible) {
       setIsSidebarVisible(true);
     } else {
-      // Si el sidebar ya está visible, hacemos focus directamente
       searchInputRef.current?.focus();
       setShouldFocusSearch(false);
     }
   };
-  
-  // --- FUNCIÓN CALLBACK ---
+
   const onSidebarAnimationComplete = () => {
     if (shouldFocusSearch) {
       searchInputRef.current?.focus();
-      setShouldFocusSearch(false); // Reseteamos el estado
+      setShouldFocusSearch(false);
     }
   };
 
   return (
-    <div>
-      <div className="flex flex-col h-screen">
-        <Header
-          userAlias={userAlias}
-          onLogout={onLogout}
-          currentTheme={currentTheme}
-          toggleTheme={toggleTheme}
-          isSidebarVisible={isSidebarVisible}
-          toggleSidebar={toggleSidebarVisibility}
-          onSearchClick={handleSearchClick}
-        />
-        {/* <Header /> */}
-        <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-white dark:bg-slate-800">
-          <div className="flex-1 h-full">
-            <MapView onMarkerClick={handleMarkerClick} />
+      <div>
+        <div className="flex flex-col h-screen">
+          <Header
+              userAlias={userAlias}
+              onLogout={onLogout}
+              currentTheme={currentTheme}
+              toggleTheme={toggleTheme}
+              isSidebarVisible={isSidebarVisible}
+              toggleSidebar={toggleSidebarVisibility}
+              onSearchClick={handleSearchClick}
+          />
+          <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-white dark:bg-slate-800">
+            <div className="flex-1 h-full">
+              <MapView onMarkerClick={handleMarkerClick} />
+            </div>
+            <AnimatePresence>
+              {isSidebarVisible && (
+                  <Sidebar
+                      selectedParkingId={selectedParkingId}
+                      searchInputRef={searchInputRef}
+                      onAnimationComplete={onSidebarAnimationComplete}
+                  />
+              )}
+            </AnimatePresence>
           </div>
-          <AnimatePresence>
-            {isSidebarVisible && (
-              <Sidebar
-                selectedParkingId={selectedParkingId}
-                searchInputRef={searchInputRef}
-                onAnimationComplete={onSidebarAnimationComplete}
-              />
-            )}
-          </AnimatePresence>
         </div>
+        {/* <Footer /> */}
       </div>
-      {/* <Footer /> */}
-    </div>
   );
 };
+
 export default Layout;
