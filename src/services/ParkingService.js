@@ -150,6 +150,12 @@ export const getParkingSpotsForLevel = async (parkingId, levelIdentifier) => {
   // --- IMPLEMENTACIÓN REAL CON FETCH ---
   // try {
   //   const response = await fetch(`${API_BASE_URL}/parkings/${parkingId}/spots`);
+
+  // -------------
+  // Con la ultima versión del backend asi quedaría la llamada:
+  // const response = await fetch(`${API_BASE_URL}/parkings/${parkingId}/spots?level=${levelIdentifier}`);
+  // -------------
+
   //   if (!response.ok) {
   //     throw new Error(`HTTP error! status: ${response.status}`);
   //   }
