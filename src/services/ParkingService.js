@@ -15,13 +15,13 @@ const bilbaoParkingsData = [
     levelsInfo: [
       {
         levelName: "Planta -1",
-        levelId: "zub_p-1",
+        levelId: -1,
         spotsTotal: 100,
         spotsFree: Math.floor(Math.random() * 100) + 1,
       },
       {
         levelName: "Planta -2",
-        levelId: "zub_p-2",
+        levelId: -2,
         spotsTotal: 100,
         spotsFree: Math.floor(Math.random() * 100) + 1,
       },
@@ -41,19 +41,19 @@ const bilbaoParkingsData = [
     levelsInfo: [
       {
         levelName: "Planta 0",
-        levelId: "lc_p0",
+        levelId: 0,
         spotsTotal: 70,
         spotsFree: Math.floor(Math.random() * 70) + 1,
       },
       {
         levelName: "Planta 1",
-        levelId: "lc_p1",
+        levelId: 1,
         spotsTotal: 70,
         spotsFree: Math.floor(Math.random() * 70) + 1,
       },
       {
         levelName: "Planta 2",
-        levelId: "lc_p2",
+        levelId: 2,
         spotsTotal: 70,
         spotsFree: Math.floor(Math.random() * 70) + 1,
       },
@@ -70,19 +70,19 @@ const bilbaoParkingsData = [
     levelsInfo: [
       {
         levelName: "Planta 0",
-        levelId: "parkia_p0",
+        levelId: 0,
         spotsTotal: 30,
         spotsFree: Math.floor(Math.random() * 30) + 1,
       },
       {
         levelName: "Planta -1",
-        levelId: "parkia_p-1",
+        levelId: 1,
         spotsTotal: 30,
         spotsFree: Math.floor(Math.random() * 30) + 1,
       },
       {
         levelName: "Planta -2",
-        levelId: "parkia_p-2",
+        levelId: 2,
         spotsTotal: 30,
         spotsFree: Math.floor(Math.random() * 30) + 1,
       },
@@ -90,23 +90,46 @@ const bilbaoParkingsData = [
   },
 ];
 
+// Helper para fallback
+const fallbackOnError = async (fn, fallback) => {
+  try {
+    return await fn();
+  } catch (e) {
+    console.warn("Fallo la API, usando datos de prueba:", e);
+    return fallback();
+  }
+};
+
 export const getAllParkings = async () => {
-  // Ejemplo de datos simulados
-  // Reemplazar con fetch(`${API_BASE_URL}/parkings`) cuando el backend esté listo
-  // console.log("Fetching all parkings (simulated)");
-  console.log("Fetching all Bilbao parkings (simulated from ParkingService)");
-  return new Promise(resolve => setTimeout(() => resolve(
-    bilbaoParkingsData.map(p => ({
-      id: p.id,
-      name: p.name,
-      address: p.address, // Añadido por si es útil en el popup o en la lista
-      latitude: p.coordinates.latitude,
-      longitude: p.coordinates.longitude,
-      totalSpots: p.totalSpots,
-      numLevels: p.numLevels,
-      price: p.price
-    }))
-  ), 0)); // Simula un pequeño retardo de red
+  return fallbackOnError(
+    async () => {
+      const response = await fetch(`${API_BASE_URL}/parkings`);
+      if (!response.ok) throw new Error("API error");
+      const data = await response.json();
+      // Ajusta el mapeo si la API devuelve otros nombres
+      return data.map(p => ({
+        id: p.id,
+        name: p.name,
+        address: p.address,
+        latitude: p.coordinates.latitude,
+        longitude: p.coordinates.longitude,
+        totalSpots: p.totalSpots,
+        numLevels: p.levels,
+        price: p.price,
+      }));
+    },
+    () =>
+      bilbaoParkingsData.map(p => ({
+        id: p.id,
+        name: p.name,
+        address: p.address,
+        latitude: p.coordinates.latitude,
+        longitude: p.coordinates.longitude,
+        totalSpots: p.totalSpots,
+        numLevels: p.numLevels,
+        price: p.price,
+      }))
+  );
 };
 
 export const getParkingDetails = async (parkingId) => {
