@@ -11,7 +11,7 @@ import {
   FaCar,
 } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { LiaMapMarkerSolid, LiaCarSolid, LiaCarSideSolid, LiaLayerGroupSolid   } from "react-icons/lia";
+import { LiaMapMarkerSolid, LiaCarSolid, LiaCarSideSolid, LiaLayerGroupSolid, LiaEuroSignSolid } from "react-icons/lia";
 import { TbCar } from "react-icons/tb";
 
 import { motion } from "framer-motion";
@@ -234,8 +234,7 @@ const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) =>
                 {/* <span className="font-semibold text-slate-800 dark:text-slate-100">Dirección:</span> */}
                 <p>{parkingDetails.address}</p>
               </div>
-            </div>
-
+            </div>            
             <div className="grid grid-cols-2 gap-3">
               <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
                 <LiaLayerGroupSolid className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
@@ -255,7 +254,20 @@ const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) =>
                   <span className="ml-1">Plazas Totales</span>
                 </div>
               </div>
+              
             </div>
+            {/* bloque para mostrar el precio */}
+            {parkingDetails.price !== undefined && (
+              <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
+                <LiaEuroSignSolid className="text-teal-500 dark:text-teal-400 mr-3 flex-shrink-0 h-5 w-5" />
+                <div className="text-left">
+                  <span className="font-semibold text-slate-800 dark:text-slate-100">
+                    Precio:{" "}
+                  </span>
+                  {parkingDetails.price.toFixed(2)} €/hora
+                </div>
+              </div>
+            )}
           </div>
 
           <h4 className="text-lg font-semibold mt-6 mb-3 border-t border-slate-200 dark:border-slate-700 pt-4 text-left text-slate-800 dark:text-slate-100">

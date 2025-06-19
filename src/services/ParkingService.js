@@ -11,6 +11,7 @@ const bilbaoParkingsData = [
     },
     numLevels: 2,
     totalSpots: 200, // 100 plazas/planta * 2 plantas
+    price: 1.50,
     levelsInfo: [
       {
         levelName: "Planta -1",
@@ -36,6 +37,7 @@ const bilbaoParkingsData = [
     },
     numLevels: 3,
     totalSpots: 210, // 70 plazas/planta * 3 plantas
+    price: 0.85,
     levelsInfo: [
       {
         levelName: "Planta 0",
@@ -64,6 +66,7 @@ const bilbaoParkingsData = [
     coordinates: { latitude: 43.26264474357679, longitude: -2.922281107878985 },
     numLevels: 3,
     totalSpots: 90, // 30 plazas/planta * 3 plantas
+    price: 1.20,
     levelsInfo: [
       {
         levelName: "Planta 0",
@@ -101,6 +104,7 @@ export const getAllParkings = async () => {
       longitude: p.coordinates.longitude,
       totalSpots: p.totalSpots,
       numLevels: p.numLevels,
+      price: p.price
     }))
   ), 0)); // Simula un pequeño retardo de red
 };
@@ -147,6 +151,12 @@ export const getParkingSpotsForLevel = async (parkingId, levelIdentifier) => {
   // --- IMPLEMENTACIÓN REAL CON FETCH ---
   // try {
   //   const response = await fetch(`${API_BASE_URL}/parkings/${parkingId}/spots`);
+
+ // -------------
+  // Con la ultima versión del backend asi quedaría la llamada:
+  // const response = await fetch(`${API_BASE_URL}/parkings/${parkingId}/spots?level=${levelIdentifier}`);
+  // -------------
+
   //   if (!response.ok) {
   //     throw new Error(`HTTP error! status: ${response.status}`);
   //   }
