@@ -11,7 +11,7 @@ const bilbaoParkingsData = [
     },
     numLevels: 2,
     totalSpots: 200, // 100 plazas/planta * 2 plantas
-    price: 1.50,
+    price: 1.5,
     levelsInfo: [
       {
         levelName: "Planta -1",
@@ -32,7 +32,7 @@ const bilbaoParkingsData = [
     name: "Parking Low Cost Garaje Centro Bilbao",
     address: "Zankoeta Kalea, 5, Basurtu-Zorrotza, 48013 Bilbao, Bizkaia",
     coordinates: {
-      latitude: 43.25845716817154, 
+      latitude: 43.25845716817154,
       longitude: -2.9472678770983896,
     },
     numLevels: 3,
@@ -66,7 +66,7 @@ const bilbaoParkingsData = [
     coordinates: { latitude: 43.26264474357679, longitude: -2.922281107878985 },
     numLevels: 3,
     totalSpots: 90, // 30 plazas/planta * 3 plantas
-    price: 1.20,
+    price: 1.2,
     levelsInfo: [
       {
         levelName: "Planta 0",
@@ -107,7 +107,7 @@ export const getAllParkings = async () => {
       if (!response.ok) throw new Error("API error");
       const data = await response.json();
       // Ajusta el mapeo si la API devuelve otros nombres
-      return data.map(p => ({
+      return data.map((p) => ({
         id: p.id,
         name: p.name,
         address: p.address,
@@ -119,7 +119,7 @@ export const getAllParkings = async () => {
       }));
     },
     () =>
-      bilbaoParkingsData.map(p => ({
+      bilbaoParkingsData.map((p) => ({
         id: p.id,
         name: p.name,
         address: p.address,
@@ -132,29 +132,94 @@ export const getAllParkings = async () => {
   );
 };
 
-export const getParkingDetails = async (parkingId) => {
-  console.log(`Fetching details for parking ${parkingId} (simulated from ParkingService)`);
-  return new Promise((resolve, reject) => setTimeout(() => {
-    const parking = bilbaoParkingsData.find(p => p.id === parkingId);
-    if (parking) {
-      // Podrías re-simular los `spotsFree` aquí si quieres que cambien cada vez que se abre el detalle
-      const detailedParking = {
-        ...parking,
-        levelsInfo: parking.levelsInfo.map(level => ({
+export const getParkingDetailsFake = async (parkingId) => {
+  console.log(
+    `Fetching details for parking ${parkingId} (simulated from ParkingService)`
+  );
+  return new Promise((resolve, reject) =>
+    setTimeout(() => {
+      const parking = bilbaoParkingsData.find((p) => p.id === parkingId);
+      if (parking) {
+        // Podrías re-simular los `spotsFree` aquí si quieres que cambien cada vez que se abre el detalle
+        const detailedParking = {
+          ...parking,
+          levelsInfo: parking.levelsInfo.map((level) => ({
             ...level,
             // spotsFree: Math.floor(Math.random() * level.spotsTotal) + 1 // Descomenta para re-simular
-        }))
-      };
-      resolve(detailedParking);
-    } else {
-      reject(new Error('Parking not found'));
-    }
-  }, 0)); // Simula un pequeño retardo de red
+          })),
+        };
+        resolve(detailedParking);
+      } else {
+        reject(new Error("Parking not found"));
+      }
+    }, 0)
+  ); // Simula un pequeño retardo de red
 };
 
-// Endpoint para actualizar el estado de una plaza (simulado por el backend en el TFM)
-// El frontend lo consumiría para obtener el estado, no para actualizarlo directamente por el usuario.
-// Esta función es más para ilustrar la interacción con los datos que vendrían del backend.
+export const getParkingDetails = async (parkingId) => {
+  console.log(`Fetching details for parking ${parkingId} from API`);
+  try {
+    const response = await fetch(`${API_BASE_URL}/parkings/${parkingId}`);
+    if (!response.ok) {
+      // Si la respuesta no es OK (ej. 404 Not Found, 500 Internal Server Error)
+      if (response.status === 404) {
+        throw new Error(`Parking con ID ${parkingId} no encontrado.`);
+      } else {
+        throw new Error(`Error HTTP! estado: ${response.status}`);
+      }
+    }
+    const data = await response.json();
+
+    return {
+      id: data.id,
+      name: data.name,
+      address: data.address,
+      latitude: data.coordinates.latitude, // Directamente de la API
+      longitude: data.coordinates.longitude, // Directamente de la API
+      numLevels: data.levels, // La API devuelve 'levels'
+      totalSpots: data.totalSpots,
+      price: data.price,
+      levelsInfo: data.levelsInfo
+        ? data.levelsInfo.map((level) => ({
+            levelId: level.levelId,
+            levelName: level.levelName,
+            spotsTotal: level.spotsTotal,
+            spotsFree: level.spotsFree,
+          }))
+        : [],
+    };
+  } catch (error) {
+    console.error(`Error fetching parking details for ID ${parkingId}:`, error);
+    // Fallback a datos simulados
+    const parking = bilbaoParkingsData.find((p) => p.id === parkingId);
+    if (parking) {
+      return {
+        id: parking.id,
+        name: parking.name,
+        address: parking.address,
+        latitude: parking.coordinates.latitude,
+        longitude: parking.coordinates.longitude,
+        numLevels: parking.numLevels,
+        totalSpots: parking.totalSpots,
+        price: parking.price,
+        levelsInfo: parking.levelsInfo
+          ? parking.levelsInfo.map((level) => ({
+              levelId: level.levelId,
+              levelName: level.levelName,
+              spotsTotal: level.spotsTotal,
+              spotsFree: level.spotsFree,
+            }))
+          : [],
+      };
+    } else {
+      throw new Error(
+        `Parking con ID ${parkingId} no encontrado en datos de prueba.`
+      );
+    }
+  }
+};
+
+// Endpoint para actualizar el estado de una plaza
 export const getSpotStatus = async (spotId) => {
   // En una implementación real, esto podría ser parte de getParkingDetails o un endpoint específico si fuera necesario.
   // El RF-010 "Provisión de Estado de Ocupación Dinámico de Parking" y RNF-001 "Actualización Automática y Periódica en Frontend"
@@ -169,61 +234,68 @@ export const getSpotStatus = async (spotId) => {
 };
 
 export const getParkingSpotsForLevel = async (parkingId, levelIdentifier) => {
-  console.log(`Fetching spots for parking ${parkingId}, level ${levelIdentifier} (ParkingService)`);
-  
-  // --- IMPLEMENTACIÓN REAL CON FETCH ---
-  // try {
-  //   const response = await fetch(`${API_BASE_URL}/parkings/${parkingId}/spots`);
+  console.log(
+    `Fetching spots for parking ${parkingId}, level ${levelIdentifier} from API`
+  );
+  try {
+    // Construye la URL del endpoint correctamente
+    const response = await fetch(
+      `${API_BASE_URL}/parkings/${parkingId}/spots?level=${levelIdentifier}`
+    );
 
- // -------------
-  // Con la ultima versión del backend asi quedaría la llamada:
-  // const response = await fetch(`${API_BASE_URL}/parkings/${parkingId}/spots?level=${levelIdentifier}`);
-  // -------------
-
-  //   if (!response.ok) {
-  //     throw new Error(`HTTP error! status: ${response.status}`);
-  //   }
-  //   const allSpots = await response.json(); // Esto es un array de TODAS las plazas del parking
-  //   
-  //   // Filtrar las plazas por el levelIdentifier (puede ser level.levelName o level.levelId o level.number)
-  //   // Necesitas saber cómo tu API identifica las plantas dentro del array de plazas.
-  //   // Asumiendo que cada objeto plaza tiene una propiedad 'level' o 'levelName' o 'levelId'.
-  //   // Ejemplo: si la plaza tiene `plaza.level === levelIdentifier`
-  //   const levelSpots = allSpots.filter(spot => spot.level === levelIdentifier); // AJUSTA ESTA CONDICIÓN
-  // 
-  //   return {
-  //     spots: levelSpots // Devuelve el array de plazas para la planta específica
-  //   };
-  // } catch (error) {
-  //   console.error(`Error fetching spots for parking ${parkingId}, level ${levelIdentifier}:`, error);
-  //   throw error;
-  // }
-  // --- FIN IMPLEMENTACIÓN REAL ---
-
-
-  // --- SIMULACIÓN (mientras el backend no esté listo o si prefieres simular) ---
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const parking = bilbaoParkingsData.find(p => p.id === parkingId);
-      if (!parking) {
-        return reject(new Error('Parking not found for spot simulation'));
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error(
+          `Spots for parking ${parkingId} and level ${levelIdentifier} not found.`
+        );
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
-      const levelInfo = parking.levelsInfo.find(l => l.levelId === levelIdentifier || l.levelName === levelIdentifier);
-      if (!levelInfo) {
-        return reject(new Error('Level not found for spot simulation'));
-      }
+    }
+    const data = await response.json(); // La API devuelve un array directamente // La función que llama (Sidebar.jsx) espera un objeto con la propiedad 'spots'. // Tu API devuelve un array directamente, así que lo envolvemos.
 
-      // Simular una lista de plazas para la planta
-      const simulatedSpots = Array.from({ length: levelInfo.spotsTotal }, (_, i) => ({
-        id: `${levelIdentifier}_spot_${i + 1}`, // ID único de la plaza
-        spotNumber: (i + 1).toString(), // Número de plaza como string
-        occupied: i < (levelInfo.spotsTotal - levelInfo.spotsFree), // Simular ocupación
-        level: levelIdentifier // Para posible referencia
-      }));
-      
-      resolve({ spots: simulatedSpots });
-    }, 300); // Simula retardo de red
-  });
-  // --- FIN SIMULACIÓN ---
+    return {
+      spots: data.map((spot) => ({
+        id: spot.id,
+        spotNumber: spot.spotNumber.toString(), // Asegúrate de que spotNumber sea string si es necesario en frontend
+        occupied: spot.occupied,
+        level: spot.level, // Para posible referencia si el frontend lo necesita
+      })),
+    };
+  } catch (error) {
+    console.error(
+      `Error fetching spots for parking ${parkingId}, level ${levelIdentifier}:`,
+      error
+    ); // Implementa un fallback a datos simulados para esta función también si lo deseas, // similar a getParkingDetails, o simplemente lanza el error. // Para este ejemplo, mantendremos el fallback existente o un error explícito.
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const parking = bilbaoParkingsData.find((p) => p.id === parkingId);
+        if (!parking) {
+          return reject(
+            new Error("Parking not found for spot simulation (fallback)")
+          );
+        }
+        const levelInfo = parking.levelsInfo.find(
+          (l) =>
+            l.levelId === levelIdentifier || l.levelName === levelIdentifier
+        );
+        if (!levelInfo) {
+          return reject(
+            new Error("Level not found for spot simulation (fallback)")
+          );
+        }
+
+        const simulatedSpots = Array.from(
+          { length: levelInfo.spotsTotal },
+          (_, i) => ({
+            id: `${levelIdentifier}_spot_${i + 1}`,
+            spotNumber: (i + 1).toString(),
+            occupied: i < levelInfo.spotsTotal - levelInfo.spotsFree,
+            level: levelIdentifier,
+          })
+        );
+        resolve({ spots: simulatedSpots });
+      }, 300);
+    });
+  }
 };
