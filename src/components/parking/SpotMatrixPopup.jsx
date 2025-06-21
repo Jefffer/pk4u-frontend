@@ -114,8 +114,8 @@ const SpotMatrixPopup = ({
             {spots.map((spot, index) => (
               <div
                 key={spot.id || index} // Usar spot.id si está disponible
-                title={`Plaza ${spot.spotNumber}: ${
-                  spot.occupied ? "Ocupada" : "Libre"
+                title={`Plaza ${spot.spotNumber} ${
+                  spot.occupied ? "Ocupada 😖" : "Libre 🤩"
                 }`}
                 className={`p-2 aspect-square rounded-md flex flex-col items-center justify-center transition-all duration-200 ease-in-out
                             ${

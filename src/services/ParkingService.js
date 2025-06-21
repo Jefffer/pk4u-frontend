@@ -174,8 +174,8 @@ export const getParkingDetails = async (parkingId) => {
       id: data.id,
       name: data.name,
       address: data.address,
-      latitude: data.coordinates.latitude, // Directamente de la API
-      longitude: data.coordinates.longitude, // Directamente de la API
+      latitude: data.coordinates.latitude, 
+      longitude: data.coordinates.longitude,
       numLevels: data.levels, // La API devuelve 'levels'
       totalSpots: data.totalSpots,
       price: data.price,
@@ -259,14 +259,14 @@ export const getParkingSpotsForLevel = async (parkingId, levelIdentifier) => {
         id: spot.id,
         spotNumber: spot.spotNumber.toString(), // Asegúrate de que spotNumber sea string si es necesario en frontend
         occupied: spot.occupied,
-        level: spot.level, // Para posible referencia si el frontend lo necesita
+        level: spot.level,
       })),
     };
   } catch (error) {
     console.error(
       `Error fetching spots for parking ${parkingId}, level ${levelIdentifier}:`,
       error
-    ); // Implementa un fallback a datos simulados para esta función también si lo deseas, // similar a getParkingDetails, o simplemente lanza el error. // Para este ejemplo, mantendremos el fallback existente o un error explícito.
+    ); // Implementa un fallback a datos simulados
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const parking = bilbaoParkingsData.find((p) => p.id === parkingId);
