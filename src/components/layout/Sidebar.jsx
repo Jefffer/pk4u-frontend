@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import SearchBar from "../ui/Searchbar";
 import SpotMatrixPopup from "../parking/SpotMatrixPopup";
-import { getParkingSpotsForLevel } from "../../services/ParkingService";
+// import { getParkingSpotsForLevel } from "../../services/ParkingService";
 // import ParkingList from '../parking/ParkingList';
 
 import {
@@ -11,7 +11,13 @@ import {
   FaCar,
 } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { LiaMapMarkerSolid, LiaCarSolid, LiaCarSideSolid, LiaLayerGroupSolid, LiaEuroSignSolid } from "react-icons/lia";
+import {
+  LiaMapMarkerSolid,
+  LiaCarSolid,
+  LiaCarSideSolid,
+  LiaLayerGroupSolid,
+  LiaEuroSignSolid,
+} from "react-icons/lia";
 import { TbCar } from "react-icons/tb";
 
 import { motion } from "framer-motion";
@@ -21,12 +27,20 @@ import {
   getAvailabilityIcon,
 } from "../../utils/utils.jsx";
 
-const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) => {
+const Sidebar = ({
+  selectedParkingId,
+  parkingDetails, // Recibe los detalles del parking ya cargados
+  isLoading, // Recibe el estado de carga
+  error, // Recibe el estado de error
+  searchInputRef,
+  onAnimationComplete,
+  getSpotsForLevel, // Recibe la función para obtener plazas por nivel
+}) => {
   // Recibe selectedParkingId
   const [searchTerm, setSearchTerm] = useState("");
-  const [parkingDetails, setParkingDetails] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [parkingDetails, setParkingDetails] = useState(null);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState(null);
   const [imageError, setImageError] = useState(false);
 
   // Para el Popup de la matriz de plazas
@@ -35,84 +49,87 @@ const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) =>
     useState(null);
   const [currentParkingNameForPopup, setCurrentParkingNameForPopup] =
     useState("");
+     const [activeLevelIdentifier, setActiveLevelIdentifier] = useState(null);
 
-  const handlePlantClick = async (levelInfo) => {
-    if (!parkingDetails) return;
+  const handlePlantClick = useCallback(
+    async (levelInfo) => {
+      if (!parkingDetails) return;
 
-    setCurrentParkingNameForPopup(parkingDetails.name); // Guardar nombre del parking para el popup
+      setCurrentParkingNameForPopup(parkingDetails.name); // Guardar nombre del parking para el popup
+      setActiveLevelIdentifier(levelInfo.levelId || levelInfo.levelName);
 
-    // --- IMPORTANTE: Obtener datos de las plazas para la planta seleccionada ---
-    // Esto depende de cómo tu API sirva estos datos.
-    // Opción 1: Si getParkingDetails ya trae todas las plazas de todas las plantas
-    // podrías filtrar aquí.
-    // Opción 2: Llamar a un nuevo endpoint o al existente GET /parkings/{parkingId}/spots
-    // y luego filtrar por levelInfo.levelId o levelInfo.levelName.
+      try {
+        // Llama a la función getSpotsForLevel recibida por props
+        const spotsData = await getSpotsForLevel(
+          parkingDetails.id,
+          levelInfo.levelId || levelInfo.levelName
+        );
 
-    // Simulando la llamada a un servicio que obtiene las plazas por planta:
-    // Deberías implementar esta lógica en ParkingService.js
-    // Por ejemplo, podría llamar a /api/v1/parkings/{parkingDetails.id}/spots
-    // y luego filtrar las plazas que pertenecen a levelInfo.levelId o levelName
-    setIsLoading(true); // Podrías usar un loader específico para el popup
-    try {
-      // Debes asegurarte que `getParkingSpotsForLevel` exista en tu ParkingService
-      // y que devuelva un objeto como { levelName: "...", spotsList: [{spotNumber:1, occupied:true}, ...] }
-      // El `levelInfo.levelId` o algún identificador único de la planta sería necesario aquí.
-      const spotsData = await getParkingSpotsForLevel(
-        parkingDetails.id,
-        levelInfo.levelId || levelInfo.levelName
-      );
+        setCurrentLevelDataForPopup({
+          levelName: levelInfo.levelName,
+          spotsTotal: levelInfo.spotsTotal,
+          spotsFree: levelInfo.spotsFree,
+          spotsList: spotsData.spots,
+        });
+        setIsSpotPopupOpen(true);
+      } catch (err) {
+        console.error("Error fetching spots for level:", err);
 
-      setCurrentLevelDataForPopup({
-        levelName: levelInfo.levelName,
-        spotsTotal: levelInfo.spotsTotal, // Ya lo tienes
-        spotsFree: levelInfo.spotsFree, // Ya lo tienes
-        spotsList: spotsData.spots, // Asumiendo que spotsData.spots es el array de plazas individuales
-        // con su estado 'occupied'.
-      });
-      setIsSpotPopupOpen(true);
-    } catch (err) {
-      console.error("Error fetching spots for level:", err);
-      // Aquí podrías mostrar un error específico para el popup
-      setError("No se pudieron cargar las plazas de la planta."); // O un estado de error diferente
-    } finally {
-      setIsLoading(false);
+        // setError("No se pudieron cargar las plazas de la planta.");
+      }
+    },
+    [parkingDetails, getSpotsForLevel]
+  );
+
+  // --- useEffect para actualizar la matriz de plazas si el popup está abierto y los parkingDetails cambian
+  useEffect(() => {
+    if (isSpotPopupOpen && parkingDetails && activeLevelIdentifier) {
+      const updatePopupSpots = async () => {
+        try {
+          const spotsData = await getSpotsForLevel(
+            parkingDetails.id,
+            activeLevelIdentifier
+          );
+          // Encuentra el levelInfo más reciente de los parkingDetails actualizados
+          const latestLevelInfo = parkingDetails.levelsInfo?.find(
+            (level) => (level.levelId || level.levelName) === activeLevelIdentifier
+          );
+
+          if (latestLevelInfo) {
+            setCurrentLevelDataForPopup({
+              levelName: latestLevelInfo.levelName,
+              spotsTotal: latestLevelInfo.spotsTotal,
+              spotsFree: latestLevelInfo.spotsFree,
+              spotsList: spotsData.spots, // Actualiza solo la lista de spots
+            });
+          }
+        } catch (err) {
+          console.error("Error updating popup spots:", err);
+        }
+      };
+      updatePopupSpots();
     }
-  };
+  }, [isSpotPopupOpen, parkingDetails, activeLevelIdentifier, getSpotsForLevel]);
+
 
   const handleSearch = (term) => {
     setSearchTerm(term);
     // Lógica de búsqueda (futura implementación)
     console.log("Buscando:", term);
     // Por ahora, si se busca, limpiamos los detalles del parking seleccionado
-    if (term) {
-      setParkingDetails(null);
-      setImageError(false);
-    }
+    // if (term) {
+    //   setParkingDetails(null);
+    //   setImageError(false);
+    // }
   };
 
   useEffect(() => {
-    if (selectedParkingId) {
-      const fetchDetails = async () => {
-        setIsLoading(true);
-        setError(null);
-        setParkingDetails(null); // Limpia detalles anteriores
-        setImageError(false); // Resetea el estado de error de imagen
-        try {
-          const data = await getParkingDetails(selectedParkingId);
-          setParkingDetails(data);
-        } catch (err) {
-          console.error("Error fetching parking details:", err);
-          setError("No se pudieron cargar los detalles del parking.");
-        } finally {
-          setIsLoading(false);
-        }
-      };
-      fetchDetails();
-    } else {
-      setParkingDetails(null); // Si no hay ID seleccionado, no mostrar detalles
+    // Si parkingDetails cambia a null (por ejemplo, al no haber un parking seleccionado)
+    // o si hay un error al cargar, reseteamos el estado de imagen.
+    if (!parkingDetails || error) {
       setImageError(false);
     }
-  }, [selectedParkingId]); // Se ejecuta cuando selectedParkingId cambia
+  }, [parkingDetails, error]);
 
   const handleImageError = () => {
     setImageError(true);
@@ -173,7 +190,10 @@ const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) =>
       animate="visible" // Estado al que animar cuando aparece
       exit="hidden" // Estado al que animar cuando desaparece
       onAnimationComplete={(definition) => {
-        if (definition === "visible" && typeof onAnimationComplete === 'function') {
+        if (
+          definition === "visible" &&
+          typeof onAnimationComplete === "function"
+        ) {
           onAnimationComplete();
         }
       }}
@@ -234,7 +254,7 @@ const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) =>
                 {/* <span className="font-semibold text-slate-800 dark:text-slate-100">Dirección:</span> */}
                 <p>{parkingDetails.address}</p>
               </div>
-            </div>            
+            </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
                 <LiaLayerGroupSolid className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
@@ -254,7 +274,6 @@ const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) =>
                   <span className="ml-1">Plazas Totales</span>
                 </div>
               </div>
-              
             </div>
             {/* bloque para mostrar el precio */}
             {parkingDetails.price !== undefined && (
@@ -296,7 +315,7 @@ const Sidebar = ({ selectedParkingId, searchInputRef, onAnimationComplete  }) =>
                 return (
                   <li
                     key={level.levelId || level.levelName}
-                    onClick={() => handlePlantClick(level)} // Implementaremos esto después
+                    onClick={() => handlePlantClick(level)}
                     className={`p-4 rounded-lg shadow-md cursor-pointer transition-all duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1 ${colorClass} flex flex-col`}
                   >
                     <div className="flex items-center justify-between mb-1">

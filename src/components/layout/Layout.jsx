@@ -4,12 +4,22 @@ import Sidebar from "./Sidebar";
 import MapView from "../map/MapView";
 import Footer from "./Footer";
 import { AnimatePresence } from "framer-motion";
+import useParkingData from '../../hooks/useParkingDataHook';
 
 const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   const [selectedParkingId, setSelectedParkingId] = useState(null);
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const [shouldFocusSearch, setShouldFocusSearch] = useState(false); // estado para controlar el focus
   const searchInputRef = useRef(null); // Ref para el input del buscador del sidebar
+
+const { 
+    parkings, 
+    selectedParkingDetails, 
+    isLoading, 
+    error, 
+    selectParking, 
+    getSpotsForLevel
+  } = useParkingData(selectedParkingId);
 
   const toggleSidebarVisibility = () => {
     setIsSidebarVisible(!isSidebarVisible);
@@ -18,6 +28,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   // función para manejar el click en un marcador
   const handleMarkerClick = (parkingId) => {
     setSelectedParkingId(parkingId); // Actualiza el ID del parking seleccionado
+    selectParking(parkingId); // Llama a la función para cargar los detalles del parking
     setShouldFocusSearch(false); // No queremos focus al hacer click en un marcador
     if (!isSidebarVisible) {
       // Si la sidebar está oculta
@@ -60,14 +71,24 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
         {/* <Header /> */}
         <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-white dark:bg-slate-800">
           <div className="flex-1 h-full">
-            <MapView onMarkerClick={handleMarkerClick} />
+            {/* Pasa la lista de parkings del hook a MapView */}
+            <MapView 
+              parkings={parkings} // Pasa la lista de parkings
+              onMarkerClick={handleMarkerClick} 
+              selectedParkingId={selectedParkingId} // Pasa el ID seleccionado para que el mapa resalte el marcador
+            />
           </div>
           <AnimatePresence>
             {isSidebarVisible && (
               <Sidebar
+                // Pasa los detalles del parking seleccionado y el estado de carga/error del hook
                 selectedParkingId={selectedParkingId}
+                parkingDetails={selectedParkingDetails} // Pasa los detalles completos
+                isLoading={isLoading}
+                error={error}
                 searchInputRef={searchInputRef}
                 onAnimationComplete={onSidebarAnimationComplete}
+                getSpotsForLevel={getSpotsForLevel} // Pasa la función para obtener detalles de plazas
               />
             )}
           </AnimatePresence>

@@ -16,7 +16,7 @@ import { LuCircleParking } from "react-icons/lu";
 import { HiLocationMarker } from "react-icons/hi";
 import { GiPositionMarker } from "react-icons/gi";
 
-import { getAllParkings } from "../../services/ParkingService";
+// import { getAllParkings } from "../../services/ParkingService";
 
 // Configuración para el icono por defecto de Leaflet (soluciona problemas de visualización del icono)
 delete L.Icon.Default.prototype._getIconUrl;
@@ -80,24 +80,24 @@ const createCustomDivIcon = (parking, isSelected) => {
 //   );
 // }
 
-const MapView = ({ onMarkerClick }) => {
+const MapView = ({ parkings, onMarkerClick, selectedParkingId }) => {
   // Recibe onMarkerClick desde Layout
-  const [parkings, setParkings] = useState([]);
-  const [selectedParkingId, setSelectedParkingId] = useState(null);
+  // const [parkings, setParkings] = useState([]);
+  // const [selectedParkingId, setSelectedParkingId] = useState(null);
   const bilbaoCoords = [43.2629126, -2.9350689]; // Centro de Bilbao
 
-  useEffect(() => {
-    const fetchParkings = async () => {
-      try {
-        const data = await getAllParkings();
-        setParkings(data);
-      } catch (error) {
-        console.error("Error fetching parkings:", error);
-        // manejar el error??
-      }
-    };
-    fetchParkings();
-  }, []); // El array vacío [] asegura que se ejecute solo una vez al montar el componente
+  // useEffect(() => {
+  //   const fetchParkings = async () => {
+  //     try {
+  //       const data = await getAllParkings();
+  //       setParkings(data);
+  //     } catch (error) {
+  //       console.error("Error fetching parkings:", error);
+  //       // manejar el error??
+  //     }
+  //   };
+  //   fetchParkings();
+  // }, []); // El array vacío [] asegura que se ejecute solo una vez al montar el componente
 
   return (
     <main className="h-full w-full bg-gray-300 dark:bg-gray-700 relative">
@@ -127,7 +127,7 @@ const MapView = ({ onMarkerClick }) => {
             position={[parking.latitude, parking.longitude]}
             eventHandlers={{
               click: () => {
-                setSelectedParkingId(parking.id); // Actualiza el seleccionado
+                // setSelectedParkingId(parking.id); // Actualiza el seleccionado
                 onMarkerClick(parking.id); // Llama a la función pasada por Layout
               },
             }}
