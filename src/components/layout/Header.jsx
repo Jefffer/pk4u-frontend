@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
 import {
@@ -11,6 +11,8 @@ import {
 } from "react-icons/lia";
 import ThemeToggleButton from "../ui/ThemeToggleButton";
 import HeaderMenu from "../ui/DropdownMenu";
+import LanguageSwitcher from "../ui/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 const logoUrl = "/pk4u-v1.png";
 
@@ -23,6 +25,10 @@ const Header = ({
   toggleSidebar,
   onSearchClick,
 }) => {
+const { t, i18n } = useTranslation();
+
+    // Fuerza re-render cuando cambia el idioma
+    useEffect(() => {}, [i18n.language]);
   return (
     <header className="bg-white dark:bg-slate-950 text-teal-600 dark:text-teal-400 border-b-1 border-teal-800 p-3 sm:p-4 shadow-md sticky top-0 z-[1100]">
       <div className="mx-auto flex justify-between items-center">
