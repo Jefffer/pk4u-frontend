@@ -51,8 +51,7 @@
   "menu": {
     "map": "Mapa de Parkings",
     "about": "Acerca del Proyecto",
-    "logout": "Cerrar sesión",
-    "title": "Menú"
+    "logout": "Salir"
   },
 
   "about": {

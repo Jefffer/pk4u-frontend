@@ -51,8 +51,7 @@
   "menu": {
     "map": "Parking Map",
     "about": "About the Project",
-    "logout": "Log out",
-    "title": "Menu"
+    "logout": "Logout"
   },
 
   "about": {
