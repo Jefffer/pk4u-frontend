@@ -1,0 +1,134 @@
+{
+  "Hola,": "Hello,",
+  "Ocultar detalles": "Hide details",
+  "Mostrar detalles": "Show details",
+  "Buscar parking": "Search parking",
+  "Busca tu parking": "Find your parking",
+  "Ver repositorio en GitHub": "View repository on GitHub",
+  "Cambiar a español": "Switch to Spanish",
+  "Cambiar a inglés": "Switch to English",
+  "Español": "Spanish",
+  "Inglés": "English",
+  "Menú": "Menu",
+  "Cerrar sesión": "Log out",
+  "Cambiar tema": "Change theme",
+  "Tema claro": "Light theme",
+  "Tema oscuro": "Dark theme",
+  "Bienvenido a PK4U": "Welcome to PK4U",
+
+  "search": {
+    "placeholder": "Enter location or name..."
+  },
+  "loading": {
+    "details": "Loading details..."
+  },
+  "error": {
+    "loadDetails": "Failed to load parking details."
+  },
+  "image": {
+    "alt": "Image of {{name}}",
+    "notAvailable": "Image not available"
+  },
+  "levels": "Levels",
+  "totalSpots": "Total Spots",
+  "availabilityByLevel": "Availability by Level",
+  "free": "free",
+  "occupied": "OCCUPIED",
+  "noLevelInfo": "No detailed level information available.",
+  "selectParking": "Select a parking on the map to see details, or use the search bar.",
+  "searchResults": "Results for: \"{{term}}\" (search list functionality pending).",
+
+  "theme": {
+    "toggleToLight": "Switch to light mode",
+    "toggleToDark": "Switch to dark mode"
+  },
+
+  "parking": {
+    "totalSpots": "Total spots",
+    "price": "Price"
+  },
+
+  "menu": {
+    "map": "Parking Map",
+    "about": "About the Project",
+    "logout": "Log out",
+    "title": "Menu"
+  },
+
+  "about": {
+    "hero": {
+      "alt": "Background image for the About Us page",
+      "logoAlt": "PK4U logo",
+      "title": "About Us",
+      "subtitle": "An intelligent solution to manage urban parking.",
+      "ctaMap": "Go to Map",
+      "ctaGithub": "View code on GitHub"
+    },
+    "challenge": {
+      "title": "The Challenge",
+      "paragraph1": "Parking in cities is an increasing challenge...",
+      "emphasis": "Urban congestion and lack of spaces",
+      "paragraph2": "create stress and waste time.",
+      "paragraph3": "We need to find efficient technological solutions.",
+      "imgAlt": "Illustrative image of the parking problem"
+    },
+    "solution": {
+      "title": "Our Solution",
+      "bold1": "PK4U offers a comprehensive platform",
+      "paragraph1": "that integrates open data and advanced technology to optimize parking.",
+      "paragraph2": "Includes interactive maps, real-time reservations, and data analytics.",
+      "paragraph3": "Easy to use and accessible from any device.",
+      "imgAlt": "Representative image of the PK4U solution",
+      "logoAlt": "PK4U logo for the solution section"
+    },
+    "features": {
+      "title": "Main Features",
+      "feature1": {
+        "title": "Fast Search",
+        "description": "Find available spots near you in seconds."
+      },
+      "feature2": {
+        "title": "Active Community",
+        "description": "Share and receive information from other users."
+      },
+      "feature3": {
+        "title": "Advanced Technology",
+        "description": "We use React, Java and more to ensure quality."
+      }
+    },
+    "technologies": {
+      "title": "Technologies Used",
+      "react": "React",
+      "java": "Java",
+      "spring": "Spring",
+      "openData": "Open Data",
+      "smartCities": "Smart Cities",
+      "elasticsearch": "Elasticsearch"
+    }
+  },
+
+  "footer": {
+    "projectInfo": {
+      "title": "PK4U: Parking for You",
+      "description": "Real-time intelligent parking management for Smart Cities. This project is part of the UNIR Master's Thesis."
+    },
+    "navigation": {
+      "title": "Navigation",
+      "aboutProject": "About the Project",
+      "goToMap": "Go to Map"
+    },
+    "copyright": {
+      "text": "© {{year}} PK4U Team",
+      "viewSource": "View Source Code",
+      "githubAriaLabel": "Frontend Repository on GitHub"
+    },
+    "builtWith": {
+      "text": "Built with",
+      "react": "React",
+      "and": "and",
+      "java": "Java",
+      "reactAriaLabel": "React Icon",
+      "javaAriaLabel": "Java Icon"
+    }
+  }
+}
