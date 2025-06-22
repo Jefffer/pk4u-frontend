@@ -22,6 +22,8 @@
   "Imagen de {{name}}": "Image of {{name}}",
   "Plantas": "Levels",
   "Plazas Totales": "Total spots",
+  "Plazas totales": "Total spots",
+  "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors, Tiles style by <a href=\"https://www.hotosm.org/\" target=\"_blank\">Humanitarian OpenStreetMap Team</a> hosted by <a href=\"https://openstreetmap.fr/\" target=\"_blank\">OpenStreetMap France</a>": "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors, Tiles style by <a href=\"https://www.hotosm.org/\" target=\"_blank\">Humanitarian OpenStreetMap Team</a> hosted by <a href=\"https://openstreetmap.fr/\" target=\"_blank\">OpenStreetMap France</a>",
   "Precio": "Price",
   "Disponibilidad por Planta": "Availability by Level",
   "Plazas libres: {{free}} de {{total}}": "Free spots: {{free}} of {{total}}",
