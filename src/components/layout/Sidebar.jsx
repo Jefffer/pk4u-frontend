@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import SearchBar from "../ui/Searchbar";
 import SpotMatrixPopup from "../parking/SpotMatrixPopup";
 // import { getParkingSpotsForLevel } from "../../services/ParkingService";
@@ -36,6 +37,9 @@ const Sidebar = ({
   onAnimationComplete,
   getSpotsForLevel, // Recibe la función para obtener plazas por nivel
 }) => {
+  // Para traducción
+  const { t } = useTranslation();
+
   // Recibe selectedParkingId
   const [searchTerm, setSearchTerm] = useState("");
   // const [parkingDetails, setParkingDetails] = useState(null);
@@ -211,14 +215,19 @@ const Sidebar = ({
         </h2> */}
         <SearchBar
           onSearch={handleSearch}
-          placeholder="Introduce ubicación o nombre..."
+          placeholder={t("Introduce ubicación o nombre...")}
           ref={searchInputRef} // Asignamos el ref al SearchBar
         />
       </div>
 
       {isLoading && (
         <p className="text-slate-600 dark:text-slate-400 mt-4">
-          Cargando detalles...
+          {t("Cargando detalles...")}
+        </p>
+      )}
+      {error && (
+        <p className="text-red-500 dark:text-red-400 mt-4">
+          {error /* Puedes traducir si los errores son fijos */}
         </p>
       )}
       {error && <p className="text-red-500 dark:text-red-400 mt-4">{error}</p>}
@@ -229,7 +238,7 @@ const Sidebar = ({
           {!imageError && imageUrl && (
             <img
               src={imageUrl}
-              alt={`Imagen de ${parkingDetails.name}`}
+              alt={t("Imagen de {{name}}", { name: parkingDetails.name })}
               className="w-full h-auto max-h-48 object-cover rounded-lg mb-4 shadow-lg border border-slate-200 dark:border-slate-700"
               onError={handleImageError}
             />
@@ -237,7 +246,7 @@ const Sidebar = ({
           {imageError && (
             <div className="w-full h-32 bg-slate-200 dark:bg-slate-700 flex flex-col items-center justify-center rounded-lg mb-4 text-slate-500 dark:text-slate-400 text-sm shadow">
               <FaBuilding className="w-10 h-10 mb-2 text-slate-400 dark:text-slate-500" />
-              <span>Imagen no disponible</span>
+              <span>{t("Imagen no disponible")}</span>
             </div>
           )}
 
@@ -262,7 +271,7 @@ const Sidebar = ({
                   <span className="font-semibold text-slate-800 dark:text-slate-100">
                     {parkingDetails.numLevels}
                   </span>
-                  <span className="ml-1">Plantas</span>
+                  <span className="ml-1">{t("Plantas")}</span>
                 </div>
               </div>
               <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
@@ -271,7 +280,7 @@ const Sidebar = ({
                   <span className="font-semibold text-slate-800 dark:text-slate-100">
                     {parkingDetails.totalSpots}
                   </span>
-                  <span className="ml-1">Plazas Totales</span>
+                  <span className="ml-1">{t("Plazas Totales")}</span>
                 </div>
               </div>
             </div>
@@ -281,16 +290,16 @@ const Sidebar = ({
                 <LiaEuroSignSolid className="text-teal-500 dark:text-teal-400 mr-3 flex-shrink-0 h-5 w-5" />
                 <div className="text-left">
                   <span className="font-semibold text-slate-800 dark:text-slate-100">
-                    Precio:{" "}
+                    {t("Precio")}:{" "}
                   </span>
-                  {parkingDetails.price.toFixed(2)} €/hora
+                  {t('{{price}} €/hour', { price: parkingDetails.price.toFixed(2) })}
                 </div>
               </div>
             )}
           </div>
 
           <h4 className="text-lg font-semibold mt-6 mb-3 border-t border-slate-200 dark:border-slate-700 pt-4 text-left text-slate-800 dark:text-slate-100">
-            Disponibilidad por Planta
+            {t("Disponibilidad por Planta")}
           </h4>
           {parkingDetails.levelsInfo && parkingDetails.levelsInfo.length > 0 ? (
             <ul className="space-y-3">
@@ -328,7 +337,7 @@ const Sidebar = ({
                         </span>
                       </div>
                       <span className="text-sm font-medium">
-                        {level.spotsFree} / {level.spotsTotal} libres
+                        {t("{{free}} / {{total}} libres", { free: level.spotsFree, total: level.spotsTotal })}
                       </span>
                     </div>
                     {/* Barra de progreso */}
@@ -347,15 +356,15 @@ const Sidebar = ({
                       ></div>
                     </div>
                     <span className="block text-xs font-bold mt-1">
-                      {percentageFull}% OCUPADO
+                      {t('{{percentage}}% OCUPADO', { percentage: percentageFull })}
                     </span>
                   </li>
                 );
               })}
             </ul>
           ) : (
-            <p className="text-sm text-left text-slate-500 dark:text-slate-400">
-              No hay información detallada de plantas disponible.
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              {t("No hay información de niveles disponible.")}
             </p>
           )}
         </div>

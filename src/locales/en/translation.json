@@ -16,27 +16,21 @@
   "Tema oscuro": "Dark theme",
   "Bienvenido a PK4U": "Welcome to PK4U",
 
-  "search": {
-    "placeholder": "Enter location or name..."
-  },
-  "loading": {
-    "details": "Loading details..."
-  },
-  "error": {
-    "loadDetails": "Failed to load parking details."
-  },
-  "image": {
-    "alt": "Image of {{name}}",
-    "notAvailable": "Image not available"
-  },
-  "levels": "Levels",
-  "totalSpots": "Total Spots",
-  "availabilityByLevel": "Availability by Level",
-  "free": "free",
-  "occupied": "OCCUPIED",
-  "noLevelInfo": "No detailed level information available.",
-  "selectParking": "Select a parking on the map to see details, or use the search bar.",
-  "searchResults": "Results for: \"{{term}}\" (search list functionality pending).",
+  "Introduce ubicación o nombre...": "Enter location or name...",
+  "Cargando detalles...": "Loading details...",
+  "Imagen no disponible": "Image not available",
+  "Imagen de {{name}}": "Image of {{name}}",
+  "Plantas": "Levels",
+  "Plazas Totales": "Total spots",
+  "Precio": "Price",
+  "Disponibilidad por Planta": "Availability by Level",
+  "Plazas libres: {{free}} de {{total}}": "Free spots: {{free}} of {{total}}",
+  "No hay información de niveles disponible.": "No level details available.",
+  "Selecciona un parking en el mapa para ver sus detalles, o utiliza la barra de búsqueda.":
+  "Select a parking on the map to see details, or use the search bar.",
+  "Resultados para: \"{{term}}\" (funcionalidad de lista de búsqueda pendiente).":
+  "Results for: \"{{term}}\" (search list feature pending).",
+  "{{percentage}}% OCUPADO": "{{percentage}}% OCCUPIED",
 
   "theme": {
     "toggleToLight": "Switch to light mode",
@@ -47,6 +41,9 @@
     "totalSpots": "Total spots",
     "price": "Price"
   },
+
+  "{{price}} €/hour": "{{price}} €/hour",
+  "{{free}} / {{total}} libres": "{{free}} / {{total}} free",
 
   "menu": {
     "map": "Parking Map",
@@ -128,6 +125,19 @@
       "java": "Java",
       "reactAriaLabel": "React Icon",
       "javaAriaLabel": "Java Icon"
+    }
+  },
+
+  "login": {
+    "welcome": "Welcome to PK4U",
+    "instructions": "Enter your username to start",
+    "placeholder": "StarDriver",
+    "continue": "Continue",
+    "characters": "characters",
+    "error": {
+      "tooLong": "Alias must be 20 characters or fewer.",
+      "invalidChars": "Alias may only contain letters, numbers, and spaces.",
+      "empty": "Please enter your username."
     }
   }
 }

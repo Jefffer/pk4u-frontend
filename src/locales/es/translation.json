@@ -16,27 +16,21 @@
   "Tema oscuro": "Tema oscuro",
   "Bienvenido a PK4U": "Bienvenido a PK4U",
 
-  "search": {
-    "placeholder": "Introduce ubicación o nombre..."
-  },
-  "loading": {
-    "details": "Cargando detalles..."
-  },
-  "error": {
-    "loadDetails": "No se pudieron cargar los detalles del parking."
-  },
-  "image": {
-    "alt": "Imagen de {{name}}",
-    "notAvailable": "Imagen no disponible"
-  },
-  "levels": "Plantas",
-  "totalSpots": "Plazas Totales",
-  "availabilityByLevel": "Disponibilidad por Planta",
-  "free": "libres",
-  "occupied": "OCUPADO",
-  "noLevelInfo": "No hay información detallada de plantas disponible.",
-  "selectParking": "Selecciona un parking en el mapa para ver sus detalles, o utiliza la barra de búsqueda.",
-  "searchResults": "Resultados para: \"{{term}}\" (funcionalidad de lista de búsqueda pendiente).",
+  "Introduce ubicación o nombre...": "Introduce ubicación o nombre...",
+  "Cargando detalles...": "Cargando detalles...",
+  "Imagen no disponible": "Imagen no disponible",
+  "Imagen de {{name}}": "Imagen de {{name}}",
+  "Plantas": "Plantas",
+  "Plazas Totales": "Plazas Totales",
+  "Precio": "Precio",
+  "Disponibilidad por Planta": "Disponibilidad por Planta",
+  "Plazas libres: {{free}} de {{total}}": "Plazas libres: {{free}} de {{total}}",
+  "No hay información de niveles disponible.": "No hay información de niveles disponible.",
+  "Selecciona un parking en el mapa para ver sus detalles, o utiliza la barra de búsqueda.":
+  "Selecciona un parking en el mapa para ver sus detalles, o utiliza la barra de búsqueda.",
+  "Resultados para: \"{{term}}\" (funcionalidad de lista de búsqueda pendiente).":
+  "Resultados para: \"{{term}}\" (funcionalidad de lista de búsqueda pendiente).",
+  "{{percentage}}% OCUPADO": "{{percentage}}% OCUPADO",
 
   "theme": {
     "toggleToLight": "Cambiar a modo claro",
@@ -47,6 +41,9 @@
     "totalSpots": "Total plazas",
     "price": "Precio"
   },
+
+  "{{price}} €/hour": "{{price}} €/hora",
+  "{{free}} / {{total}} libres": "{{free}} / {{total}} libres",
 
   "menu": {
     "map": "Mapa de Parkings",
@@ -128,6 +125,19 @@
       "java": "Java",
       "reactAriaLabel": "Icono de React",
       "javaAriaLabel": "Icono de Java"
+    }
+  },
+
+  "login": {
+    "welcome": "Bienvenido a PK4U",
+    "instructions": "Ingresa tu nombre de Usuario para comenzar",
+    "placeholder": "ConductorEstrella",
+    "continue": "Continuar",
+    "characters": "caracteres",
+    "error": {
+      "tooLong": "El alias no puede tener más de 20 caracteres.",
+      "invalidChars": "El alias solo puede contener letras, números y espacios.",
+      "empty": "Por favor, introduce tu nombre de Usuario."
     }
   }
 }
