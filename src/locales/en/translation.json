@@ -34,10 +34,8 @@
   "Results for: \"{{term}}\" (search list feature pending).",
   "{{percentage}}% OCUPADO": "{{percentage}}% OCCUPIED",
 
-  "theme": {
-    "toggleToLight": "Switch to light mode",
-    "toggleToDark": "Switch to dark mode"
-  },
+  "Cambiar a modo claro": "Switch to light mode",
+  "Cambiar a modo oscuro": "Switch to dark mode",
 
   "parking": {
     "totalSpots": "Total spots",

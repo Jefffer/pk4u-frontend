@@ -34,10 +34,8 @@
   "Resultados para: \"{{term}}\" (funcionalidad de lista de búsqueda pendiente).",
   "{{percentage}}% OCUPADO": "{{percentage}}% OCUPADO",
 
-  "theme": {
-    "toggleToLight": "Cambiar a modo claro",
-    "toggleToDark": "Cambiar a modo oscuro"
-  },
+  "Cambiar a modo claro": "Cambiar a modo claro",
+  "Cambiar a modo oscuro": "Cambiar a modo oscuro",
 
   "parking": {
     "totalSpots": "Total plazas",
