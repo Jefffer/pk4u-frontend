@@ -4,6 +4,7 @@ import Layout from "./components/layout/Layout";
 import LoginFake from "./components/auth/LoginFake";
 import AboutPage from "./pages/AboutPage"; 
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import "./i18n";
 
 function App() {
   // Intentamos obtener el alias de localStorage al iniciar
