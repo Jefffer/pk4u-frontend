@@ -371,17 +371,17 @@ const Sidebar = ({
       )}
 
       {!parkingDetails && !isLoading && !error && !searchTerm && (
-        <p className="text-slate-500 dark:text-slate-400 mt-4">
-          Selecciona un parking en el mapa para ver sus detalles, o utiliza la
-          barra de búsqueda.
-        </p>
+          <p className="text-slate-500 dark:text-slate-400 mt-4">
+            {t("Selecciona un parking en el mapa para ver sus detalles, o utiliza la barra de búsqueda.")}
+          </p>
       )}
-      {/* Mensaje para cuando hay un término de búsqueda pero aún no hay resultados */}
+
       {!parkingDetails && searchTerm && (
-        <p className="text-slate-600 dark:text-slate-400 mt-4">
-          Resultados para: "{searchTerm}" (funcionalidad de lista de búsqueda
-          pendiente).
-        </p>
+          <p className="text-slate-600 dark:text-slate-400 mt-4">
+            {t('Resultados para: "{{searchTerm}}" (funcionalidad de lista de búsqueda pendiente).', {
+              searchTerm
+            })}
+          </p>
       )}
 
       {/* {!parkingDetails && !isLoading && !error && (

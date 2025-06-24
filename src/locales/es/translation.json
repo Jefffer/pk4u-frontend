@@ -52,54 +52,57 @@
   },
 
   "about": {
-    "hero": {
-      "alt": "Imagen de fondo para la página Sobre Nosotros",
-      "logoAlt": "Logotipo de PK4U",
-      "title": "Sobre Nosotros",
-      "subtitle": "Una solución inteligente para gestionar el aparcamiento urbano.",
-      "ctaMap": "Ir al Mapa",
-      "ctaGithub": "Ver código en GitHub"
-    },
-    "challenge": {
-      "title": "El problema",
-      "paragraph1": "El aparcamiento en las ciudades es un desafío creciente...",
-      "emphasis": "La congestión urbana y la falta de espacios",
-      "paragraph2": "crean estrés y pérdida de tiempo.",
-      "paragraph3": "Es necesario encontrar soluciones tecnológicas eficientes.",
-      "imgAlt": "Imagen ilustrativa del problema de aparcamiento"
-    },
-    "solution": {
-      "title": "Nuestra solución",
-      "bold1": "PK4U ofrece una plataforma integral",
-      "paragraph1": "que integra datos abiertos y tecnología avanzada para optimizar el aparcamiento.",
-      "paragraph2": "Incluye mapas interactivos, reservas en tiempo real y análisis de datos.",
-      "paragraph3": "Fácil de usar y accesible desde cualquier dispositivo.",
-      "imgAlt": "Imagen representativa de la solución PK4U",
-      "logoAlt": "Logotipo PK4U para sección de solución"
-    },
-    "features": {
-      "title": "Características principales",
+    "title": "PK4U: Parking for You",
+    "heroSubtitle": "Plataforma abierta y gratuita para la gestión inteligente del aparcamiento urbano en Smart Cities.",
+    "viewMap": "Ver Mapa de Parkings",
+    "viewOnGitHub": "Ver en GitHub",
+    "challengeTitle": "El Desafío Urbano",
+    "challengeP1": "En las ciudades modernas, encontrar aparcamiento se ha convertido en un desafío diario que genera estrés, pérdida de tiempo y un aumento innecesario del tráfico y la contaminación.",
+    "challengeP2": "Este fenómeno, conocido como",
+    "challengeP2b": ", afecta negativamente la calidad de vida y la sostenibilidad urbana.",
+    "challengeP3": "Las soluciones comerciales suelen ser propietarias y costosas, limitando su adopción y la interoperabilidad entre servicios de Smart City.",
+    "parkingProblemAlt": "Problema de aparcamiento",
+    "solutionTitle": "Nuestra Solución: PK4U",
+    "solutionP1": "es una plataforma web Open Source y gratuita que centraliza la información de disponibilidad de plazas de aparcamiento en tiempo real.",
+    "solutionP2": "Unificamos datos de diferentes parkings en una sola interfaz con mapas interactivos, empoderando a los conductores para tomar mejores decisiones y reducir el tráfico y la contaminación.",
+    "solutionP3": "Nuestro objetivo es democratizar el acceso a la información y fomentar la movilidad sostenible en las ciudades inteligentes.",
+    "solutionImgAlt": "Solución PK4U",
+    "logoAlt": "Logo PK4U",
+    "keyFeatures": {
+      "title": "Características Clave",
       "feature1": {
-        "title": "Búsqueda rápida",
-        "description": "Encuentra espacios disponibles cerca de ti en segundos."
+        "title": "Visualización en Mapa",
+        "description": "Mapa interactivo con OpenStreetMap que muestra la ubicación de todos los parkings y su estado general."
       },
       "feature2": {
-        "title": "Comunidad activa",
-        "description": "Comparte y recibe información de otros usuarios."
+        "title": "Información en Tiempo Real",
+        "description": "Datos de ocupación actualizados periódicamente para reflejar la disponibilidad de plazas de la forma más precisa posible."
       },
       "feature3": {
-        "title": "Tecnología avanzada",
-        "description": "Utilizamos React, Java y más para garantizar calidad."
+        "title": "Código Abierto",
+        "description": "Proyecto distribuido bajo una licencia Open Source para fomentar la colaboración, la transparencia y la adaptación a las necesidades de cualquier ciudad."
       }
     },
-    "technologies": {
-      "title": "Tecnologías usadas",
-      "react": "React",
-      "java": "Java",
-      "spring": "Spring",
-      "openData": "Datos abiertos",
-      "smartCities": "Smart Cities",
-      "elasticsearch": "Elasticsearch"
+    "techStack": {
+      "title": "Stack Tecnológico",
+      "frontend": {
+        "title": "Frontend",
+        "description": "React, React Router, Tailwind CSS"
+      },
+      "backend": {
+        "title": "Backend",
+        "description": "Java, Spring Boot"
+      },
+      "data": {
+        "title": "Datos y Búsqueda",
+        "description": "MongoDB, Elasticsearch"
+      }
+    },
+    "cta": {
+      "title": "¿Listo para transformar la movilidad urbana?",
+      "description": "Únete a la comunidad PK4U, explora el código, contribuye o simplemente utiliza la plataforma para mejorar tu día a día en la ciudad.",
+      "goToMap": "Ir al Mapa",
+      "viewOnGitHub": "Ver en GitHub"
     }
   },
 
