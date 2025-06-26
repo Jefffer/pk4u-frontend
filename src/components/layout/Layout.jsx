@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 import MapView from "../map/MapView";
 import Footer from "./Footer";
 import { AnimatePresence } from "framer-motion";
-import useParkingData from '../../hooks/useParkingDataHook';
+import useParkingData from "../../hooks/useParkingDataHook";
 
 const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   const { t } = useTranslation(); // <-- Hook para traducciones
@@ -21,7 +21,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
     isLoading,
     error,
     selectParking,
-    getSpotsForLevel
+    getSpotsForLevel,
   } = useParkingData(selectedParkingId);
 
   const toggleSidebarVisibility = () => {
@@ -60,47 +60,49 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   };
 
   return (
-      <div>
-        <div className="flex flex-col h-screen">
-          <Header
-              userAlias={userAlias}
-              onLogout={onLogout}
-              currentTheme={currentTheme}
-              toggleTheme={toggleTheme}
-              isSidebarVisible={isSidebarVisible}
-              toggleSidebar={toggleSidebarVisibility}
-              onSearchClick={handleSearchClick}
-              // Si Header usa textos, ahí dentro ya debe usar t('clave')
-          />
-          {/* <Header /> */}
-          <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-white dark:bg-slate-800">
-            <div className="flex-1 h-full">
-              {/* Pasa la lista de parkings del hook a MapView */}
-              <MapView
-                  parkings={parkings} // Pasa la lista de parkings
-                  onMarkerClick={handleMarkerClick}
-                  selectedParkingId={selectedParkingId} // Pasa el ID seleccionado para que el mapa resalte el marcador
-              />
-            </div>
-            <AnimatePresence>
-              {isSidebarVisible && (
-                  <Sidebar
-                      // Pasa los detalles del parking seleccionado y el estado de carga/error del hook
-                      selectedParkingId={selectedParkingId}
-                      parkingDetails={selectedParkingDetails} // Pasa los detalles completos
-                      isLoading={isLoading}
-                      error={error}
-                      searchInputRef={searchInputRef}
-                      onAnimationComplete={onSidebarAnimationComplete}
-                      getSpotsForLevel={getSpotsForLevel} // Pasa la función para obtener detalles de plazas
-                      // Sidebar debe tener sus propios textos traducidos con t('clave')
-                  />
-              )}
-            </AnimatePresence>
+    <div>
+      <div className="flex flex-col h-screen">
+        <Header
+          userAlias={userAlias}
+          onLogout={onLogout}
+          currentTheme={currentTheme}
+          toggleTheme={toggleTheme}
+          isSidebarVisible={isSidebarVisible}
+          toggleSidebar={toggleSidebarVisibility}
+          onSearchClick={handleSearchClick}
+          // Si Header usa textos, ahí dentro ya debe usar t('clave')
+        />
+        {/* <Header /> */}
+        <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-white dark:bg-slate-800">
+          <div className="flex-1 h-full">
+            {/* Pasa la lista de parkings del hook a MapView */}
+            <MapView
+              parkings={parkings} // Pasa la lista de parkings
+              onMarkerClick={handleMarkerClick}
+              selectedParkingId={selectedParkingId} // Pasa el ID seleccionado para que el mapa resalte el marcador
+            />
           </div>
+          <AnimatePresence>
+            {isSidebarVisible && (
+              <Sidebar
+                // Pasa los detalles del parking seleccionado y el estado de carga/error del hook
+                selectedParkingId={selectedParkingId}
+                parkings={parkings} // Pasa la lista de parkings
+                onParkingSelect={handleMarkerClick} // Pasa la función de click
+                parkingDetails={selectedParkingDetails} // Pasa los detalles completos
+                isLoading={isLoading}
+                error={error}
+                searchInputRef={searchInputRef}
+                onAnimationComplete={onSidebarAnimationComplete}
+                getSpotsForLevel={getSpotsForLevel} // Pasa la función para obtener detalles de plazas
+                // Sidebar debe tener sus propios textos traducidos con t('clave')
+              />
+            )}
+          </AnimatePresence>
         </div>
-        {/* <Footer /> */}
       </div>
+      {/* <Footer /> */}
+    </div>
   );
 };
 

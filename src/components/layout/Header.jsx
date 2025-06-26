@@ -115,7 +115,7 @@ const Header = ({
                         target="_blank"
                         rel="noopener noreferrer"
                         title={t("Ver repositorio en GitHub")}
-                        className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-150"
+                        className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-150 mr-1 sm:mr-2"
                     >
                         <LiaGithub className="w-5 h-5" />
                     </a>

@@ -75,6 +75,12 @@ const MapView = ({ parkings, onMarkerClick, selectedParkingId }) => {
                     click: () => {
                       onMarkerClick(parking.id); // Llama a la función pasada por Layout
                     },
+                    mouseover: (event) => {
+                      event.target.openPopup(); // Abre el Popup en hover
+                    },
+                    mouseout: (event) => {
+                      event.target.closePopup(); // Cierra el Popup al quitar el ratón
+                    },
                   }}
               >
                 <Popup className="custom-popup-dark dark:custom-popup-dark">

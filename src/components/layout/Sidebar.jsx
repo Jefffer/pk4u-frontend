@@ -22,7 +22,7 @@ import {
 import { TbCar } from "react-icons/tb";
 
 import { motion } from "framer-motion";
-import { getParkingDetails } from "../../services/ParkingService";
+// import { getParkingDetails } from "../../services/ParkingService";
 import {
   getAvailabilityColor,
   getAvailabilityIcon,
@@ -36,6 +36,8 @@ const Sidebar = ({
   searchInputRef,
   onAnimationComplete,
   getSpotsForLevel, // Recibe la función para obtener plazas por nivel
+  parkings, // recibir la lista de parkings
+  onParkingSelect, // manejar la selección
 }) => {
   // Para traducción
   const { t } = useTranslation();
@@ -53,7 +55,7 @@ const Sidebar = ({
     useState(null);
   const [currentParkingNameForPopup, setCurrentParkingNameForPopup] =
     useState("");
-     const [activeLevelIdentifier, setActiveLevelIdentifier] = useState(null);
+  const [activeLevelIdentifier, setActiveLevelIdentifier] = useState(null);
 
   const handlePlantClick = useCallback(
     async (levelInfo) => {
@@ -96,7 +98,8 @@ const Sidebar = ({
           );
           // Encuentra el levelInfo más reciente de los parkingDetails actualizados
           const latestLevelInfo = parkingDetails.levelsInfo?.find(
-            (level) => (level.levelId || level.levelName) === activeLevelIdentifier
+            (level) =>
+              (level.levelId || level.levelName) === activeLevelIdentifier
           );
 
           if (latestLevelInfo) {
@@ -113,12 +116,15 @@ const Sidebar = ({
       };
       updatePopupSpots();
     }
-  }, [isSpotPopupOpen, parkingDetails, activeLevelIdentifier, getSpotsForLevel]);
-
+  }, [
+    isSpotPopupOpen,
+    parkingDetails,
+    activeLevelIdentifier,
+    getSpotsForLevel,
+  ]);
 
   const handleSearch = (term) => {
     setSearchTerm(term);
-    // Lógica de búsqueda (futura implementación)
     console.log("Buscando:", term);
     // Por ahora, si se busca, limpiamos los detalles del parking seleccionado
     // if (term) {
@@ -225,14 +231,11 @@ const Sidebar = ({
           {t("Cargando detalles...")}
         </p>
       )}
-      {error && (
-        <p className="text-red-500 dark:text-red-400 mt-4">
-          {error /* Puedes traducir si los errores son fijos */}
-        </p>
-      )}
+      {error && <p className="text-red-500 dark:text-red-400 mt-4">{error}</p>}
       {error && <p className="text-red-500 dark:text-red-400 mt-4">{error}</p>}
 
       {parkingDetails && !isLoading && !error && (
+        // --- VISTA DE DETALLES DE UN PARKING ---
         <div className="mt-6 space-y-5">
           {/* Imagen del Parking */}
           {!imageError && imageUrl && (
@@ -292,7 +295,9 @@ const Sidebar = ({
                   <span className="font-semibold text-slate-800 dark:text-slate-100">
                     {t("Precio")}:{" "}
                   </span>
-                  {t('{{price}} €/hour', { price: parkingDetails.price.toFixed(2) })}
+                  {t("{{price}} €/hour", {
+                    price: parkingDetails.price.toFixed(2),
+                  })}
                 </div>
               </div>
             )}
@@ -337,7 +342,10 @@ const Sidebar = ({
                         </span>
                       </div>
                       <span className="text-sm font-medium">
-                        {t("{{free}} / {{total}} libres", { free: level.spotsFree, total: level.spotsTotal })}
+                        {t("{{free}} / {{total}} libres", {
+                          free: level.spotsFree,
+                          total: level.spotsTotal,
+                        })}
                       </span>
                     </div>
                     {/* Barra de progreso */}
@@ -356,7 +364,9 @@ const Sidebar = ({
                       ></div>
                     </div>
                     <span className="block text-xs font-bold mt-1">
-                      {t('{{percentage}}% OCUPADO', { percentage: percentageFull })}
+                      {t("{{percentage}}% OCUPADO", {
+                        percentage: percentageFull,
+                      })}
                     </span>
                   </li>
                 );
@@ -370,18 +380,58 @@ const Sidebar = ({
         </div>
       )}
 
+      {/* --- VISTA DE LISTA GENERAL DE PARKINGS --- */}
       {!parkingDetails && !isLoading && !error && !searchTerm && (
-          <p className="text-slate-500 dark:text-slate-400 mt-4">
-            {t("Selecciona un parking en el mapa para ver sus detalles, o utiliza la barra de búsqueda.")}
-          </p>
+        // <p className="text-slate-500 dark:text-slate-400 mt-4">
+        //   {t(
+        //     "Selecciona un parking en el mapa para ver sus detalles, o utiliza la barra de búsqueda."
+        //   )}
+        // </p>
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-4 text-left border-b border-slate-200 dark:border-slate-700 pb-2">
+            {t("Parkings Disponibles")}
+          </h3>
+          <ul className="space-y-3">
+            {parkings.map((parking) => (
+              <li
+                key={parking.id}
+                onClick={() => onParkingSelect(parking.id)}
+                className="p-4 rounded-lg shadow-md cursor-pointer transition-all duration-300 ease-in-out bg-white dark:bg-slate-800 hover:shadow-lg transform hover:-translate-y-1 hover:bg-slate-200 dark:hover:bg-slate-700/50 border border-slate-200 dark:border-slate-700"
+              >
+                <div className="flex flex-col text-left">
+                  <h4 className="font-semibold text-md text-teal-600 dark:text-teal-400 mb-2">
+                    {parking.name}
+                  </h4>
+                  <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+                    <p className="flex items-start">
+                      <LiaMapMarkerSolid className="mr-2 mt-0.5 flex-shrink-0 h-4 w-4" />
+                      <span>{parking.address}</span>
+                    </p>
+                    <p className="flex items-center">
+                      <LiaCarSideSolid className="mr-2 flex-shrink-0 h-4 w-4" />
+                      <span>
+                        {t("{{total}} Plazas Totales", {
+                          total: parking.totalSpots,
+                        })}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       {!parkingDetails && searchTerm && (
-          <p className="text-slate-600 dark:text-slate-400 mt-4">
-            {t('Resultados para: "{{searchTerm}}" (funcionalidad de lista de búsqueda pendiente).', {
-              searchTerm
-            })}
-          </p>
+        <p className="text-slate-600 dark:text-slate-400 mt-4">
+          {t(
+            'Resultados para: "{{searchTerm}}" (funcionalidad de lista de búsqueda pendiente).',
+            {
+              searchTerm,
+            }
+          )}
+        </p>
       )}
 
       {/* {!parkingDetails && !isLoading && !error && (

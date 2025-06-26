@@ -34,6 +34,9 @@
   "Results for: \"{{term}}\" (search list feature pending).",
   "{{percentage}}% OCUPADO": "{{percentage}}% OCCUPIED",
 
+  "Parkings Disponibles": "Available Parkings",
+  "{{total}} Plazas Totales": "{{total}} Total Spots",
+
   "Cambiar a modo claro": "Switch to light mode",
   "Cambiar a modo oscuro": "Switch to dark mode",
 
