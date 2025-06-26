@@ -3,6 +3,7 @@ import {
   getAllParkings,
   getParkingDetails,
   getParkingSpotsForLevel,
+  searchParkings,
 } from "../services/ParkingService";
 
 const useParkingData = (initialSelectedParkingId = null) => {
@@ -13,6 +14,9 @@ const useParkingData = (initialSelectedParkingId = null) => {
   const [error, setError] = useState(null);
   const selectedParkingIdRef = useRef(initialSelectedParkingId);
   const isInitialLoad = useRef(true);
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Actualiza la referencia cuando initialSelectedParkingId cambia
   useEffect(() => {
@@ -98,6 +102,29 @@ const useParkingData = (initialSelectedParkingId = null) => {
     }
   }, []);
 
+  // Función para manejar la búsqueda de parkings
+  const handleSearch = useCallback(async (query) => {
+    setSearchTerm(query);
+
+    if (query.length < 3) {
+      setSearchResults([]);
+      setIsSearching(false);
+      return;
+    }
+
+    setIsSearching(true);
+    setError(null);
+    try {
+      const results = await searchParkings(query);
+      setSearchResults(results);
+    } catch (err) {
+      console.error("Error en la búsqueda:", err);
+      setError("Error al realizar la búsqueda.");
+    } finally {
+      setIsSearching(false);
+    }
+  }, []);
+
   return {
     parkings,
     selectedParkingDetails,
@@ -105,6 +132,10 @@ const useParkingData = (initialSelectedParkingId = null) => {
     error,
     selectParking,
     getSpotsForLevel,
+    handleSearch,
+    searchResults,
+    isSearching,
+    searchTerm,
   };
 };
 

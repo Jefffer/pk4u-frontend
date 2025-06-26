@@ -299,3 +299,40 @@ export const getParkingSpotsForLevel = async (parkingId, levelIdentifier) => {
     });
   }
 };
+
+export const searchParkings = async (query) => {
+  console.log(`Buscando parkings con el término: ${query}`);
+  // La búsqueda solo se activa con 3 o más caracteres.
+  if (query.length < 3) {
+    return [];
+  }
+  try {
+    const response = await fetch(`${API_BASE_URL}/search?query=${encodeURIComponent(query)}`);
+    if (!response.ok) {
+      // Si el backend devuelve 404, significa que no hay resultados.
+      if (response.status === 404) {
+        return [];
+      }
+      throw new Error(`Error HTTP! estado: ${response.status}`);
+    }
+    const data = await response.json();
+    // Mapeamos la respuesta para asegurar que coincida con la estructura del frontend
+    return data.map((p) => ({
+      id: p.id,
+      name: p.name,
+      address: p.address,
+      // latitude: p.coordinates.latitude,
+      // longitude: p.coordinates.longitude,
+      totalSpots: p.totalSpots,
+      // numLevels: p.levels,
+      // price: p.price,
+    }));
+  } catch (error) {
+    console.error(`Error al buscar parkings con "${query}":`, error);
+    // Para demostración, si falla la API, buscamos en los datos locales.
+    return bilbaoParkingsData.filter((p) =>
+      p.name.toLowerCase().includes(query.toLowerCase()) ||
+      p.address.toLowerCase().includes(query.toLowerCase())
+    );
+  }
+};

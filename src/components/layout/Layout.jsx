@@ -22,6 +22,10 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
     error,
     selectParking,
     getSpotsForLevel,
+    handleSearch, 
+    searchResults, 
+    isSearching, 
+    searchTerm,    
   } = useParkingData(selectedParkingId);
 
   const toggleSidebarVisibility = () => {
@@ -95,7 +99,10 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
                 searchInputRef={searchInputRef}
                 onAnimationComplete={onSidebarAnimationComplete}
                 getSpotsForLevel={getSpotsForLevel} // Pasa la función para obtener detalles de plazas
-                // Sidebar debe tener sus propios textos traducidos con t('clave')
+                onSearch={handleSearch}
+                searchResults={searchResults}
+                isSearching={isSearching}
+                searchTerm={searchTerm}
               />
             )}
           </AnimatePresence>

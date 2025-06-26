@@ -38,12 +38,16 @@ const Sidebar = ({
   getSpotsForLevel, // Recibe la función para obtener plazas por nivel
   parkings, // recibir la lista de parkings
   onParkingSelect, // manejar la selección
+  onSearch,
+  searchResults,
+  isSearching,
+  searchTerm,
 }) => {
   // Para traducción
   const { t } = useTranslation();
 
   // Recibe selectedParkingId
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
   // const [parkingDetails, setParkingDetails] = useState(null);
   // const [isLoading, setIsLoading] = useState(false);
   // const [error, setError] = useState(null);
@@ -126,11 +130,6 @@ const Sidebar = ({
   const handleSearch = (term) => {
     setSearchTerm(term);
     console.log("Buscando:", term);
-    // Por ahora, si se busca, limpiamos los detalles del parking seleccionado
-    // if (term) {
-    //   setParkingDetails(null);
-    //   setImageError(false);
-    // }
   };
 
   useEffect(() => {
@@ -220,11 +219,61 @@ const Sidebar = ({
           {parkingDetails ? "Detalle del Parking" : "Buscar Parkings"}
         </h2> */}
         <SearchBar
-          onSearch={handleSearch}
+          onSearch={onSearch} // Usamos directamente la función del hook
           placeholder={t("Introduce ubicación o nombre...")}
-          ref={searchInputRef} // Asignamos el ref al SearchBar
+          ref={searchInputRef}
         />
       </div>
+
+      {/* --- LÓGICA DE VISUALIZACIÓN --- */}
+      {/* Muestra "Cargando..." mientras se busca */}
+      {isSearching && (
+        <p className="text-slate-600 dark:text-slate-400 mt-4">
+          Buscando...
+        </p>
+      )}
+
+      {/* Muestra los resultados si hay un término de búsqueda válido y no se está cargando */}
+      {searchTerm.length >= 3 && !isSearching && (
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-4 text-left border-b border-slate-200 dark:border-slate-700 pb-2">
+            {searchResults.length > 0 ? "Resultados de la Búsqueda" : "Sin Resultados"}
+          </h3>
+          {searchResults.length > 0 ? (
+            <ul className="space-y-3">
+              {searchResults.map((parking) => (
+                <li
+                  key={parking.id}
+                  onClick={() => onParkingSelect(parking.id)}
+                  className="p-4 rounded-lg shadow-md cursor-pointer transition-all duration-300 ease-in-out bg-white dark:bg-slate-800 hover:shadow-lg transform hover:-translate-y-1 hover:bg-slate-200 dark:hover:bg-slate-700/50 border border-slate-200 dark:border-slate-700"
+                >
+                  <div className="flex flex-col text-left">
+                    <h4 className="font-semibold text-md text-teal-600 dark:text-teal-400 mb-2">
+                      {parking.name}
+                    </h4>
+                    <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+                      <p className="flex items-start">
+                        <LiaMapMarkerSolid className="mr-2 mt-0.5 flex-shrink-0 h-4 w-4" />
+                        <span>{parking.address}</span>
+                      </p>
+                      <p className="flex items-center">
+                        <LiaCarSideSolid className="mr-2 flex-shrink-0 h-4 w-4" />
+                        <span>
+                          {t("{{total}} Plazas Totales", { total: parking.totalSpots })}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-slate-500 dark:text-slate-400 mt-4">
+              No se encuentra información. Busca nuevamente.
+            </p>
+          )}
+        </div>
+      )}
 
       {isLoading && (
         <p className="text-slate-600 dark:text-slate-400 mt-4">
@@ -232,8 +281,9 @@ const Sidebar = ({
         </p>
       )}
       {error && <p className="text-red-500 dark:text-red-400 mt-4">{error}</p>}
-      {error && <p className="text-red-500 dark:text-red-400 mt-4">{error}</p>}
+      {/* {error && <p className="text-red-500 dark:text-red-400 mt-4">{error}</p>} */}
 
+      {/* Muestra los detalles del parking si hay uno seleccionado */}
       {parkingDetails && !isLoading && !error && (
         // --- VISTA DE DETALLES DE UN PARKING ---
         <div className="mt-6 space-y-5">
@@ -380,7 +430,7 @@ const Sidebar = ({
         </div>
       )}
 
-      {/* --- VISTA DE LISTA GENERAL DE PARKINGS --- */}
+      {/* Muestra la lista general de parkings si no hay búsqueda ni parking seleccionado */}
       {!parkingDetails && !isLoading && !error && !searchTerm && (
         // <p className="text-slate-500 dark:text-slate-400 mt-4">
         //   {t(
@@ -423,7 +473,7 @@ const Sidebar = ({
         </div>
       )}
 
-      {!parkingDetails && searchTerm && (
+      {/* {!parkingDetails && searchTerm && (
         <p className="text-slate-600 dark:text-slate-400 mt-4">
           {t(
             'Resultados para: "{{searchTerm}}" (funcionalidad de lista de búsqueda pendiente).',
@@ -432,7 +482,7 @@ const Sidebar = ({
             }
           )}
         </p>
-      )}
+      )} */}
 
       {/* {!parkingDetails && !isLoading && !error && (
         <div className="text-center mt-10 text-slate-500 dark:text-slate-400">
