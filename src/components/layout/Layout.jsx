@@ -26,6 +26,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
     searchResults, 
     isSearching, 
     searchTerm,    
+    clearSelectedParking,
   } = useParkingData(selectedParkingId);
 
   const toggleSidebarVisibility = () => {
@@ -74,6 +75,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
           isSidebarVisible={isSidebarVisible}
           toggleSidebar={toggleSidebarVisibility}
           onSearchClick={handleSearchClick}
+          onClearSelection={clearSelectedParking} 
           // Si Header usa textos, ahí dentro ya debe usar t('clave')
         />
         {/* <Header /> */}

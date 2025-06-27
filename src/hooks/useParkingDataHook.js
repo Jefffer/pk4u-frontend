@@ -125,6 +125,11 @@ const useParkingData = (initialSelectedParkingId = null) => {
     }
   }, []);
 
+  const clearSelectedParking = () => {
+    setSelectedParkingDetails(null);
+    selectedParkingIdRef.current = null;
+  };
+
   return {
     parkings,
     selectedParkingDetails,
@@ -136,6 +141,7 @@ const useParkingData = (initialSelectedParkingId = null) => {
     searchResults,
     isSearching,
     searchTerm,
+    clearSelectedParking,
   };
 };
 

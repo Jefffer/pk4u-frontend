@@ -2,16 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import SearchBar from "../ui/Searchbar";
 import SpotMatrixPopup from "../parking/SpotMatrixPopup";
-// import { getParkingSpotsForLevel } from "../../services/ParkingService";
-// import ParkingList from '../parking/ParkingList';
-
 import {
   FaMapMarkerAlt,
   FaLayerGroup,
   FaBuilding,
   FaCar,
 } from "react-icons/fa";
-import { HiOutlineLocationMarker } from "react-icons/hi";
 import {
   LiaMapMarkerSolid,
   LiaCarSolid,
@@ -19,10 +15,7 @@ import {
   LiaLayerGroupSolid,
   LiaEuroSignSolid,
 } from "react-icons/lia";
-import { TbCar } from "react-icons/tb";
-
 import { motion } from "framer-motion";
-// import { getParkingDetails } from "../../services/ParkingService";
 import {
   getAvailabilityColor,
   getAvailabilityIcon,
@@ -42,15 +35,10 @@ const Sidebar = ({
   searchResults,
   isSearching,
   searchTerm,
+  onClearSelection, // Función para limpiar la selección
 }) => {
   // Para traducción
   const { t } = useTranslation();
-
-  // Recibe selectedParkingId
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const [parkingDetails, setParkingDetails] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState(null);
   const [imageError, setImageError] = useState(false);
 
   // Para el Popup de la matriz de plazas
@@ -228,16 +216,16 @@ const Sidebar = ({
       {/* --- LÓGICA DE VISUALIZACIÓN --- */}
       {/* Muestra "Cargando..." mientras se busca */}
       {isSearching && (
-        <p className="text-slate-600 dark:text-slate-400 mt-4">
-          Buscando...
-        </p>
+        <p className="text-slate-600 dark:text-slate-400 mt-4">Buscando...</p>
       )}
 
       {/* Muestra los resultados si hay un término de búsqueda válido y no se está cargando */}
-      {searchTerm.length >= 3 && !isSearching && (
+      {searchTerm.length >= 3 && !isSearching && !parkingDetails && (
         <div className="mt-6">
           <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-4 text-left border-b border-slate-200 dark:border-slate-700 pb-2">
-            {searchResults.length > 0 ? "Resultados de la Búsqueda" : "Sin Resultados"}
+            {searchResults.length > 0
+              ? "Resultados de la Búsqueda"
+              : "Sin Resultados"}
           </h3>
           {searchResults.length > 0 ? (
             <ul className="space-y-3">
@@ -259,7 +247,9 @@ const Sidebar = ({
                       <p className="flex items-center">
                         <LiaCarSideSolid className="mr-2 flex-shrink-0 h-4 w-4" />
                         <span>
-                          {t("{{total}} Plazas Totales", { total: parking.totalSpots })}
+                          {t("{{total}} Plazas Totales", {
+                            total: parking.totalSpots,
+                          })}
                         </span>
                       </p>
                     </div>
@@ -275,6 +265,180 @@ const Sidebar = ({
         </div>
       )}
 
+      {/* Muestra los detalles del parking si hay uno seleccionado */}
+      {parkingDetails && !isLoading && !error && (
+        <div className="w-full">
+          {/* --- BOTÓN DE VOLVER (NUEVO) --- */}
+          {/* Solo se muestra si venimos de una búsqueda */}
+          {searchTerm.length >= 3 && (
+            <button
+              onClick={onClearSelection}
+              className="mb-4 flex items-center text-sm font-semibold text-sky-600 dark:text-sky-400 hover:underline"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 mr-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              Volver a los resultados
+            </button>
+          )}
+          
+          <div className="mt-6 space-y-5">
+            {/* Imagen del Parking */}
+            {!imageError && imageUrl && (
+              <img
+                src={imageUrl}
+                alt={t("Imagen de {{name}}", { name: parkingDetails.name })}
+                className="w-full h-auto max-h-48 object-cover rounded-lg mb-4 shadow-lg border border-slate-200 dark:border-slate-700"
+                onError={handleImageError}
+              />
+            )}
+            {imageError && (
+              <div className="w-full h-32 bg-slate-200 dark:bg-slate-700 flex flex-col items-center justify-center rounded-lg mb-4 text-slate-500 dark:text-slate-400 text-sm shadow">
+                <FaBuilding className="w-10 h-10 mb-2 text-slate-400 dark:text-slate-500" />
+                <span>{t("Imagen no disponible")}</span>
+              </div>
+            )}
+
+            {/* Nombre del Parking */}
+            <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-3 text-left">
+              {parkingDetails.name}
+            </h3>
+
+            {/* Detalles del Parking */}
+            <div className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
+              <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
+                <LiaMapMarkerSolid className="text-teal-500 dark:text-teal-400 mr-3 flex-shrink-0 h-5 w-5" />
+                <div className="text-left">
+                  {/* <span className="font-semibold text-slate-800 dark:text-slate-100">Dirección:</span> */}
+                  <p>{parkingDetails.address}</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
+                  <LiaLayerGroupSolid className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
+                  <div>
+                    <span className="font-semibold text-slate-800 dark:text-slate-100">
+                      {parkingDetails.numLevels}
+                    </span>
+                    <span className="ml-1">{t("Plantas")}</span>
+                  </div>
+                </div>
+                <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
+                  <LiaCarSideSolid className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
+                  <div>
+                    <span className="font-semibold text-slate-800 dark:text-slate-100">
+                      {parkingDetails.totalSpots}
+                    </span>
+                    <span className="ml-1">{t("Plazas Totales")}</span>
+                  </div>
+                </div>
+              </div>
+              {/* bloque para mostrar el precio */}
+              {parkingDetails.price !== undefined && (
+                <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
+                  <LiaEuroSignSolid className="text-teal-500 dark:text-teal-400 mr-3 flex-shrink-0 h-5 w-5" />
+                  <div className="text-left">
+                    <span className="font-semibold text-slate-800 dark:text-slate-100">
+                      {t("Precio")}:{" "}
+                    </span>
+                    {t("{{price}} €/hour", {
+                      price: parkingDetails.price.toFixed(2),
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <h4 className="text-lg font-semibold mt-6 mb-3 border-t border-slate-200 dark:border-slate-700 pt-4 text-left text-slate-800 dark:text-slate-100">
+              {t("Disponibilidad por Planta")}
+            </h4>
+            {parkingDetails.levelsInfo &&
+            parkingDetails.levelsInfo.length > 0 ? (
+              <ul className="space-y-3">
+                {parkingDetails.levelsInfo.map((level) => {
+                  const colorClass = getAvailabilityColor(
+                    level.spotsFree,
+                    level.spotsTotal
+                  );
+                  const IconComponent = getAvailabilityIcon(
+                    level.spotsFree,
+                    level.spotsTotal
+                  );
+
+                  // Calcula el porcentaje para la barra de progreso
+                  const percentageFull =
+                    level.spotsTotal > 0
+                      ? Math.round(
+                          100 - (level.spotsFree / level.spotsTotal) * 100
+                        )
+                      : 0;
+
+                  return (
+                    <li
+                      key={level.levelId || level.levelName}
+                      onClick={() => handlePlantClick(level)}
+                      className={`p-4 rounded-lg shadow-md cursor-pointer transition-all duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1 ${colorClass} flex flex-col`}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="flex items-center">
+                          {React.cloneElement(IconComponent, {
+                            className: "mr-2 flex-shrink-0 h-5 w-5",
+                          })}
+                          <span className="font-semibold text-md">
+                            {level.levelName}
+                          </span>
+                        </div>
+                        <span className="text-sm font-medium">
+                          {t("{{free}} / {{total}} libres", {
+                            free: level.spotsFree,
+                            total: level.spotsTotal,
+                          })}
+                        </span>
+                      </div>
+                      {/* Barra de progreso */}
+                      <div className="w-full bg-white/30 dark:bg-black/30 rounded-full h-1.5 mt-1">
+                        <div
+                          className={`h-1.5 rounded-full ${
+                            percentageFull >= 98
+                              ? "bg-red-300"
+                              : percentageFull > 75
+                              ? "bg-orange-300"
+                              : percentageFull > 40
+                              ? "bg-yellow-300"
+                              : "bg-green-300"
+                          }`}
+                          style={{ width: `${percentageFull}%` }}
+                        ></div>
+                      </div>
+                      <span className="block text-xs font-bold mt-1">
+                        {t("{{percentage}}% OCUPADO", {
+                          percentage: percentageFull,
+                        })}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                {t("No hay información de niveles disponible.")}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
       {isLoading && (
         <p className="text-slate-600 dark:text-slate-400 mt-4">
           {t("Cargando detalles...")}
@@ -283,155 +447,8 @@ const Sidebar = ({
       {error && <p className="text-red-500 dark:text-red-400 mt-4">{error}</p>}
       {/* {error && <p className="text-red-500 dark:text-red-400 mt-4">{error}</p>} */}
 
-      {/* Muestra los detalles del parking si hay uno seleccionado */}
-      {parkingDetails && !isLoading && !error && (
-        // --- VISTA DE DETALLES DE UN PARKING ---
-        <div className="mt-6 space-y-5">
-          {/* Imagen del Parking */}
-          {!imageError && imageUrl && (
-            <img
-              src={imageUrl}
-              alt={t("Imagen de {{name}}", { name: parkingDetails.name })}
-              className="w-full h-auto max-h-48 object-cover rounded-lg mb-4 shadow-lg border border-slate-200 dark:border-slate-700"
-              onError={handleImageError}
-            />
-          )}
-          {imageError && (
-            <div className="w-full h-32 bg-slate-200 dark:bg-slate-700 flex flex-col items-center justify-center rounded-lg mb-4 text-slate-500 dark:text-slate-400 text-sm shadow">
-              <FaBuilding className="w-10 h-10 mb-2 text-slate-400 dark:text-slate-500" />
-              <span>{t("Imagen no disponible")}</span>
-            </div>
-          )}
-
-          {/* Nombre del Parking */}
-          <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-3 text-left">
-            {parkingDetails.name}
-          </h3>
-
-          {/* Detalles del Parking */}
-          <div className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
-            <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
-              <LiaMapMarkerSolid className="text-teal-500 dark:text-teal-400 mr-3 flex-shrink-0 h-5 w-5" />
-              <div className="text-left">
-                {/* <span className="font-semibold text-slate-800 dark:text-slate-100">Dirección:</span> */}
-                <p>{parkingDetails.address}</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
-                <LiaLayerGroupSolid className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
-                <div>
-                  <span className="font-semibold text-slate-800 dark:text-slate-100">
-                    {parkingDetails.numLevels}
-                  </span>
-                  <span className="ml-1">{t("Plantas")}</span>
-                </div>
-              </div>
-              <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
-                <LiaCarSideSolid className="text-teal-500 dark:text-teal-400 mr-2 flex-shrink-0 h-5 w-5" />
-                <div>
-                  <span className="font-semibold text-slate-800 dark:text-slate-100">
-                    {parkingDetails.totalSpots}
-                  </span>
-                  <span className="ml-1">{t("Plazas Totales")}</span>
-                </div>
-              </div>
-            </div>
-            {/* bloque para mostrar el precio */}
-            {parkingDetails.price !== undefined && (
-              <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
-                <LiaEuroSignSolid className="text-teal-500 dark:text-teal-400 mr-3 flex-shrink-0 h-5 w-5" />
-                <div className="text-left">
-                  <span className="font-semibold text-slate-800 dark:text-slate-100">
-                    {t("Precio")}:{" "}
-                  </span>
-                  {t("{{price}} €/hour", {
-                    price: parkingDetails.price.toFixed(2),
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <h4 className="text-lg font-semibold mt-6 mb-3 border-t border-slate-200 dark:border-slate-700 pt-4 text-left text-slate-800 dark:text-slate-100">
-            {t("Disponibilidad por Planta")}
-          </h4>
-          {parkingDetails.levelsInfo && parkingDetails.levelsInfo.length > 0 ? (
-            <ul className="space-y-3">
-              {parkingDetails.levelsInfo.map((level) => {
-                const colorClass = getAvailabilityColor(
-                  level.spotsFree,
-                  level.spotsTotal
-                );
-                const IconComponent = getAvailabilityIcon(
-                  level.spotsFree,
-                  level.spotsTotal
-                );
-
-                // Calcula el porcentaje para la barra de progreso
-                const percentageFull =
-                  level.spotsTotal > 0
-                    ? Math.round(
-                        100 - (level.spotsFree / level.spotsTotal) * 100
-                      )
-                    : 0;
-
-                return (
-                  <li
-                    key={level.levelId || level.levelName}
-                    onClick={() => handlePlantClick(level)}
-                    className={`p-4 rounded-lg shadow-md cursor-pointer transition-all duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1 ${colorClass} flex flex-col`}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="flex items-center">
-                        {React.cloneElement(IconComponent, {
-                          className: "mr-2 flex-shrink-0 h-5 w-5",
-                        })}
-                        <span className="font-semibold text-md">
-                          {level.levelName}
-                        </span>
-                      </div>
-                      <span className="text-sm font-medium">
-                        {t("{{free}} / {{total}} libres", {
-                          free: level.spotsFree,
-                          total: level.spotsTotal,
-                        })}
-                      </span>
-                    </div>
-                    {/* Barra de progreso */}
-                    <div className="w-full bg-white/30 dark:bg-black/30 rounded-full h-1.5 mt-1">
-                      <div
-                        className={`h-1.5 rounded-full ${
-                          percentageFull >= 98
-                            ? "bg-red-300"
-                            : percentageFull > 75
-                            ? "bg-orange-300"
-                            : percentageFull > 40
-                            ? "bg-yellow-300"
-                            : "bg-green-300"
-                        }`}
-                        style={{ width: `${percentageFull}%` }}
-                      ></div>
-                    </div>
-                    <span className="block text-xs font-bold mt-1">
-                      {t("{{percentage}}% OCUPADO", {
-                        percentage: percentageFull,
-                      })}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <p className="text-sm text-slate-600 dark:text-slate-400">
-              {t("No hay información de niveles disponible.")}
-            </p>
-          )}
-        </div>
-      )}
-
       {/* Muestra la lista general de parkings si no hay búsqueda ni parking seleccionado */}
-      {!parkingDetails && !isLoading && !error && !searchTerm && (
+      {!parkingDetails && !isLoading && !error && !searchTerm.length < 3 && (
         // <p className="text-slate-500 dark:text-slate-400 mt-4">
         //   {t(
         //     "Selecciona un parking en el mapa para ver sus detalles, o utiliza la barra de búsqueda."
@@ -472,23 +489,6 @@ const Sidebar = ({
           </ul>
         </div>
       )}
-
-      {/* {!parkingDetails && searchTerm && (
-        <p className="text-slate-600 dark:text-slate-400 mt-4">
-          {t(
-            'Resultados para: "{{searchTerm}}" (funcionalidad de lista de búsqueda pendiente).',
-            {
-              searchTerm,
-            }
-          )}
-        </p>
-      )} */}
-
-      {/* {!parkingDetails && !isLoading && !error && (
-        <div className="text-center mt-10 text-slate-500 dark:text-slate-400">
-          <p>Selecciona un parking en el mapa para ver sus detalles.</p>
-        </div>
-      )} */}
 
       {/* Renderizar el Popup */}
       <SpotMatrixPopup

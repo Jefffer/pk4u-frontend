@@ -300,13 +300,14 @@ export const getParkingSpotsForLevel = async (parkingId, levelIdentifier) => {
   }
 };
 
+// Función para buscar parkings por nombre o dirección
 export const searchParkings = async (query) => {
   console.log(`Buscando parkings con el término: ${query}`);
   // La búsqueda solo se activa con 3 o más caracteres.
   if (query.length < 3) {
     return [];
   }
-  try {
+  // try {
     const response = await fetch(`${API_BASE_URL}/search?query=${encodeURIComponent(query)}`);
     if (!response.ok) {
       // Si el backend devuelve 404, significa que no hay resultados.
@@ -327,12 +328,12 @@ export const searchParkings = async (query) => {
       // numLevels: p.levels,
       // price: p.price,
     }));
-  } catch (error) {
-    console.error(`Error al buscar parkings con "${query}":`, error);
-    // Para demostración, si falla la API, buscamos en los datos locales.
-    return bilbaoParkingsData.filter((p) =>
-      p.name.toLowerCase().includes(query.toLowerCase()) ||
-      p.address.toLowerCase().includes(query.toLowerCase())
-    );
-  }
+  // } catch (error) {
+  //   console.error(`Error al buscar parkings con "${query}":`, error);
+  //   // Para demostración, si falla la API, buscamos en los datos locales.
+  //   return bilbaoParkingsData.filter((p) =>
+  //     p.name.toLowerCase().includes(query.toLowerCase()) ||
+  //     p.address.toLowerCase().includes(query.toLowerCase())
+  //   );
+  // }
 };
