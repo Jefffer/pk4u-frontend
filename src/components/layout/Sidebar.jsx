@@ -216,23 +216,23 @@ const Sidebar = ({
               <LiaArrowLeftSolid className="w-6 h-6" />
             </motion.button>
           )}
-         </AnimatePresence>
-  <AnimatePresence mode="wait">
-    <motion.div
-      key={cameFromSearch && parkingDetails ? "with-back" : "no-back"}
-      initial={{ x: 24, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: 24, opacity: 0 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      className="flex-1"
-    >
-      <SearchBar
-        onSearch={onSearch}
-        placeholder={t("Introduce ubicación o nombre...")}
-        ref={searchInputRef}
-      />
-    </motion.div>
-  </AnimatePresence>
+        </AnimatePresence>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={cameFromSearch && parkingDetails ? "with-back" : "no-back"}
+            initial={{ x: 24, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 24, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 500, damping: 25 }}
+            className="flex-1"
+          >
+            <SearchBar
+              onSearch={onSearch}
+              placeholder={t("Introduce ubicación o nombre...")}
+              ref={searchInputRef}
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* --- LÓGICA DE VISUALIZACIÓN --- */}
