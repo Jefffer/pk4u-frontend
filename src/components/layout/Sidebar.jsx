@@ -14,8 +14,9 @@ import {
   LiaCarSideSolid,
   LiaLayerGroupSolid,
   LiaEuroSignSolid,
+  LiaArrowLeftSolid,
 } from "react-icons/lia";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   getAvailabilityColor,
   getAvailabilityIcon,
@@ -36,7 +37,7 @@ const Sidebar = ({
   isSearching,
   searchTerm,
   onClearSelection, // Función para limpiar la selección
-  cameFromSearch, 
+  cameFromSearch,
 }) => {
   // Para traducción
   const { t } = useTranslation();
@@ -115,11 +116,6 @@ const Sidebar = ({
     activeLevelIdentifier,
     getSpotsForLevel,
   ]);
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-    console.log("Buscando:", term);
-  };
 
   useEffect(() => {
     // Si parkingDetails cambia a null (por ejemplo, al no haber un parking seleccionado)
@@ -203,15 +199,40 @@ const Sidebar = ({
                  overflow-y-auto subtle-scrollbar" // Para scroll si el contenido es largo
     >
       {/* <aside className="w-full md:w-1/3 lg:w-1/4 bg-slate-50 dark:bg-slate-800 p-6 border-r border-slate-200 dark:border-slate-700 overflow-y-auto"> */}
-      <div className="bg-transparent pt-2 pb-2 z-10">
-        {/* <h2 className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4">
-          {parkingDetails ? "Detalle del Parking" : "Buscar Parkings"}
-        </h2> */}
-        <SearchBar
-          onSearch={onSearch} // Usamos directamente la función del hook
-          placeholder={t("Introduce ubicación o nombre...")}
-          ref={searchInputRef}
-        />
+      <div className="bg-transparent pt-2 pb-2 z-10 flex items-center gap-2">
+        <AnimatePresence>
+          {cameFromSearch && parkingDetails && (
+            <motion.button
+              key="back-to-results"
+              initial={{ x: -24, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -24, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              onClick={onClearSelection}
+              className="p-2 rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors"
+              title={t("Volver a los resultados")}
+              aria-label={t("Volver a los resultados")}
+            >
+              <LiaArrowLeftSolid className="w-6 h-6" />
+            </motion.button>
+          )}
+         </AnimatePresence>
+  <AnimatePresence mode="wait">
+    <motion.div
+      key={cameFromSearch && parkingDetails ? "with-back" : "no-back"}
+      initial={{ x: 24, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 24, opacity: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      className="flex-1"
+    >
+      <SearchBar
+        onSearch={onSearch}
+        placeholder={t("Introduce ubicación o nombre...")}
+        ref={searchInputRef}
+      />
+    </motion.div>
+  </AnimatePresence>
       </div>
 
       {/* --- LÓGICA DE VISUALIZACIÓN --- */}
@@ -269,31 +290,6 @@ const Sidebar = ({
       {/* Muestra los detalles del parking si hay uno seleccionado */}
       {parkingDetails && !isLoading && !error && (
         <div className="w-full">
-          {/* --- BOTÓN DE VOLVER --- */}
-          {/* Solo se muestra si venimos de una búsqueda */}
-          {cameFromSearch && (
-            <button
-              onClick={onClearSelection}
-              className="mb-4 flex items-center text-sm font-semibold text-sky-600 dark:text-sky-400 hover:underline"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              Volver a los resultados
-            </button>
-          )}
-          
           <div className="mt-6 space-y-5">
             {/* Imagen del Parking */}
             {!imageError && imageUrl && (

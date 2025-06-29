@@ -23,7 +23,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
     error,
     selectParking,
     getSpotsForLevel,
-    handleSearch,
+    handleSearch : dataHookHandleSearch,
     searchResults,
     isSearching,
     searchTerm,
@@ -35,6 +35,11 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
         setSelectedParkingId(null);
         setCameFromSearch(false); // Reseteamos el estado al volver
     });
+  };
+
+  const handleSearch = (query) => {
+    // Llama a la función del hook pasándole el query y el callback para limpiar el ID
+    dataHookHandleSearch(query, setSelectedParkingId);
   };
 
   const toggleSidebarVisibility = () => {
