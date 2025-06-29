@@ -23,98 +23,88 @@ const useParkingData = (initialSelectedParkingId = null) => {
     selectedParkingIdRef.current = initialSelectedParkingId;
   }, [initialSelectedParkingId]);
 
-  const fetchData = useCallback(async (showLoading = false) => {
-    if (showLoading) {
-      setIsLoadingInitial(true);
-      setError(null);
-    }
-
-    try {
-      const allParkingsData = await getAllParkings();
-      setParkings(allParkingsData);
-
-      if (selectedParkingIdRef.current) {
-        // Solo actualizamos si hay un parking seleccionado
-        const details = await getParkingDetails(selectedParkingIdRef.current);
-        setSelectedParkingDetails(details);
-      }
-    } catch (err) {
-      console.error("Error fetching data:", err);
-      setError("No se pudieron cargar los datos de los parkings.");
-      // Si hay un error en una actualización en segundo plano, podríamos querer mantener los datos viejos
-      // y solo mostrar el error de forma sutil, o loggearlo. Aquí, simplemente actualizamos el estado de error.
-    } finally {
-      if (showLoading) {
-        // Solo oculta el loading si se mostró
-        setIsLoadingInitial(false);
-      }
-      isInitialLoad.current = false; // Ya no es la carga inicial
-    }
-  }, []);
-
+  // Efecto para la carga de datos inicial y la actualización periódica
   useEffect(() => {
+    // Definimos la función de carga dentro del efecto para evitar "stale closures"
+    const fetchData = async (showLoading = false) => {
+      if (showLoading) {
+        setIsLoading(true);
+        setError(null);
+      }
+      try {
+        // Obtenemos todos los parkings para mantener el mapa actualizado
+        const allParkingsData = await getAllParkings();
+        setParkings(allParkingsData);
+
+        // Si hay un parking seleccionado, refrescamos sus detalles
+        if (selectedParkingIdRef.current) {
+          const details = await getParkingDetails(selectedParkingIdRef.current);
+          setSelectedParkingDetails(details);
+        }
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("No se pudieron cargar los datos de los parkings.");
+      } finally {
+        if (showLoading) {
+          setIsLoading(false);
+        }
+      }
+    };
+
     // Primera carga al montar el componente
     fetchData(true);
 
-    // Configurar el intervalo para recargar los datos cada 10 segundos
-    const intervalId = setInterval(fetchData, 10000); // 10000 ms = 10 segundos
+    // Intervalo para recargar los datos cada 10 segundos
+    const intervalId = setInterval(() => fetchData(false), 10000);
 
-    // Limpiar el intervalo cuando el componente se desmonte
+    // Limpiamos el intervalo al desmontar el componente
     return () => clearInterval(intervalId);
-  }, [fetchData]); // El array vacío asegura que este efecto se ejecute solo una vez al montar
+  }, []); // El array vacío asegura que este efecto se ejecute solo una vez al montar
 
-  // Función para seleccionar un parking y cargar sus detalles (puede ser llamada desde MapView)
+  // Función para seleccionar un parking y cargar sus detalles
   const selectParking = useCallback(async (parkingId) => {
     selectedParkingIdRef.current = parkingId;
     if (parkingId) {
-      setIsLoadingInitial(true); // Siempre muestra loading al seleccionar un nuevo parking
+      setIsLoading(true);
       setError(null);
       try {
         const details = await getParkingDetails(parkingId);
         setSelectedParkingDetails(details);
       } catch (err) {
         console.error("Error fetching selected parking details:", err);
-        setError(
-          "No se pudieron cargar los detalles del parking seleccionado."
-        );
+        setError("No se pudieron cargar los detalles del parking seleccionado.");
       } finally {
-        setIsLoadingInitial(false);
+        setIsLoading(false); // Corregido el estado de loading
       }
     } else {
       setSelectedParkingDetails(null);
     }
   }, []);
 
-  // Función para obtener las plazas de un nivel específico (llamada desde Sidebar para el popup)
+  // Función para obtener las plazas de un nivel específico
   const getSpotsForLevel = useCallback(async (parkingId, levelIdentifier) => {
-    // No usamos setIsLoadingInitial aquí, ya que es para el popup, que gestiona su propio loading.
-    // Podrías añadir un estado de loading específico para el popup si quieres un spinner dentro del modal.
     try {
-      const spotsData = await getParkingSpotsForLevel(
-        parkingId,
-        levelIdentifier
-      );
-      return spotsData;
+      return await getParkingSpotsForLevel(parkingId, levelIdentifier);
     } catch (err) {
       console.error("Error fetching spots for level:", err);
-      // Aquí el error debe ser manejado por el componente que llama (Sidebar)
-      throw err; // Re-lanza el error para que Sidebar lo capture
+      throw err;
     }
   }, []);
 
   // Función para manejar la búsqueda de parkings
   const handleSearch = useCallback(async (query, clearSelectionCallback) => {
     setSearchTerm(query);
-    setSelectedParkingDetails(null);
-
-    if (clearSelectionCallback) {
-        clearSelectionCallback(null); // Ejecutar el callback para limpiar el ID en Layout
-    }
 
     if (query.length < 3) {
-      setSearchResults([]);
       setIsSearching(false);
+      setSearchResults([]);
       return;
+    }
+
+    // Limpiamos la selección actual al iniciar una búsqueda
+    setSelectedParkingDetails(null);
+    if (clearSelectionCallback) {
+      clearSelectionCallback(null);
     }
 
     setIsSearching(true);
@@ -130,18 +120,18 @@ const useParkingData = (initialSelectedParkingId = null) => {
     }
   }, []);
 
-  const clearSelectedParking = (callback) => {
+  const clearSelectedParking = useCallback((callback) => {
     setSelectedParkingDetails(null);
     selectedParkingIdRef.current = null;
     if (callback) {
-      callback(null); // Ejecutar el callback
+      callback(null);
     }
-  };
+  }, []);
 
   return {
     parkings,
     selectedParkingDetails,
-    isLoading: isLoadingInitial, // Exportamos isLoadingInitial como isLoading
+    isLoading, // Exportamos isLoadingInitial como isLoading
     error,
     selectParking,
     getSpotsForLevel,

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback  } from "react";
 import { useTranslation } from "react-i18next"; // <-- Importar useTranslation
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -30,17 +30,16 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
     clearSelectedParking,
   } = useParkingData(selectedParkingId);
 
-  const handleClearSelection = () => {
+  const handleClearSelection = useCallback(() => {
     clearSelectedParking(() => {
-        setSelectedParkingId(null);
-        setCameFromSearch(false); // Reseteamos el estado al volver
+      setSelectedParkingId(null);
+      setCameFromSearch(false);
     });
-  };
+  }, [clearSelectedParking]);
 
-  const handleSearch = (query) => {
-    // Llama a la función del hook pasándole el query y el callback para limpiar el ID
+  const handleSearch = useCallback((query) => {
     dataHookHandleSearch(query, setSelectedParkingId);
-  };
+  }, [dataHookHandleSearch]);
 
   const toggleSidebarVisibility = () => {
     setIsSidebarVisible(!isSidebarVisible);

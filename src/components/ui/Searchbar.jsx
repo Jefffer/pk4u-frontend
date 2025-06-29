@@ -9,10 +9,11 @@ const SearchBar = forwardRef(
     useEffect(() => {
       // Establece un temporizador para ejecutar la búsqueda 300ms después de que el usuario deje de escribir
       const handler = setTimeout(() => {
-        if (onSearch) {
+        // Solo ejecuta la búsqueda si el valor ha cambiado y tiene al menos 3 caracteres o está vacío
+        if (onSearch && (inputValue.length >= 3 || inputValue.length === 0)) {
           onSearch(inputValue);
         }
-      }, 300); // debounce de 300ms
+      }, 500); // debounce de 300ms
 
       // Limpia el temporizador si el usuario sigue escribiendo
       return () => {
