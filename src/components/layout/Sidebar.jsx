@@ -36,6 +36,7 @@ const Sidebar = ({
   isSearching,
   searchTerm,
   onClearSelection, // Función para limpiar la selección
+  cameFromSearch, 
 }) => {
   // Para traducción
   const { t } = useTranslation();
@@ -232,7 +233,7 @@ const Sidebar = ({
               {searchResults.map((parking) => (
                 <li
                   key={parking.id}
-                  onClick={() => onParkingSelect(parking.id)}
+                  onClick={() => onParkingSelect(parking.id, true)}
                   className="p-4 rounded-lg shadow-md cursor-pointer transition-all duration-300 ease-in-out bg-white dark:bg-slate-800 hover:shadow-lg transform hover:-translate-y-1 hover:bg-slate-200 dark:hover:bg-slate-700/50 border border-slate-200 dark:border-slate-700"
                 >
                   <div className="flex flex-col text-left">
@@ -268,9 +269,9 @@ const Sidebar = ({
       {/* Muestra los detalles del parking si hay uno seleccionado */}
       {parkingDetails && !isLoading && !error && (
         <div className="w-full">
-          {/* --- BOTÓN DE VOLVER (NUEVO) --- */}
+          {/* --- BOTÓN DE VOLVER --- */}
           {/* Solo se muestra si venimos de una búsqueda */}
-          {searchTerm.length >= 3 && (
+          {cameFromSearch && (
             <button
               onClick={onClearSelection}
               className="mb-4 flex items-center text-sm font-semibold text-sky-600 dark:text-sky-400 hover:underline"
@@ -448,7 +449,7 @@ const Sidebar = ({
       {/* {error && <p className="text-red-500 dark:text-red-400 mt-4">{error}</p>} */}
 
       {/* Muestra la lista general de parkings si no hay búsqueda ni parking seleccionado */}
-      {!parkingDetails && !isLoading && !error && !searchTerm.length < 3 && (
+      {!parkingDetails && !isLoading && !error && searchTerm.length < 3 && (
         // <p className="text-slate-500 dark:text-slate-400 mt-4">
         //   {t(
         //     "Selecciona un parking en el mapa para ver sus detalles, o utiliza la barra de búsqueda."

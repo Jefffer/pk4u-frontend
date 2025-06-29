@@ -105,6 +105,7 @@ const useParkingData = (initialSelectedParkingId = null) => {
   // Función para manejar la búsqueda de parkings
   const handleSearch = useCallback(async (query) => {
     setSearchTerm(query);
+    setSelectedParkingDetails(null);
 
     if (query.length < 3) {
       setSearchResults([]);
@@ -125,9 +126,12 @@ const useParkingData = (initialSelectedParkingId = null) => {
     }
   }, []);
 
-  const clearSelectedParking = () => {
+  const clearSelectedParking = (callback) => {
     setSelectedParkingDetails(null);
     selectedParkingIdRef.current = null;
+    if (callback) {
+      callback(null); // Ejecutar el callback
+    }
   };
 
   return {

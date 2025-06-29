@@ -13,6 +13,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
   const [selectedParkingId, setSelectedParkingId] = useState(null);
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const [shouldFocusSearch, setShouldFocusSearch] = useState(false); // estado para controlar el focus
+  const [cameFromSearch, setCameFromSearch] = useState(false);
   const searchInputRef = useRef(null); // Ref para el input del buscador del sidebar
 
   const {
@@ -22,22 +23,30 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
     error,
     selectParking,
     getSpotsForLevel,
-    handleSearch, 
-    searchResults, 
-    isSearching, 
-    searchTerm,    
+    handleSearch,
+    searchResults,
+    isSearching,
+    searchTerm,
     clearSelectedParking,
   } = useParkingData(selectedParkingId);
+
+  const handleClearSelection = () => {
+    clearSelectedParking(() => {
+        setSelectedParkingId(null);
+        setCameFromSearch(false); // Reseteamos el estado al volver
+    });
+  };
 
   const toggleSidebarVisibility = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
   // función para manejar el click en un marcador
-  const handleMarkerClick = (parkingId) => {
+  const handleMarkerClick = (parkingId, fromSearch = false) => {
     setSelectedParkingId(parkingId); // Actualiza el ID del parking seleccionado
     selectParking(parkingId); // Llama a la función para cargar los detalles del parking
     setShouldFocusSearch(false); // No queremos focus al hacer click en un marcador
+    setCameFromSearch(fromSearch);
     if (!isSidebarVisible) {
       // Si la sidebar está oculta
       setIsSidebarVisible(true); // Muéstrala
@@ -75,7 +84,7 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
           isSidebarVisible={isSidebarVisible}
           toggleSidebar={toggleSidebarVisibility}
           onSearchClick={handleSearchClick}
-          onClearSelection={clearSelectedParking} 
+          onClearSelection={clearSelectedParking}
           // Si Header usa textos, ahí dentro ya debe usar t('clave')
         />
         {/* <Header /> */}
@@ -105,6 +114,8 @@ const Layout = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
                 searchResults={searchResults}
                 isSearching={isSearching}
                 searchTerm={searchTerm}
+                onClearSelection={handleClearSelection}
+                cameFromSearch={cameFromSearch} 
               />
             )}
           </AnimatePresence>
