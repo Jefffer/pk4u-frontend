@@ -12,6 +12,7 @@ import {
   LiaLayerGroupSolid,
   LiaEuroSignSolid,
   LiaArrowLeftSolid,
+  LiaMoneyBillWaveAltSolid,
 } from "react-icons/lia";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -338,7 +339,7 @@ const Sidebar = ({
             )}
 
             {/* Nombre del Parking */}
-            <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-3 text-left">
+            <h3 className="text-xl font-semibold tracking-wide text-slate-800 dark:text-slate-100 mb-3 pb-2 text-left border-b border-slate-200 dark:border-slate-700">
               {parkingDetails.name}
             </h3>
 
@@ -374,7 +375,7 @@ const Sidebar = ({
               {/* bloque para mostrar el precio */}
               {parkingDetails.price !== undefined && (
                 <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
-                  <LiaEuroSignSolid className="text-teal-500 dark:text-teal-400 mr-3 flex-shrink-0 h-5 w-5" />
+                  <LiaMoneyBillWaveAltSolid className="text-teal-500 dark:text-teal-400 mr-3 flex-shrink-0 h-5 w-5" />
                   <div className="text-left">
                     <span className="font-semibold text-slate-800 dark:text-slate-100">
                       {t("Precio")}:{" "}
@@ -448,7 +449,7 @@ const Sidebar = ({
                           style={{ width: `${percentageFull}%` }}
                         ></div>
                       </div>
-                      <span className="block text-xs font-bold mt-1">
+                      <span className="block text-xs font-semibold tracking-wider mt-1">
                         {t("{{percentage}}% OCUPADO", {
                           percentage: percentageFull,
                         })}
