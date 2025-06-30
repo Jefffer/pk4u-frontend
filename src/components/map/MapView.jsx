@@ -8,7 +8,7 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import logoMarker from "../../../public/logo-transparent.png";
+import logoMarker from "/logo-transparent.png";
 
 import ReactDOMServer from "react-dom/server";
 import { GiPositionMarker } from "react-icons/gi";
@@ -26,7 +26,7 @@ L.Icon.Default.mergeOptions({
 
 // Función para crear un icono personalizado del logo
 const createLogoIcon = (isSelected) => {
-  const size = isSelected ? 45 : 30;
+  const size = isSelected ? 45 : 32;
   return new L.Icon({
     iconUrl: logoMarker,
     iconSize: [size * 0.8, size],

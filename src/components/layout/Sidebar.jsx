@@ -344,7 +344,7 @@ const Sidebar = ({
             </h3>
 
             {/* Detalles del Parking */}
-            <div className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
+            <div className="space-y-3 text-xs tracking-wide text-slate-700 dark:text-slate-300">
               <div className="flex items-center p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg shadow-sm">
                 <LiaMapMarkerSolid className="text-teal-500 dark:text-teal-400 mr-3 flex-shrink-0 h-5 w-5" />
                 <div className="text-left">
