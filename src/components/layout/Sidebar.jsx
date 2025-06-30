@@ -228,7 +228,7 @@ const Sidebar = ({
       {/* <aside className="w-full md:w-1/3 lg:w-1/4 bg-slate-50 dark:bg-slate-800 p-6 border-r border-slate-200 dark:border-slate-700 overflow-y-auto"> */}
       <div className="bg-transparent pt-2 pb-2 z-10 flex items-center gap-2">
         <AnimatePresence>
-          {cameFromSearch && parkingDetails && (
+          {parkingDetails && (
             <motion.button
               key="back-to-results"
               initial={{ x: -24, opacity: 0 }}
