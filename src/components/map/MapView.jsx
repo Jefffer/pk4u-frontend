@@ -36,22 +36,6 @@ const createLogoIcon = (isSelected) => {
   });
 };
 
-// Referencias a los marcadores
-const markerRefs = useRef({});
-
-// Efecto para abrir el popup del marcador seleccionado
-useEffect(() => {
-  if (selectedParkingId && markerRefs.current[selectedParkingId]) {
-    markerRefs.current[selectedParkingId].openPopup();
-  }
-  // cerrar popups de otros marcadores
-  Object.entries(markerRefs.current).forEach(([id, marker]) => {
-    if (id !== String(selectedParkingId)) {
-      marker.closePopup();
-    }
-  });
-}, [selectedParkingId]);
-
 // Función para crear un icono personalizado usando L.DivIcon
 // Esta función se puede usar para crear iconos personalizados basados en el estado del parking
 const createCustomDivIcon = (parking, isSelected) => {
@@ -72,8 +56,23 @@ const createCustomDivIcon = (parking, isSelected) => {
 
 const MapView = ({ parkings, onMarkerClick, selectedParkingId }) => {
   const { t } = useTranslation();
+  const bilbaoCoords = [43.2629126, -2.9350689];
 
-  const bilbaoCoords = [43.2629126, -2.9350689]; // Centro de Bilbao
+  // Referencias a los marcadores
+  const markerRefs = useRef({});
+
+  // Efecto para abrir el popup del marcador seleccionado
+  useEffect(() => {
+    if (selectedParkingId && markerRefs.current[selectedParkingId]) {
+      markerRefs.current[selectedParkingId].openPopup();
+    }
+    // Opcional: cerrar popups de otros marcadores
+    Object.entries(markerRefs.current).forEach(([id, marker]) => {
+      if (id !== String(selectedParkingId)) {
+        marker.closePopup();
+      }
+    });
+  }, [selectedParkingId]);
 
   return (
     <main className="h-full w-full bg-gray-300 dark:bg-gray-700 relative">
@@ -95,14 +94,14 @@ const MapView = ({ parkings, onMarkerClick, selectedParkingId }) => {
         {parkings.map((parking) => (
           <Marker
             key={parking.id}
-            icon={createLogoIcon(selectedParkingId === parking.id)} // Usa el icono personalizado
+            icon={createLogoIcon(selectedParkingId === parking.id)}
             position={[parking.latitude, parking.longitude]}
             eventHandlers={{
               click: () => {
-                onMarkerClick(parking.id); // Llama a la función pasada por Layout
+                onMarkerClick(parking.id);
               },
               mouseover: (event) => {
-                event.target.openPopup(); // Abre el Popup en hover
+                event.target.openPopup();
               },
               mouseout: (event) => {
                 // Solo cerrar si NO es el seleccionado
@@ -123,9 +122,7 @@ const MapView = ({ parkings, onMarkerClick, selectedParkingId }) => {
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   {parking.address}
                   <br />
-                  <span className="font-semibold">
-                    {t("Plazas totales")}:
-                  </span>{" "}
+                  <span className="font-semibold">{t("Plazas totales")}:</span>{" "}
                   {parking.totalSpots}
                 </p>
               </div>
