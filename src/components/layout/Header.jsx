@@ -14,7 +14,7 @@ import HeaderMenu from "../ui/DropdownMenu";
 import LanguageSwitcher from "../ui/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 
-const logoUrl = "/pk4u-v1.png";
+const logoUrl = "/pk4u-v2.png";
 
 const Header = ({
                     userAlias,

@@ -50,9 +50,9 @@ const AboutPage = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
               className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/60 to-teal-100/60 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-teal-900/40"/>
           <div className="relative z-10 flex flex-col items-center">
             <img
-                src="/pk4u-v1.png"
+                src="/logo-transparent.png"
                 alt={t("about.logoAlt", "PK4U Logo")}
-                className="h-20 w-20 mb-4 drop-shadow-xl rounded-full bg-white/80 dark:bg-slate-900/80 p-2"
+                className="w-30 mb-4 drop-shadow-xl p-2"
             />
             <h1 className="text-4xl sm:text-5xl font-extrabold text-teal-600 dark:text-teal-400 drop-shadow-lg">
               {t("about.heroTitle", "PK4U: Parking for You")}
@@ -145,7 +145,7 @@ const AboutPage = ({ userAlias, onLogout, currentTheme, toggleTheme }) => {
                   style={{filter: "grayscale(0.1) brightness(1.05)"}}
               />
               <img
-                  src="/pk4u-v1.png"
+                  src="/pk4u-v2.png"
                   alt={t("about.logoAlt")}
                   className="absolute -bottom-8 -left-8 h-20 w-20 rounded-full bg-white/80 dark:bg-slate-900/80 p-2 shadow-lg border-2 border-teal-200 dark:border-teal-800"
               />

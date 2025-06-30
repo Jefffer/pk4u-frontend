@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -8,6 +8,7 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import logoMarker from "../../../public/logo-transparent.png";
 
 import ReactDOMServer from "react-dom/server";
 import { GiPositionMarker } from "react-icons/gi";
@@ -18,10 +19,38 @@ import { useTranslation } from "react-i18next";
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
-      "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
+
+// Función para crear un icono personalizado del logo
+const createLogoIcon = (isSelected) => {
+  const size = isSelected ? 45 : 30;
+  return new L.Icon({
+    iconUrl: logoMarker,
+    iconSize: [size * 0.8, size],
+    iconAnchor: [size / 2, size], // El "pico" del marcador en la base
+    popupAnchor: [0, -size],
+    className: "bg-transparent border-none",
+  });
+};
+
+// Referencias a los marcadores
+const markerRefs = useRef({});
+
+// Efecto para abrir el popup del marcador seleccionado
+useEffect(() => {
+  if (selectedParkingId && markerRefs.current[selectedParkingId]) {
+    markerRefs.current[selectedParkingId].openPopup();
+  }
+  // cerrar popups de otros marcadores
+  Object.entries(markerRefs.current).forEach(([id, marker]) => {
+    if (id !== String(selectedParkingId)) {
+      marker.closePopup();
+    }
+  });
+}, [selectedParkingId]);
 
 // Función para crear un icono personalizado usando L.DivIcon
 // Esta función se puede usar para crear iconos personalizados basados en el estado del parking
@@ -32,7 +61,7 @@ const createCustomDivIcon = (parking, isSelected) => {
 
   return new L.DivIcon({
     html: ReactDOMServer.renderToString(
-        <GiPositionMarker className={`${iconColor} ${shadow} ${iconSize}`} />
+      <GiPositionMarker className={`${iconColor} ${shadow} ${iconSize}`} />
     ),
     className: "bg-transparent border-none", // Para evitar estilos por defecto de L.DivIcon
     iconSize: [isSelected ? 48 : 36, isSelected ? 48 : 36],
@@ -47,61 +76,66 @@ const MapView = ({ parkings, onMarkerClick, selectedParkingId }) => {
   const bilbaoCoords = [43.2629126, -2.9350689]; // Centro de Bilbao
 
   return (
-      <main className="h-full w-full bg-gray-300 dark:bg-gray-700 relative">
-        <MapContainer
-            center={bilbaoCoords}
-            zoom={14}
-            scrollWheelZoom={true}
-            zoomControl={false}
-            className="h-full w-full"
-        >
-          <TileLayer
-              attribution={t(
-                  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
-              )}
-              url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
-              maxZoom={19}
-          />
+    <main className="h-full w-full bg-gray-300 dark:bg-gray-700 relative">
+      <MapContainer
+        center={bilbaoCoords}
+        zoom={14}
+        scrollWheelZoom={true}
+        zoomControl={false}
+        className="h-full w-full"
+      >
+        <TileLayer
+          attribution={t(
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
+          )}
+          url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+          maxZoom={19}
+        />
 
-          {parkings.map((parking) => (
-              <Marker
-                  key={parking.id}
-                  icon={createCustomDivIcon(
-                      parking,
-                      selectedParkingId === parking.id
-                  )} // Usa el icono personalizado
-                  position={[parking.latitude, parking.longitude]}
-                  eventHandlers={{
-                    click: () => {
-                      onMarkerClick(parking.id); // Llama a la función pasada por Layout
-                    },
-                    mouseover: (event) => {
-                      event.target.openPopup(); // Abre el Popup en hover
-                    },
-                    mouseout: (event) => {
-                      event.target.closePopup(); // Cierra el Popup al quitar el ratón
-                    },
-                  }}
-              >
-                <Popup className="custom-popup-dark dark:custom-popup-dark">
-                  <div className="flex flex-col">
-                    <h3 className="text-lg font-semibold text-slate-200">
-                      {parking.name}
-                    </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {parking.address}
-                      <br />
-                      <span className="font-semibold">{t("Plazas totales")}:</span>{" "}
-                      {parking.totalSpots}
-                    </p>
-                  </div>
-                </Popup>
-              </Marker>
-          ))}
+        {parkings.map((parking) => (
+          <Marker
+            key={parking.id}
+            icon={createLogoIcon(selectedParkingId === parking.id)} // Usa el icono personalizado
+            position={[parking.latitude, parking.longitude]}
+            eventHandlers={{
+              click: () => {
+                onMarkerClick(parking.id); // Llama a la función pasada por Layout
+              },
+              mouseover: (event) => {
+                event.target.openPopup(); // Abre el Popup en hover
+              },
+              mouseout: (event) => {
+                // Solo cerrar si NO es el seleccionado
+                if (selectedParkingId !== parking.id) {
+                  event.target.closePopup();
+                }
+              },
+            }}
+            ref={(ref) => {
+              if (ref) markerRefs.current[parking.id] = ref;
+            }}
+          >
+            <Popup className="custom-popup-dark dark:custom-popup-dark">
+              <div className="flex flex-col">
+                <h3 className="text-lg font-semibold text-slate-200">
+                  {parking.name}
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {parking.address}
+                  <br />
+                  <span className="font-semibold">
+                    {t("Plazas totales")}:
+                  </span>{" "}
+                  {parking.totalSpots}
+                </p>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
 
-          <ZoomControl position="topright" />
-        </MapContainer>
-      </main>
+        <ZoomControl position="topright" />
+      </MapContainer>
+    </main>
   );
 };
 

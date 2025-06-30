@@ -1,12 +1,7 @@
-// LoginFace.jsx
-
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-// Asumiendo que tu logo se llama 'pk4u-logo.svg' y está en la carpeta 'public/'
-// Si el nombre es "pk4u-vq.svg" o similar, ajústalo.
-// Si está en src/assets, importa la imagen directamente: import pk4uLogo from '../../assets/pk4u-logo.svg';
-const logoUrl = "/pk4u-v1.png"; // Ruta relativa a la carpeta public. Ajusta si es necesario.
+const logoUrl = "/pk4u-v2.png";
 
 const AliasScreen = ({ onAliasSubmit }) => {
   const [alias, setAlias] = useState("");
