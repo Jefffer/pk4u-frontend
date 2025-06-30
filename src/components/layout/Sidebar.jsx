@@ -3,10 +3,7 @@ import { useTranslation } from "react-i18next";
 import SearchBar from "../ui/Searchbar";
 import SpotMatrixPopup from "../parking/SpotMatrixPopup";
 import {
-  FaMapMarkerAlt,
-  FaLayerGroup,
   FaBuilding,
-  FaCar,
 } from "react-icons/fa";
 import {
   LiaMapMarkerSolid,
@@ -35,7 +32,7 @@ const Sidebar = ({
   onSearch,
   searchResults,
   isSearching,
-  searchTerm,
+  searchTerm, // Término de búsqueda actual
   onClearSelection, // Función para limpiar la selección
   cameFromSearch,
 }) => {
@@ -50,6 +47,36 @@ const Sidebar = ({
   const [currentParkingNameForPopup, setCurrentParkingNameForPopup] =
     useState("");
   const [activeLevelIdentifier, setActiveLevelIdentifier] = useState(null);
+
+  // --- SINCRONIZACIÓN Y DEBOUNCING DE LA BÚSQUEDA ---
+  // Estado local para el valor del input del buscador
+  const [localInputValue, setLocalInputValue] = useState("");
+
+  // Sincroniza el input con el término de búsqueda del hook.
+  // Esto asegura que si volvemos atrás, el input muestre la búsqueda anterior.
+  useEffect(() => {
+    setLocalInputValue(searchTerm);
+  }, [searchTerm]);
+
+  // Efecto para realizar la búsqueda con debounce.
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      // Solo busca si el valor del input es diferente al término ya buscado.
+      // Esto evita búsquedas redundantes al navegar atrás.
+      if (localInputValue !== searchTerm) {
+        onSearch(localInputValue);
+      }
+    }, 500); // debounce
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [localInputValue, searchTerm, onSearch]);
+
+  const handleSearchChange = (e) => {
+    setLocalInputValue(e.target.value);
+  };
+  // --- FIN DE LÓGICA DE BÚSQUEDA ---
 
   const handlePlantClick = useCallback(
     async (levelInfo) => {
@@ -219,17 +246,20 @@ const Sidebar = ({
         </AnimatePresence>
         <AnimatePresence mode="wait">
           <motion.div
-            key={cameFromSearch && parkingDetails ? "with-back" : "no-back"}
-            initial={{ x: 24, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: 24, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 500, damping: 25 }}
+            initial={false}
+            animate={{
+              marginLeft: cameFromSearch && parkingDetails ? 0 : 0,
+              x: cameFromSearch && parkingDetails ? 0 : 0,
+              opacity: 1,
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
             className="flex-1"
           >
             <SearchBar
-              onSearch={onSearch}
-              placeholder={t("Introduce ubicación o nombre...")}
               ref={searchInputRef}
+              placeholder={t("Introduce ubicación o nombre...")}
+              value={localInputValue}
+              onChange={handleSearchChange}
             />
           </motion.div>
         </AnimatePresence>
