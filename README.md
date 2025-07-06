@@ -39,26 +39,45 @@ yarn install
 ### 3. Environment Setup
 The application needs to connect to the backend's API Gateway, which acts as the single entry point for the entire system. By default, it expects the gateway to be running at `http://localhost:8080`.
 
-If your API Gateway is running on a different port or address, you can create a .env file in the project root and specify the base URL:
+
+### 4. Running the Application
+Now, you can start the Vite development server:
+```bash
+npm run dev
+```
+
+The application should be available at http://localhost:5173 (or whichever port Vite indicates in your terminal).
+
+### 5. Running the Full System
+Keep in mind that the frontend is only the **presentation layer** of the PK4U system. for full functionality, you need to have all the backend services running.
+
+Make sure to clone and run the following repositories in the recommended order:
+
+| Order | Component             | Description                                                                                          | Repository                                                                    |
+| :---: | --------------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+|   1   | **Eureka Server** | Essential service for dynamic discovery and registration of all microservices.                       | [eureka_service_tfm](https://github.com/gecamara/eureka_service_tfm)       |
+|   2   | **API Gateway** | Single entry point for all requests, routing traffic from the frontend to the appropriate services.  | [gateway_service](https://github.com/gecamara/gateway_service)         |
+|   3   | **PK4U Backend** | The core application that centralizes business logic and communicates with the database.             | [PK4U-backend](https://github.com/MMunozLo/PK4U-backend.git)         |
+|   4   | **DB Scripts** | Scripts to initialize the MongoDB database with the required data structure.                         | [pk4u-db-scripts](https://github.com/Jefffer/pk4u-db-scripts)           |
+|   5   | **Simulator** | Emulates IoT sensor behavior, generating and sending real-time parking occupancy data.               | [Simulator](https://github.com/MMunozLo/Simulator)                   |
 
 
 ---
 ## 🌟 What is PK4U?
 
-PK4U is an open-source web application that allows real-time visualization of parking spot availability in various urban establishments. Its objective is to centralize this information on a single accessible platform for citizens, thus improving urban mobility in the context of a Smart City.
+In modern cities, finding parking has become a daily challenge that causes stress and unnecessarily increases traffic and pollution. This phenomenon, known as _cruising for parking_, negatively affects the quality of life and urban sustainability.
 
-### 💻 Main Components of PK4U:
+**PK4U** was created to address this problem by offering an open-source solution that centralizes and displays real-time parking availability in a city. Our platform unifies data from multiple parking facilities into a single interface with interactive maps, empowering drivers to make better decisions and contributing to smarter, more sustainable mobility.
 
-The PK4U system consists of several parts, working together to offer a comprehensive parking management solution:
+### 💻 Core Technology Stack
 
-* **Frontend (This Repository)**: The intuitive and reactive user interface developed with **React.js** that allows citizens to view parking lots on an interactive map and check their real-time availability.
-    * **Frontend Repository**: [https://github.com/Jefffer/pk4u-frontend](https://github.com/Jefffer/pk4u-frontend)
-* **Backend**: The robust server built with **Java** and **Spring Boot** that handles business logic, processes occupancy data updates (simulated by these scripts), and serves information to the Frontend via a RESTful API.
-    * **Backend Repository**: [https://github.com/MMunozLo/PK4U-backend.git](https://github.com/MMunozLo/PK4U-backend.git)
-* **DB Scripts**: This tool is crucial for initializing and maintaining the database, inserting the spot structure and generating detailed spot information for each floor.
-* **Simulator**
-* **API Gateway**
-* **Eureka**
+| Área                | Tecnologías Clave                                                              |
+| ------------------- | ------------------------------------------------------------------------------ |
+| **Frontend** | `React` `Vite` `React Router` `Tailwind CSS` `Leaflet` `i18next`                 |
+| **Backend** | `Java` `Spring Boot` `Spring Cloud`                                            |
+| **Data & Search**| `MongoDB` `Elasticsearch`                                                      |
+| **Communication** | `REST API` `RabbitMQ`                                                          |
+| **Architecture** | `Microservicios` `API Gateway` `Service Registry (Eureka)`                     |
 
 ### 🤝 Contribution
 Your help is welcome! If you wish to contribute to this script project, please feel free to:
