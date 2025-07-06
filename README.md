@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/logo-transparent.png" alt="PK4U Logo" width="160"/>
+</p>
+
 # 🅿️ PK4U: Parking for You - Frontend
 **PK4U** is an open-source web application designed for the intelligent management of parking spaces in urban environments. The goal is to centralize information on parking availability onto a single platform, allowing citizens to quickly and efficiently locate parking lots with available spaces, thereby improving mobility within a Smart City context.
 
