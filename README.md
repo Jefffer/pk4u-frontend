@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/logo-transparent.png" alt="PK4U Logo" width="160"/>
+  <img src="public/logo-transparent.png" alt="PK4U Logo" width="150"/>
 </p>
 
 # 🅿️ PK4U: Parking for You - Frontend
