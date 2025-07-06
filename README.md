@@ -25,7 +25,7 @@ git clone https://github.com/Jefffer/pk4u-frontend.git
 cd pk4u-frontend
 ```
 
-### 2. Install Dependencies
+### 2. Install Dependencies 📦
 Once inside the project directory, install all the necessary dependencies.
 
 With npm:
@@ -40,11 +40,11 @@ Or with yarn:
 yarn install
 ```
 
-### 3. Environment Setup
+### 3. Environment Setup 🛠️
 The application needs to connect to the backend's API Gateway, which acts as the single entry point for the entire system. By default, it expects the gateway to be running at `http://localhost:8080`.
 
 
-### 4. Running the Application
+### 4. Running the Application ▶️
 Now, you can start the Vite development server:
 ```bash
 npm run dev
@@ -52,7 +52,7 @@ npm run dev
 
 The application should be available at http://localhost:5173 (or whichever port Vite indicates in your terminal).
 
-### 5. Running the Full System
+### 5. Running the Full System 🌐
 Keep in mind that the frontend is only the **presentation layer** of the PK4U system. for full functionality, you need to have all the backend services running.
 
 Make sure to clone and run the following repositories in the recommended order:
