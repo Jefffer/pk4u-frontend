@@ -1,6 +1,18 @@
 <p align="center">
-  <img src="public/logo-transparent.png" alt="PK4U Logo" width="150"/>
+  <img src="public/logo-transparent.png" alt="PK4U Logo" width="120"/>
 </p>
+
+<p align="center">
+  <img src="https://camo.githubusercontent.com/ed0af164ae05d97fefe3d5abb213aab6a5c71ff229c2000b2bfc63e016971ddc/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f64786766366f68766f2f696d6167652f75706c6f61642f76313732393031323936302f737461727465722d766974652d72656163742d6d696e5f6b7676326c782e706e67" alt="vite-react" width="280"/>
+</p>
+
+<!--
+<p align="center">
+  <img src="https://w7.pngwing.com/pngs/403/269/png-transparent-react-react-native-logos-brands-in-colors-icon-thumbnail.png" alt="react"/>
+  <img src="https://w7.pngwing.com/pngs/293/485/png-transparent-tailwind-css-hd-logo.png" alt="react" width="120"/>
+  <img src="https://pngate.com/wp-content/uploads/2025/05/vite-logo-lightning-bolt-gradient-vector-design-1.png" alt="react" width="120"/>  
+</p>
+-->
 
 # 🅿️ PK4U: Parking for You - Frontend
 **PK4U** is an open-source web application designed for the intelligent management of parking spaces in urban environments. The goal is to centralize information on parking availability onto a single platform, allowing citizens to quickly and efficiently locate parking lots with available spaces, thereby improving mobility within a Smart City context.
@@ -64,7 +76,7 @@ Make sure to clone and run the following repositories in the recommended order:
 |   3   | **PK4U Backend** | The core application that centralizes business logic and communicates with the database.             | [PK4U-backend](https://github.com/MMunozLo/PK4U-backend.git)         |
 |   4   | **DB Scripts** | Scripts to initialize the MongoDB database with the required data structure.                         | [pk4u-db-scripts](https://github.com/Jefffer/pk4u-db-scripts)           |
 |   5   | **Simulator** | Emulates IoT sensor behavior, generating and sending real-time parking occupancy data.               | [Simulator](https://github.com/MMunozLo/Simulator)                   |
-
+|   6   | **PK4U Frontend** | Presentation layer of the PK4U system developed with React, Vite and TailwindCSS              | [pk4u-frontend](https://github.com/Jefffer/pk4u-frontend)                   |
 
 ---
 ## 🌟 What is PK4U?
