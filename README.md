@@ -20,11 +20,11 @@ PK4U is an open-source web application that allows real-time visualization of pa
 
 The PK4U system consists of several parts, working together to offer a comprehensive parking management solution:
 
-* **Frontend**: The intuitive and reactive user interface developed with **React.js** that allows citizens to view parking lots on an interactive map and check their real-time availability.
+* **Frontend (This Repository)**: The intuitive and reactive user interface developed with **React.js** that allows citizens to view parking lots on an interactive map and check their real-time availability.
     * **Frontend Repository**: [https://github.com/Jefffer/pk4u-frontend](https://github.com/Jefffer/pk4u-frontend)
 * **Backend**: The robust server built with **Java** and **Spring Boot** that handles business logic, processes occupancy data updates (simulated by these scripts), and serves information to the Frontend via a RESTful API.
     * **Backend Repository**: [https://github.com/MMunozLo/PK4U-backend.git](https://github.com/MMunozLo/PK4U-backend.git)
-* **DB Scripts (This Repository)**: This tool is crucial for initializing and maintaining the database, inserting the spot structure and generating detailed spot information for each floor.
+* **DB Scripts**: This tool is crucial for initializing and maintaining the database, inserting the spot structure and generating detailed spot information for each floor.
 * **Simulator**
 * **API Gateway**
 * **Eureka**
