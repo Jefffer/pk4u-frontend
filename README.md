@@ -12,7 +12,6 @@
   <img src="https://w7.pngwing.com/pngs/293/485/png-transparent-tailwind-css-hd-logo.png" alt="react" width="120"/>
   <img src="https://pngate.com/wp-content/uploads/2025/05/vite-logo-lightning-bolt-gradient-vector-design-1.png" alt="react" width="120"/>  
 </p>
--->
 
 <h1 align="center">
   <img src="https://github.com/Jefffer/pk4u-frontend/blob/main/public/logo-transparent.png" alt="PK4U Logo" width="50"/>  
@@ -22,6 +21,22 @@
 <p align="center">
    <img src="https://camo.githubusercontent.com/ed0af164ae05d97fefe3d5abb213aab6a5c71ff229c2000b2bfc63e016971ddc/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f64786766366f68766f2f696d6167652f75706c6f61642f76313732393031323936302f737461727465722d766974652d72656163742d6d696e5f6b7676326c782e706e67" alt="vite-react" width="250"/>
 </p>
+-->
+<div align="center">
+  <img src="https://github.com/Jefffer/pk4u-frontend/blob/main/public/logo-transparent.png?raw=true" alt="PK4U Logo" width="80"/>
+  <h1>PK4U: Parking for You - Frontend</h1>
+  <p>
+    <em>The interactive web interface for the PK4U Smart Parking System.</em>
+  </p>
+  <p>
+    <img src="https://img.shields.io/badge/Node.js-18+-green.svg?style=for-the-badge&logo=node.js&logoColor=green" alt="Node.js"/>
+    <img src="https://img.shields.io/badge/React-19-blue.svg?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React 19"/>
+    <img src="https://img.shields.io/badge/Vite-5-purple.svg?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 5"/>
+    <img src="https://img.shields.io/badge/Tailwind_CSS-4-cyan.svg?style=for-the-badge&logo=tailwindcss&logoColor=cyan" alt="Tailwind CSS 4"/>
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License: MIT"/>
+  </p>
+</div>
+
 
 **PK4U** is an open-source web application designed for the intelligent management of parking spaces in urban environments. The goal is to centralize information on parking availability onto a single platform, allowing citizens to quickly and efficiently locate parking lots with available spaces, thereby improving mobility within a Smart City context.
 
