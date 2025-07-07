@@ -1,3 +1,4 @@
+<!--
 <p align="center">
   <img src="public/logo-transparent.png" alt="PK4U Logo" width="120"/>
 </p>
@@ -6,7 +7,6 @@
   <img src="https://camo.githubusercontent.com/ed0af164ae05d97fefe3d5abb213aab6a5c71ff229c2000b2bfc63e016971ddc/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f64786766366f68766f2f696d6167652f75706c6f61642f76313732393031323936302f737461727465722d766974652d72656163742d6d696e5f6b7676326c782e706e67" alt="vite-react" width="280"/>
 </p>
 
-<!--
 <p align="center">
   <img src="https://w7.pngwing.com/pngs/403/269/png-transparent-react-react-native-logos-brands-in-colors-icon-thumbnail.png" alt="react"/>
   <img src="https://w7.pngwing.com/pngs/293/485/png-transparent-tailwind-css-hd-logo.png" alt="react" width="120"/>
@@ -14,7 +14,15 @@
 </p>
 -->
 
-# 🅿️ PK4U: Parking for You - Frontend
+<h1 align="center">
+  <img src="https://github.com/Jefffer/pk4u-frontend/blob/main/public/logo-transparent.png" alt="PK4U Logo" width="50"/>  
+  PK4U: Parking for You - Frontend
+</h1>
+
+<p align="center">
+   <img src="https://camo.githubusercontent.com/ed0af164ae05d97fefe3d5abb213aab6a5c71ff229c2000b2bfc63e016971ddc/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f64786766366f68766f2f696d6167652f75706c6f61642f76313732393031323936302f737461727465722d766974652d72656163742d6d696e5f6b7676326c782e706e67" alt="vite-react" width="250"/>
+</p>
+
 **PK4U** is an open-source web application designed for the intelligent management of parking spaces in urban environments. The goal is to centralize information on parking availability onto a single platform, allowing citizens to quickly and efficiently locate parking lots with available spaces, thereby improving mobility within a Smart City context.
 
 ## 🚀 Getting Started
