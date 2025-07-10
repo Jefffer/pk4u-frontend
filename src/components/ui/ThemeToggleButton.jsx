@@ -1,5 +1,4 @@
 import React from "react";
-import { FaSun, FaMoon } from "react-icons/fa";
 import { LiaSunSolid, LiaMoonSolid } from "react-icons/lia";
 
 import { useTranslation } from "react-i18next";  // Import para traducción
