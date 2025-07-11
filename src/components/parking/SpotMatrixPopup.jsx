@@ -1,9 +1,6 @@
-// src/components/ui/SpotMatrixPopup.jsx
 import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { CiParking1 } from "react-icons/ci";
 import { TbParkingCircleFilled } from "react-icons/tb";
-import { LiaCarSolid } from "react-icons/lia";
 import { MdDirectionsCar } from "react-icons/md";
 
 const SpotMatrixPopup = ({
@@ -46,25 +43,6 @@ const SpotMatrixPopup = ({
       onClose();
     }
   };
-
-  // Asumimos que levelData.spots es un array de objetos:
-  // [{ spotNumber: 'A1', occupied: true }, { spotNumber: 'A2', occupied: false }, ...]
-  // O si solo tienes el número total y las ocupadas, necesitarás generarlos o adaptar la lógica.
-  // Por ahora, basémonos en la estructura que mencionaste: "mostrará 30 unidades junto con su respectivo numero de plaza"
-  // y que "vendrá desde base de datos a través del API, la información especifica de cada plaza".
-
-  // Ejemplo de cómo podrías estructurar 'spots' si recibes todos los detalles:
-  // const spots = levelData.spots || []; // Asegúrate que esto venga del API
-
-  // Si solo tienes spotsTotal y spotsFree (como en Sidebar), y necesitas mostrar cada plaza individualmente:
-  // Esta parte es CRUCIAL y depende de cómo tu API entregue los datos de CADA PLAZA.
-  // Si tu API en GET /parkings/{id}/spots (Figura 5) devuelve un array de plazas con su estado,
-  // entonces `levelData.spots` debería ser ese array filtrado por la planta actual.
-
-  // *** Placeholder: Necesitarás obtener los datos de cada plaza para esta planta ***
-  // Esto es una simulación si tu API no da el detalle plaza por plaza aún.
-  // Idealmente, tu API debería dar algo como:
-  // levelData = { levelName: "Planta -1", spots: [{id: "s1", spotNumber: 1, occupied: true}, {id: "s2", spotNumber: 2, occupied: false}, ...] }
 
   const spots =
     levelData.spotsList ||

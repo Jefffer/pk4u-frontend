@@ -1,4 +1,3 @@
-import { FaInfoCircle, FaExclamationTriangle, FaCheckCircle, FaClock, FaParking } from 'react-icons/fa';
 import { LiaInfoCircleSolid, LiaExclamationTriangleSolid, LiaClockSolid, LiaParkingSolid, LiaCheckCircleSolid } from "react-icons/lia";
 import { PiTimer } from "react-icons/pi";
 
