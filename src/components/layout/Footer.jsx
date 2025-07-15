@@ -17,7 +17,7 @@ const Footer = () => {
           <h5 className="text-xl font-bold mb-2">
             {t("footer.projectInfo.title")}
           </h5>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             {t("footer.projectInfo.description")}
           </p>
         </div>
@@ -27,11 +27,11 @@ const Footer = () => {
           <h5 className="text-lg font-semibold mb-2">
             {t("footer.navigation.title")}
           </h5>
-          <ul className="space-y-2">
+          <ul className="space-y-2 text-slate-600 dark:text-slate-400">
             <li>
               <Link
                 to="/about"
-                className="inline-flex items-center text-gray-300 hover:text-teal-400 transition-colors duration-300"
+                className="inline-flex items-center hover:text-teal-400 transition-colors duration-300"
               >
                 <FaInfoCircle className="w-4 h-4 mr-2" />
                 {t("footer.navigation.aboutProject")}
@@ -40,7 +40,7 @@ const Footer = () => {
             <li>
               <Link
                 to="/"
-                className="inline-flex items-center text-gray-300 hover:text-teal-400 transition-colors duration-300"
+                className="inline-flex items-center hover:text-teal-400 transition-colors duration-300"
               >
                 <FaReact className="w-4 h-4 mr-2" />
                 {t("footer.navigation.goToMap")}
@@ -50,15 +50,15 @@ const Footer = () => {
         </div>
 
         {/* Créditos y GitHub */}
-        <div className="text-center md:text-right">
-          <p className="text-sm text-gray-400 mb-2">
+        <div className="text-center md:text-right text-slate-600 dark:text-slate-400">
+          <p className="text-sm mb-2">
             {t("footer.copyright.text", { year: currentYear })}
           </p>
           <a
             href={frontendRepoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center text-gray-300 hover:text-teal-400 transition-colors duration-300"
+            className="inline-flex items-center hover:text-teal-400 transition-colors duration-300"
             aria-label={t("footer.copyright.githubAriaLabel")}
           >
             <FaGithub className="w-5 h-5 mr-2" />
@@ -68,8 +68,8 @@ const Footer = () => {
       </div>
 
       {/* Built by */}
-      <div className="mt-8 border-t border-gray-700 pt-4 text-center tracking-wide">
-        <p className="text-xs text-gray-500 flex flex-wrap justify-center items-center gap-x-2 gap-y-1">
+      <div className="mt-8 border-t border-gray-700 pt-4 text-center tracking-wide text-slate-600 dark:text-slate-400">
+        <p className="text-xs flex flex-wrap justify-center items-center gap-x-2 gap-y-1">
           {t("footer.builtWith.text")}{" "}
           <FaReact
             className="inline-block text-teal-400 align-middle"
@@ -103,7 +103,41 @@ const Footer = () => {
           />
           <span className="text-blue-500 font-semibold">RabbitMQ</span>
         </p>
+        <div className="mt-2 flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-xs">
+    <span>{t("footer.developers", "Desarrolladores:")}</span>
+    <a
+      href="https://github.com/Jefffer"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center hover:text-teal-400 transition-colors"
+      aria-label="GitHub Jeffer"
+    >
+      <FaGithub className="w-4 h-4 mr-1" />
+      Jeffer
+    </a>
+    <a
+      href="https://github.com/MMunozLo"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center hover:text-teal-400 transition-colors"
+      aria-label="GitHub Maria"
+    >
+      <FaGithub className="w-4 h-4 mr-1" />
+      Maria
+    </a>
+    <a
+      href="https://github.com/gecamara"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center hover:text-teal-400 transition-colors"
+      aria-label="GitHub Germi"
+    >
+      <FaGithub className="w-4 h-4 mr-1" />
+      Germi
+    </a>
+  </div>
       </div>
+      
     </footer>
   );
 };
