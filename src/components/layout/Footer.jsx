@@ -104,40 +104,39 @@ const Footer = () => {
           <span className="text-blue-500 font-semibold">RabbitMQ</span>
         </p>
         <div className="mt-2 flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-xs">
-    <span>{t("footer.developers", "Desarrolladores:")}</span>
-    <a
-      href="https://github.com/Jefffer"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center hover:text-teal-400 transition-colors"
-      aria-label="GitHub Jeffer"
-    >
-      <FaGithub className="w-4 h-4 mr-1" />
-      Jeffer
-    </a>
-    <a
-      href="https://github.com/MMunozLo"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center hover:text-teal-400 transition-colors"
-      aria-label="GitHub Maria"
-    >
-      <FaGithub className="w-4 h-4 mr-1" />
-      Maria
-    </a>
-    <a
-      href="https://github.com/gecamara"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center hover:text-teal-400 transition-colors"
-      aria-label="GitHub Germi"
-    >
-      <FaGithub className="w-4 h-4 mr-1" />
-      Germi
-    </a>
-  </div>
+          <span>{t("footer.developers", "Desarrolladores:")}</span>
+          <a
+            href="https://github.com/Jefffer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center hover:text-teal-400 transition-colors"
+            aria-label="GitHub Jeffer"
+          >
+            <FaGithub className="w-4 h-4 mr-1" />
+            Jeffer
+          </a>
+          <a
+            href="https://github.com/MMunozLo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center hover:text-teal-400 transition-colors"
+            aria-label="GitHub Maria"
+          >
+            <FaGithub className="w-4 h-4 mr-1" />
+            Maria
+          </a>
+          <a
+            href="https://github.com/gecamara"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center hover:text-teal-400 transition-colors"
+            aria-label="GitHub Germi"
+          >
+            <FaGithub className="w-4 h-4 mr-1" />
+            Germi
+          </a>
+        </div>
       </div>
-      
     </footer>
   );
 };

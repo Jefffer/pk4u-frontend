@@ -7,10 +7,8 @@ import {
 } from "react-icons/fa";
 import {
   LiaMapMarkerSolid,
-  LiaCarSolid,
   LiaCarSideSolid,
   LiaLayerGroupSolid,
-  LiaEuroSignSolid,
   LiaArrowLeftSolid,
   LiaMoneyBillWaveAltSolid,
 } from "react-icons/lia";
