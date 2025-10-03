@@ -151,12 +151,18 @@ const Sidebar = ({
     }
   }, [parkingDetails, error]);
 
-  const handleImageError = () => {
-    setImageError(true);
+  const handleImageError = (event) => {
+    // Si hay error cargando la imagen específica, usar la imagen por defecto
+    if (event.target.src !== `${window.location.origin}/p1.png`) {
+      event.target.src = "/p1.png";
+    } else {
+      // Si también falla p1.png, mostrar placeholder
+      setImageError(true);
+    }
   };
 
-  const imageUrl = "/p1.png";
-  // const imageUrl = parkingDetails ? `/${parkingDetails.id}.png` : null;
+  // Usar imagen específica del parking basada en su ID, con fallback a p1.png
+  const imageUrl = parkingDetails ? `/${parkingDetails.id}.png` : "/p1.png";
 
   // Variantes de animación para el Sidebar
   const sidebarVariants = {
